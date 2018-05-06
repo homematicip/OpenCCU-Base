@@ -9,6 +9,7 @@
 #include <utils.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <cstdlib>
 
 InfoLed::InfoLed():
   #if defined(PLATFORM_CCU3)
@@ -27,9 +28,13 @@ InfoLed::InfoLed():
   rflgwInfoLed()
 {
   #if defined(PLATFORM_CCU3)
-  redLed.LedOn();
-  greenLed.LedOn();
-  blueLed.LedOff();
+  // identify if we have a RPI-RF-MOD
+  if(system("lsmod | grep -q rx8130") == 0)
+  {
+    redLed.LedOn();
+    greenLed.LedOn();
+    blueLed.LedOff();
+  }
   #else
 	infoLed.LedOff();
   #endif
@@ -135,13 +140,17 @@ void InfoLed::updateLedState() {
       (newStateRed != led::UNKNOWN && newStateGreen != led::UNKNOWN && newStateBlue != led::UNKNOWN)) ||
      (this->nextInfoUpdate > time_millis()))
   {
-    this->redLed.LedOff();
-    this->greenLed.LedOff();
-    this->blueLed.LedOff();
+    // identify if we have a RPI-RF-MOD
+    if(system("lsmod | grep -q rx8130") == 0)
+    {
+      this->redLed.LedOff();
+      this->greenLed.LedOff();
+      this->blueLed.LedOff();
 
-    this->redLed.switchLed(newStateRed);
-    this->greenLed.switchLed(newStateGreen);
-    this->blueLed.switchLed(newStateBlue);
+      this->redLed.switchLed(newStateRed);
+      this->greenLed.switchLed(newStateGreen);
+      this->blueLed.switchLed(newStateBlue);
+    }
 
     if(newStateLGW != oldStateLGW && newStateLGW != led::UNKNOWN)
       this->rflgwInfoLed.switchLed(newStateLGW);
