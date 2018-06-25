@@ -412,11 +412,8 @@ int main(int argc, char ** argv) {
 
 	while (1) {
 
-		fd_set inFd, outFd, excFd;
+		fd_set inFd;
 		FD_ZERO(&inFd);
-		FD_ZERO(&outFd);
-		FD_ZERO(&excFd);
-
 		FD_SET(ssdpSock, &inFd);
 
 		struct timeval tv;
@@ -424,7 +421,14 @@ int main(int argc, char ** argv) {
 		tv.tv_usec = 0;
 		if (tv.tv_sec > REPEAT_AFTER)
 			tv.tv_sec = 0;
-		if (select(ssdpSock + 1, &inFd, &outFd, &excFd, &tv) > 0) {
+
+		int ret = select(ssdpSock + 1, &inFd, NULL, NULL, &tv);
+		if (ret < 0) {
+			perror("select failed");
+			break;
+		}
+
+		if (ret > 0) {
 			socklen_t len_r;
 			len_r = sizeof(struct sockaddr_in);
 			memset(buffer, 0, sizeof(buffer));
