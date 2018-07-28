@@ -444,20 +444,19 @@ int main(int argc, char ** argv) {
 			if (cnt < 0) {
 				perror("recvfrom failed");
 				exit(1);
-			} else if (cnt == 0) { /* end of transmission */
-				break;
-			}
-			if(cnt < (ssize_t)sizeof(buffer))
-				buffer[cnt] = '\0';
+			} else if (cnt > 0) {
+				if(cnt < (ssize_t)sizeof(buffer))
+					buffer[cnt] = '\0';
 
-			if (strncmp(buffer, "M-SEARCH", 8) == 0) {
-				std::string request = buffer;
-				std::string st_header = get_header_field(request, "ST:");
-				std::string man_header = get_header_field(request, "MAN:");
-				if (man_header == "ssdp:discover"
-						&& (st_header == "upnp:rootdevice" || st_header == uuid || st_header == "ssdp:all")) {
-					int mx = atoi(get_header_field(request, "MX:").c_str());
-					sendRespose(ssdpSock, &sa_peer, mx);
+				if (strncmp(buffer, "M-SEARCH", 8) == 0) {
+					std::string request = buffer;
+					std::string st_header = get_header_field(request, "ST:");
+					std::string man_header = get_header_field(request, "MAN:");
+					if (man_header == "ssdp:discover"
+							&& (st_header == "upnp:rootdevice" || st_header == uuid || st_header == "ssdp:all")) {
+						int mx = atoi(get_header_field(request, "MX:").c_str());
+						sendRespose(ssdpSock, &sa_peer, mx);
+					}
 				}
 			}
 		} else {
