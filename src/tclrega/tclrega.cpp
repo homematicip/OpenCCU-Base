@@ -18,6 +18,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <xmlParser.h>
+#include <fstream>
 
 /*############################################################################*/
 /*# Definitionen                                                             #*/
@@ -31,16 +32,16 @@
 
 static Tcl_HashTable hashTable;
 
-static char* DEFAULT_URL="http://127.0.0.1:8181/tclrega.exe";
+//static std::string DEFAULT_URL("http://127.0.0.1:8181/tclrega.exe");
 
 static char* USAGE =  "usage: rega command\n"
                         "\trega_script script\n"
-                        "\trega_url url (url defaults to http://127.0.0.1:8181)\n"
+                        "\trega_url url (url defaults to http://127.0.0.1:8183)\n"
                         "\trega_sid sid"
                         "\trega_post url payload";
                         
-/* - - - wernerf - - - */
-static char REGA_URL_PREFIX[] = "http://127.0.0.1:8181";
+/* - - - wernerf/ - - - */
+//static std::string REGA_URL_PREFIX("http://127.0.0.1:8181");
 /* - - - wernerf - - - */
                         
 
@@ -48,7 +49,55 @@ struct sockaddr_in dest_addr;
 static std::string uri;
 static std::string sid;
 
+// - - - niclaus - - -
+static std::string portRega("8183");
+static volatile bool portRegaRead;
 
+
+
+/*############################################################################*/
+/*# Interne Hilfsfunktionen                                                  #*/
+/*############################################################################*/
+
+std::string trim(const std::string& str)
+{
+    unsigned int first = str.find_first_not_of(' ');
+    if (std::string::npos == first)
+    {
+        return str;
+    }
+    unsigned int last = str.find_last_not_of(' ');
+    return str.substr(first, (last - first + 1));
+}
+
+std::string readPortFromFile(const char* filename) {
+    std::ifstream ifs;
+    ifs.open(filename, std::ifstream::in);
+    char* buffer = new char[256];
+    std::string base("01234567890");
+    while(ifs.good()) {
+        ifs.getline(buffer, 256);
+        std::string port(buffer);
+        port = trim(port);
+        if(!port.empty() && (port.find_first_not_of(base) == std::string::npos)) {
+            delete[] buffer;
+            return port;
+        }
+    }
+    delete[] buffer;
+    return std::string("");
+}
+
+void initPorts() {
+    if(!portRegaRead) {
+        std::string port(readPortFromFile("/etc/rega_http.port"));
+        if(!port.empty()) {
+            portRega = port;
+        }
+        portRegaRead = true;
+    }
+}
+// - - - niclaus - - -
 
 extern "C" {
 
@@ -82,6 +131,8 @@ int Tclrega_Init (Tcl_Interp* interp) {
 	Tcl_CreateCommand(interp, "rega_post", Tclrega_post, (ClientData) NULL, NULL);
   /* - - - wernerf - - - */
 	Tcl_SetVar(interp, "rega_version", TCLREGA_VERSION, TCL_GLOBAL_ONLY);
+    initPorts();
+    const std::string DEFAULT_URL = ("http://127.0.0.1:"+portRega+"/tclrega.exe");
     ParseURL(DEFAULT_URL);
 	return TCL_OK;
 }
@@ -299,6 +350,8 @@ static int Tclrega_post (ClientData, Tcl_Interp * interp, int argc,
     
   if (2 >= argc) { return TclError(interp, USAGE); }
   
+  initPorts();
+  const std::string REGA_URL_PREFIX("http://127.0.0.1:"+portRega);
   url  = REGA_URL_PREFIX;
   url += argv[1];
   for(int i = 2; i < argc; i++)
@@ -313,6 +366,9 @@ static int Tclrega_post (ClientData, Tcl_Interp * interp, int argc,
     return TclError(interp, ERROR_MSG); 
   }
   Tcl_AppendResult(interp, response.c_str(), NULL);
+  
+  initPorts();
+  const std::string DEFAULT_URL = "http://127.0.0.1:"+portRega+ "/tclrega.exe";
   ParseURL(DEFAULT_URL);
   
   return TCL_OK;
