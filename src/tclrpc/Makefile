@@ -6,6 +6,7 @@ STRIP = $(CROSS)strip
 TCLRPC = tclrpc.so
 
 TCLPATH = ../tcl
+#TCLPATH = ../tcl-8.6.9
 TCLVERSION = $(shell awk -F "[ \t]*=[ \t]*" 'NF==2 && $$1 == "VERSION" {print $$2}' $(TCLPATH)/unix/Makefile)
 TCLINCLUDEPATH = $(TCLPATH)/generic
 TCLLIBPATH = $(TCLPATH)/unix

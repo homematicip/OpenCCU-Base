@@ -9,10 +9,13 @@
 #include <cstring>
 #include <cstdio>
 #include <cstdlib>
-#ifdef WIN32
-  #define DLLEXPORT __declspec(dllexport)
-#else
-  #define DLLEXPORT
+
+#ifndef DLLEXPORT
+  #ifdef WIN32
+    #define DLLEXPORT __declspec(dllexport)
+  #else
+    #define DLLEXPORT
+  #endif
 #endif
 
 #include <iostream>
@@ -20,9 +23,9 @@
 
 using namespace XmlRpc;
 
-#define TCLRPC_VERSION "1.0"
+#define TCLRPC_VERSION "1.1"
 
-static char* USAGE = "usage: xmlrpc url methodName ?arg1 ?arg2 ...??";
+static const char* USAGE = "usage: xmlrpc url methodName ?arg1 ?arg2 ...??";
 
 // Error handler
 static class TclrpcErrorHandler : public XmlRpcErrorHandler {
@@ -43,6 +46,7 @@ private:
 } g_tclrpcErrorHandler;
 
 static XmlRpcClient* xmlRpcClient = NULL;
+static Tcl_Encoding iso8859_encoding = NULL;
 
 extern "C" {
 
@@ -55,12 +59,30 @@ int DLLEXPORT Tclrpc_Init (Tcl_Interp* interp) {
 	Tcl_SetVar(interp, "xmlrpc_version", TCLRPC_VERSION, TCL_GLOBAL_ONLY);
 	Tcl_CreateExitHandler( Tclrpc_Exit, 0 );
     XmlRpc::XmlRpcErrorHandler::setErrorHandler( &g_tclrpcErrorHandler );
+
+	// get used tcl version
+	int major;
+	int minor;
+	Tcl_GetVersion(&major, &minor, NULL, NULL);
+
+	// get iso8859-1 encoding to signal that we need to convert
+	// from utf8 to iso8859-1 in case we use a tcl version > 8.2
+	if(major > 8 || (major == 8 && minor > 2)) {
+	  iso8859_encoding = Tcl_GetEncoding(interp, "iso8859-1");
+	}
+
 	return TCL_OK;
 }
 
 static void Tclrpc_Exit (ClientData)
 {
 	Tcl_DeleteExitHandler( Tclrpc_Exit, 0 );
+	if(iso8859_encoding != NULL)
+	{
+	  Tcl_FreeEncoding(iso8859_encoding);
+	  iso8859_encoding = NULL;
+	}
+
 	if( xmlRpcClient )delete xmlRpcClient;
 }
 
@@ -334,7 +356,14 @@ static int Tclrpc_Cmd (ClientData, Tcl_Interp * interp, int argc, CONST84 char* 
         int retval=TCL_OK;
         int index=0;
         for(int i=3;i<argc;i++){
-            retval=StringToXmlRpcValue(interp, params[index], argv[i]);
+            if(iso8859_encoding != NULL) {
+              Tcl_DString dst;
+              const char *cstr = Tcl_UtfToExternalDString(iso8859_encoding, argv[i], -1, &dst);
+              retval=StringToXmlRpcValue(interp, params[index], cstr);
+              Tcl_DStringFree(&dst);
+            } else {
+              retval=StringToXmlRpcValue(interp, params[index], argv[i]);
+            }
             if(retval!=TCL_OK){
 		    Tcl_AppendResult(interp, "Error parsing argument ", argv[i], NULL);
 		return TCL_ERROR;
@@ -373,7 +402,15 @@ static int Tclrpc_Cmd (ClientData, Tcl_Interp * interp, int argc, CONST84 char* 
             }else{
                 std::string tcl_result;
                 retval=StringFromXmlRpcValue(interp, response, tcl_result);
-                Tcl_SetResult(interp, const_cast<char*>(tcl_result.c_str()), TCL_VOLATILE);
+                if(iso8859_encoding != NULL) {
+                  Tcl_DString dst;
+                  char* cstr;
+                  cstr = Tcl_ExternalToUtfDString(iso8859_encoding, tcl_result.c_str(), -1, &dst);
+                  Tcl_SetResult(interp, cstr, TCL_VOLATILE);
+                  Tcl_DStringFree(&dst);
+                } else {
+                  Tcl_SetResult(interp, const_cast<char*>(tcl_result.c_str()), TCL_VOLATILE);
+                }
             }
         }
 	return retval;
