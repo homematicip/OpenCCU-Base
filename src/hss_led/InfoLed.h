@@ -11,11 +11,12 @@
 #include "led.h"
 #include "ServiceMessage.h"
 #include "AlarmMessage.h"
-#include "UpdateAvailable.h"
 #include "MessageParser.h"
 #include "RFLGWInfoLED.h"
 #if defined(PLATFORM_CCU3)
 #include "Network.h"
+#else
+#include "UpdateAvailable.h"
 #endif
 
 class InfoLed {
@@ -41,7 +42,9 @@ private:
 	unsigned long nextInfoUpdate;
 	ServiceMessage service;
 	AlarmMessage alarm;
+  #if !defined(PLATFORM_CCU3)
 	UpdateAvailable update;
+  #endif
 	MessageParser parser;
 	RFLGWInfoLED rflgwInfoLed;
 };

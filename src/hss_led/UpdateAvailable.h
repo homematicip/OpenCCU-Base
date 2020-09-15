@@ -7,6 +7,7 @@
 
 #ifndef UPDATEAVAILABLE_H_
 #define UPDATEAVAILABLE_H_
+#if !defined(PLATFORM_CCU3)
 #include "Info.h"
 #include <string>
 class UpdateAvailable:public Info {
@@ -24,5 +25,6 @@ private:
 	bool requestUpdateServer();
 
 };
+#endif
 
 #endif /* UPDATEAVAILABLE_H_ */

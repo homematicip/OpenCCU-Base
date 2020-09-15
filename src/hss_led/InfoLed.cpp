@@ -29,7 +29,9 @@ InfoLed::InfoLed():
   nextInfoUpdate(0),
   service(),
   alarm(),
+#if !defined(PLATFORM_CCU3)
   update(),
+#endif
   parser(),
   rflgwInfoLed()
 {

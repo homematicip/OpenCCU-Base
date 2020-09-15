@@ -4,6 +4,9 @@
  *  Created on: 18.01.2013
  *      Author: willms
  */
+
+#if !defined(PLATFORM_CCU3)
+
 #include <fcntl.h>
 #include "UpdateAvailable.h"
 #include <utils.h>
@@ -105,3 +108,5 @@ bool UpdateAvailable::requestUpdateServer() {
 	}
 	return false;
 }
+
+#endif
