@@ -22,7 +22,7 @@ TCLRPCOBJS = tclrpc.o
 CC = $(CROSS)g++
 CXX = $(CROSS)g++
 LD = $(CROSS)g++
-CXXFLAGS +=  -fPIC -O2 -I$(XMLRPCINCLUDE) -I$(TCLINCLUDEPATH) -Wall 
+CXXFLAGS +=  -fPIC -O2 -I$(XMLRPCINCLUDE) -I$(TCLINCLUDEPATH) -W -Wall -Wno-write-strings
 LDFLAGS += -shared -fPIC $(TCLLIB) -lstdc++ -L$(XMLRPCPATH) -lXmlRpc
 
 all: xmlrpc $(TCLRPC)
@@ -37,7 +37,7 @@ xmlrpc_install:
 	make -C $(XMLRPCPATH) install
 	 
 $(TCLRPC): $(TCLRPCOBJS) $(XMLRPCOBJS)
-	$(LD) $(LDFLAGS) -o $(TCLRPC) $(TCLRPCOBJS)
+	$(LD) -o $(TCLRPC) $(TCLRPCOBJS) $(LDFLAGS)
 
 install: $(TCLRPC)
 	$(STRIP) $(TCLRPC)
