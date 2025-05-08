@@ -29,12 +29,12 @@ else
 $(error "missing project configuration; is PLATFORM=$(PLATFORM) valid?")
 endif
 
-#LIBELVUTILSPATH = ../base/libs/elvutils
-LIBELVUTILSPATH = $(ELVUTILS_DIR)
+LIBELVUTILSPATH = ../elvutils
+#LIBELVUTILSPATH = $(ELVUTILS_DIR)
 LIBELVUTILS = elvutils
 
-#LIBXMLPARSERPATH = ../libs/xmlparser
-LIBXMLPARSERPATH = $(XMLPARSER_DIR)
+LIBXMLPARSERPATH = ../xmlparser
+#LIBXMLPARSERPATH = $(XMLPARSER_DIR)
 LIBXMLPARSER = xmlparser
 
 TARGET = hs485dLoader
