@@ -1,0 +1,177 @@
+html, body {
+  margin:0;
+  padding:0;
+}
+
+
+.thumbnail {
+  position:relative;
+  width:50px;
+  height:50px;
+  margin:auto;
+}
+
+#canvas {
+  display:none;
+}
+
+.hidden {
+    display:none;
+}
+
+.visibilityHidden {
+    visibility: hidden;
+}
+
+.alignRight {
+  text-align: right;
+}
+
+.alignLeft {
+  text-align: left;
+}
+
+.alignCenter {
+  text-align: center;
+}
+
+.divAlignCenter {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+table.center {
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.borderWidth2Px {
+  border-width: 2px !important;
+}
+
+.diagramHelpCustomModeLi1 {
+  margin-bottom: 10px;
+}
+
+.firmwareAvailable {
+    cursor: pointer;
+    color: $_(clickable);
+}
+
+.infoBckGnd {
+  background-color: $_(clickable) !important;
+  color: $_(textColorA); /* white */
+  font-weight: bold;
+}
+
+.virtualChannelBckGnd {
+  background-color: #BCC3C1 !important;
+}
+
+.virtualChannelBckGndA {
+  background-color: #E0E0E0 !important;
+}
+
+.noBorder {
+  border-style: none !important;
+}
+
+.marginAuto {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.RFConfig_InterfacesTable {
+  border: 1px solid $_(black); /* black */
+}
+
+.RFConfig_InterfacesTable th {
+  background-color: $_(clickable);
+  color: $_(textColorA); /* white */
+  font-weight: bold;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.RFConfig_InterfacesTable_tr {
+  background-color: $_(activeBackground);
+}
+
+.RFConfig_InterfacesTable_tr_hover {
+  background-color: $_(inactiveBackground);
+  cursor:pointer;
+}
+
+.RFConfig_InterfacesTable td {
+  color: $_(textColorB); /* black */
+  text-align: center;
+  vertical-align: middle;
+}
+
+.centerSelect {
+   text-align-last: center;
+   text-align: center;
+   -ms-text-align-last: center;
+   -moz-text-align-last: center;
+}
+
+.controlHeader {
+  text-align:center;
+  background-color:#89989b;
+  color:white;
+  font-weight: bold;
+}
+
+.controlHeader150px {
+  text-align:center;
+  background-color:#89989b;
+  color:white;
+  font-weight: bold;
+  min-width: 150px;
+}
+
+.controlRedBorder {
+  border: 1px solid red !important;
+}
+
+progress[value] {
+
+  /* Reset the default appearance */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+   appearance: none;
+
+  /* Remove the default border in Firefox. */
+  border: none;
+
+  /* For IE10 */
+  color: #3678c9;
+  width: 75%;
+  height: 100%;
+}
+progress::-moz-progress-bar { background: #3678c9; }
+progress::-webkit-progress-value { background: #3678c9; }
+
+.dutyCycleProgress {
+  width: 75%;
+
+  background: -moz-linear-gradient(0deg, rgba(13,255,0,1) 0%, rgba(255,255,0,1) 63%, rgba(255,0,0,1) 100%); /* ff3.6+ */
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%, rgba(13,255,0,1)), color-stop(63%, rgba(255,255,0,1)), color-stop(100%, rgba(255,0,0,1))); /* safari4+,chrome */
+  background: -webkit-linear-gradient(0deg, rgba(13,255,0,1) 0%, rgba(255,255,0,1) 63%, rgba(255,0,0,1) 100%); /* safari5.1+,chrome10+ */
+  background: -o-linear-gradient(0deg, rgba(13,255,0,1) 0%, rgba(255,255,0,1) 63%, rgba(255,0,0,1) 100%); /* opera 11.10+ */
+  background: -ms-linear-gradient(0deg, rgba(13,255,0,1) 0%, rgba(255,255,0,1) 63%, rgba(255,0,0,1) 100%); /* ie10+ */
+  background: linear-gradient(90deg, rgba(13,255,0,1) 0%, rgba(255,255,0,1) 63%, rgba(255,0,0,1) 100%); /* w3c */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0DFF00', endColorstr='#ff0000',GradientType=1 ); /* ie6-9 */
+
+
+}
+
+.dutyCycleProgressBar {
+  width: 1%;
+  height: 12px;
+  background-color: #d9d9d9;
+}
+
+

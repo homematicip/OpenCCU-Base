@@ -1,0 +1,69 @@
+/*LinkList-Tabelle*/
+/*--------------------------------------------*/
+#ic_linkpeerlist #head_wrapper {
+  border-bottom: 0;
+  margin: 0;
+  padding: 0;
+}
+
+#ic_linkpeerlist #foot_wrapper {
+  border-top: 0;
+  margin: 0;
+  padding: 0;
+}
+
+#ic_linkpeerlist #body_wrapper {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  background-color: $_(background); /* #183473 */
+}
+
+#ic_linkpeerlist .LinkListTbl {
+  empty-cells: show;
+  padding:0;
+  margin: 20px 0 0 0;
+  width: 100%;
+  height: auto;
+  border: 1px solid $_(black); /* black */
+}
+
+#ic_linkpeerlist .LinkListTbl td {
+  background-color: $_(activeBackground);
+  color: $_(textColorB); /* black */
+  border: 1px solid $_(black); /* black */
+  height: 50px;  
+  text-align:center;
+}
+
+#ic_linkpeerlist .LinkListTbl th {
+  border: 1px solid $_(black); /* black */
+}
+
+#ic_linkpeerlist .LinkListTbl thead th {
+	background-color: $_(clickable);
+	border: 1px solid $_(black); /* black */
+	color: $_(textColorA); /* white */
+	font-weight: normal;
+	cursor: pointer;
+	margin: 0;
+}
+
+#ic_linkpeerlist .LinkListTbl thead td {
+	background-color: $_(clickable);
+	color: $_(textColorA); /* white */
+	margin: 0;
+}
+
+#ic_linkpeerlist .LinkListTbl .header_active
+{
+  background-color: $_(active); /* #565657 */
+}
+
+#ic_linkpeerlist .LinkListTbl .LinkListTbl_img
+{
+	background-color: $_(white); /* white */
+	text-align: left;
+	height: 80px;  
+}
+/*--------------------------------------------*/

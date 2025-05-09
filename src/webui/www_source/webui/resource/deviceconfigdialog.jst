@@ -1,0 +1,50 @@
+<div id="DeviceConfigDialog">
+<div id="DeviceConfigDialogTitle" onmousedown="new Drag($('DeviceConfigDialog'), event);"><span name="generalDeviceConfigTitle">Allgemeine Geräteeinstellungen:</span> ${device.address}</div>
+<div id="DeviceConfigDialogContent">
+
+  <div id="DeviceConfigDialogContentLeft">
+    <div  class="DeviceConfigDialogSection">
+      <div class="CLASS10800">
+        <div class="CLASS10801">${device.imageHTML}</div>
+      </div>
+      <div class="CLASS10802">${device.typeName}</div>
+    </div>
+  </div>
+
+  <div id="DeviceConfigDialogContentMain">
+    <div class="DeviceConfigDialogSection">
+      <table border="0" cellspacing="0" cellpadding="2px"  class="DeviceConfigDialogTable">
+        <tr><td name="generalDeviceChannelConfigLblName">Name:</td><td><input id="DeviceConfigDialog_DeviceName" class="CLASS10803" type="text" value="${device.name}"/></td></tr>
+        <tr><td name="generalDeviceChannelConfigLblTypeDescription">Typenbezeichnung:</td><td><input class="CLASS10803" disabled="disabled" readonly="readonly" type="text" value="${device.typeName}"/></td></tr>
+        <tr><td name="generalDeviceChannelConfigLblSerialNumber">Seriennummer:</td><td><input class="CLASS10803" disabled="disabled" readonly="readonly" type="text" value="${device.address}"/></td></tr>
+        <tr><td name="generalDeviceChannelConfigLblUsable">Bedienbar:</td><td><input id="DeviceConfigDialog_isUsable" type="checkbox" onclick="DeviceConfigDialog.isUsabilityChanged=true;" {if device.isUsable} checked="checked" {/if} {if !device.isWritable} disabled="disabled" readonly="readonly" {/if}/></td></tr>
+        <!-- <tr id="trAllChnVisible" class="hidden"><td name="generalDeviceChannelConfigLblVisible">Sichtbar:</td><td><input id="DeviceConfigDialog_isVisible" type="checkbox" onclick="DeviceConfigDialog.isVisibilityChanged=true;" {if device.isVisible} checked="checked" {/if}/></td></tr> -->
+        <tr id="btnEnableDeviceLogging"><td name="generalDeviceChannelConfigLblLogged">Protokolliert:</td><td><input id="DeviceConfigDialog_isLogged" type="checkbox" onclick="DeviceConfigDialog.isLoggingChanged=true;" {if device.isLogged} checked="checked" {/if} {if !device.isLogable} disabled="disabled" readonly="readonly" {/if}/></td></tr>
+
+        <tr id="trAllChnVisible" class="hidden"><td name="lblAllChannelsVisible">Alle Kan%E4le sichtbar:</td><td><input id="DeviceConfigDialog_isVisible" type="checkbox" onclick="DeviceConfigDialog.isVisibilityChanged=true;"/></td></tr>
+      </table>
+    </div>
+    
+    <div id="deviceFunctionTestPanel" class="DeviceConfigDialogSection">
+      <div class="CLASS10804" name="generalDeviceChannelConfigLblFuncTest">Funktionstest</div>
+      <hr />
+      <div>
+        <table border="0"  class="DeviceConfigDialogTable" width="250px">
+          <tr>
+            <td width="50%"><div id="DeviceConfigDialogTestButton" class="StdButton" name="generalDeviceChannelConfigBtnFuncTest" onclick="DeviceConfigDialog.startTest();">Test starten</div></td>
+            <td width="50%"><div id="DeviceConfigDialogTestResult">--:--:--</div></td>
+          </tr>
+        </table>
+        <div class="CLASS10805" name="generalDeviceConfigHint">
+          Im Rahmen des Funktionstests wird geprüft, ob die Kommunikation mit dem Gerät fehlerfrei funktioniert. Der Test gilt als bestanden, sobald die erste Rückmeldung von dem Gerät empfangen wurde. <br /> Dazu werden an alle Aktoren des Geräts Schaltbefehle gesendet, die deren Zustand ändern. Sensoren, wie z.B. Fernbedienungen, melden sich im Allgemeinen erst dann, wenn sie durch ein entsprechendes Ereignis ausgelöst wurden.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div id="DeviceConfigDialogFooter">
+  <div class="DeviceConfigDialogButton FooterButton" name="btnCancel" id="DeviceConfigDialogAbortButton" onclick="DeviceConfigDialog.abort();">Abbrechen</div>
+  <div class="DeviceConfigDialogButton FooterButton" name="btnOk" id="DeviceConfigDialogOkButton" onclick="DeviceConfigDialog.ok();">Ok</div>
+</div>
+</div>
