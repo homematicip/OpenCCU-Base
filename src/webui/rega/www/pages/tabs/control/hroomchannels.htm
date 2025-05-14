@@ -51,10 +51,10 @@
 
 <table id="tblHRoomChannels" class="filterTable CLASS03600 j_translate" cellpadding="0" cellspacing="0" border="1" >
   <colgroup>
-     <col width="15%" />
-     <col width="15%" />
-     <col width="15%" />
-     <col width="55%" />
+     <col style="width:15%;"/>
+     <col style="width:15%;"/>
+     <col style="width:15%;"/>
+     <col style="width:55%;"/>
   </colgroup>
   <tr>
   <%string sCssName="Sort"; if(system.GetSessionVar("sessionLS")=="name"){sCssName="SortSelected";} %>
@@ -114,6 +114,7 @@
   object oUser = dom.GetObject( system.GetSessionVar('sessionUserID'));
   integer userID = oUser.ID();
   object user = dom.GetObject(userID);
+  integer virtChnCounter = 0;
 
     object room = dom.GetObject(system.GetVar("id"));
     if (room)
@@ -139,35 +140,20 @@
             bShow = true;
           }
 
-          boolean bShowChannel = false;
-
-          if (user.UserEasyLinkMode() != true) {
-            ! User is expert
-            bShowChannel = true;
-          } else {
-            if (chn.HssType().Find("VIRTUAL_") == -1) {
-                ! not a virtual channel
-                bShowChannel = true;
-            } else {
-              if (chn.HssType().Find("VIRTUAL_KEY") != -1) {
-                ! virtual key of the ccu
-                bShowChannel = true;
-              }
-            }
-          }
-
-          if (sInterface != "HmIP-RF") {
-            Call("/esp/functions.fn::showHideRFChannel()");
-          } else {
-            Call("/esp/functions.fn::showHideHmIPChannel()");
-          }
-
-          if( bShow && chn.ReadyConfig() && oDev.ReadyConfig() && bShowChannel )
+          if( bShow && chn.ReadyConfig() && oDev.ReadyConfig())
           {
             string trId = room.ID()#tmp;
+            boolean showExtDesc = false;
             Write("<tr id='"#trId#"'>");
             Write("<td class='GrayBkg'>");
-            Write(chn.Name());
+
+            Call("/pages/tabs/control/function.fn::ShowExtDesc()");
+
+            if (showExtDesc == false) {
+              Write(chn.Name()#"<br/><br><span name='hssType' class='hidden'>${chType_"#chn.HssType()#"}</span>");
+            }
+
+
             Write("</td>");
             Write("<td class='GrayBkg'>");
             string functions = "";
@@ -192,13 +178,13 @@
             Write(sLastTime);
             
             Write("</div></td></tr>");
-            Write( '<tr><td align="center" class="CLASS03602">' );
+            Write( '<tr><td style="text-align:center;" class="CLASS03602">' );
             string sDisplay = 'none';
             if( chn.WorkingDPState() ) { sDisplay = "inline"; }
             Write( '<span id="work'#cId#'" style="display:'#sDisplay#';"><img src="/ise/img/pinion_gears_32.png" /></span>' );
             sDisplay = 'none';
             if( chn.ExistServiceMsg() ) { sDisplay = "inline"; }
-            Write( '<span id="warn'#cId#'" style="display:'#sDisplay#'"><img src="/ise/img/warning.png" /></span>' );
+            Write( '<span id="warn'#cId#'" style="display:'#sDisplay#'"><img name="attention" src="/ise/img/warning.png" /></span>' );
             Write( '</td></tr></table>' );
             
             Write("</td>");
@@ -258,5 +244,15 @@
     jQuery("#ftName").focus();
   });
 
-  translatePage("#tblHRoomChannels");
+  jQuery("[name='attention']").data('powertip', '<div>'+translateKey("lblSeeServiceMessage")+'</div>').powerTip();
+
+  translatePage("#tblHRoomChannels", function () {
+    jQuery("[name='hssType']").each(function(index, elm) {
+      var chText = jQuery(elm).text();
+      if (chText.indexOf("chType_") == -1) {
+        jQuery(elm).show();
+      }
+    });
+  });
+
 </script>

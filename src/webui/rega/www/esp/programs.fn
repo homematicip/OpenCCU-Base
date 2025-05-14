@@ -73,8 +73,25 @@ function ::WriteConditionText()
                   if( !bSysVarGeneric )
                   {
                     !sRet = sRet#" bei";
-                    sRet = sRet#" ${ruleConditionLblWhen}";
+                    !sRet = sRet#" ${ruleConditionLblWhen}";
                   }
+
+                  !SPHM-934
+                  if( (iLVT == ivtSystemId) || (iLVT == 19) )
+                  {
+                    if( bBinary )
+                    {
+                      if( iRV1 == 0 )
+                      {
+                        sRet = sRet#', ${ruleConditionLblWhen} '#oLV.ValueName0()#', ';
+                      }
+                      if( iRV1 == 1 )
+                      {
+                        sRet = sRet#', ${ruleConditionLblWhen} '#oLV.ValueName1()#', ';
+                      }
+                    }
+                  }
+                  !END SPHM-934
 
                   if( iLVT == ivtObjectId )
                   {
@@ -84,6 +101,13 @@ function ::WriteConditionText()
                       object oDP = dom.GetObject( sDP );
                       if( oDP )
                       {
+                        string hssid = "";
+
+                        if ( oDP.IsTypeOf( OT_HSSDP ) )
+                        {
+                          hssid = oDP.HSSID();
+                        }
+
                         if( oDP.ID() == iLV)
                         {
                           if( (oDP.Operations() & (OPERATION_READ|OPERATION_EVENT)) != 0 )
@@ -109,8 +133,8 @@ function ::WriteConditionText()
                                     }
                                     if( !oDP.IsTypeOf( OT_VARDP ) )
                                     {
-                                      string sLongKey = oCC.ChnLabel()#"|"#oDP.HSSID()#"="#sVLValue;
-                                      string sShortKey = oDP.HSSID()#"="#sVLValue;
+                                      string sLongKey = oCC.ChnLabel()#"|"#hssid#"="#sVLValue;
+                                      string sShortKey = hssid#"="#sVLValue;
                                       sValue = web.webKeyFromStringTable(sLongKey);
                                       if( !sValue.Length() )
                                       {
@@ -136,8 +160,8 @@ function ::WriteConditionText()
                                   string sValue = oDP.Name()#": "#oDP.ValueName1();
                                   if( (!oDP.IsTypeOf( OT_VARDP )) && (!oDP.IsTypeOf( OT_ALARMDP )) )
                                   {
-                                    string sLongKey = oCC.ChnLabel()#"|"#oDP.HSSID()#"=TRUE";
-                                    string sShortKey = oDP.HSSID()#"=TRUE";
+                                    string sLongKey = oCC.ChnLabel()#"|"#hssid#"=TRUE";
+                                    string sShortKey = hssid#"=TRUE";
                                     sValue = web.webKeyFromStringTable(sLongKey);
                                     if( sValue.Length() == 0 )
                                     {
@@ -148,6 +172,7 @@ function ::WriteConditionText()
                                       }
                                     }
                                   }
+                                  Call("/esp/functions.fn::getSpecialBinaryTranslation()");
                                   sRet = sRet#' '#sValue;
                                 }
                                 if( (oDP.ID() == iLV) && (iRV1 == false) ) 
@@ -155,8 +180,8 @@ function ::WriteConditionText()
                                   string sValue = oDP.Name()#": "#oDP.ValueName0();
                                   if( (!oDP.IsTypeOf( OT_VARDP )) && (!oDP.IsTypeOf( OT_ALARMDP )) )
                                   {
-                                    string sLongKey = oCC.ChnLabel()#"|"#oDP.HSSID()#"=FALSE";
-                                    string sShortKey = oDP.HSSID()#"=FALSE";
+                                    string sLongKey = oCC.ChnLabel()#"|"#hssid#"=FALSE";
+                                    string sShortKey = hssid#"=FALSE";
                                     sValue = web.webKeyFromStringTable(sLongKey);
                                     if( sValue.Length() == 0 )
                                     {
@@ -167,6 +192,7 @@ function ::WriteConditionText()
                                       }
                                     }
                                   }
+                                  Call("/esp/functions.fn::getSpecialBinaryTranslation()");
                                   sRet = sRet#' '#sValue;
                                 }
                                 !Write( "<script>conInfo('- ist binär und Action, RV1="#iRV1#" -- RV2="#iRV2#"');</script>" );
@@ -181,8 +207,8 @@ function ::WriteConditionText()
                                   }
                                   if( (!oDP.IsTypeOf( OT_VARDP )) && (!oDP.IsTypeOf( OT_ALARMDP )) )
                                   {
-                                    string sLongKey = oCC.ChnLabel()#"|"#oDP.HSSID();
-                                    string sShortKey = oDP.HSSID();
+                                    string sLongKey = oCC.ChnLabel()#"|"#hssid;
+                                    string sShortKey = hssid;
                                     sValue = web.webKeyFromStringTable(sLongKey);
                                     if( !sValue.Length() )
                                     {
@@ -194,6 +220,7 @@ function ::WriteConditionText()
                                     }
                                   }
                                   !Write( "<script>conInfo('- ist was anderes -- sDP:"#sDP#" Typ:"#iRV1T#" ');</script>" );
+                                  Call("/esp/functions.fn::getSpecialIntegerTranslation()");
                                   sRet = sRet#' '#sValue;
                                 }
                               }
@@ -209,8 +236,8 @@ function ::WriteConditionText()
                                 if( (oDP.ID() == iLV) && (s == iRV1.ToString()) && (iRV1T == ivtSpecialValue) ) 
                                 { 
                                   string sValue = oDP.Name();  
-                                  string sLongKey = oCC.ChnLabel()#"|"#oDP.HSSID()#"="#s;
-                                  string sShortKey = oDP.HSSID()#"="#s;
+                                  string sLongKey = oCC.ChnLabel()#"|"#hssid#"="#s;
+                                  string sShortKey = hssid#"="#s;
                                   string sValue = web.webKeyFromStringTable(sLongKey);
                                   if( !sValue.Length() )
                                   {
@@ -221,7 +248,7 @@ function ::WriteConditionText()
                                     }
                                   }
                                   !Write( "<script>conInfo('- ist HSSDP -- "#ivtSpecialValue#" -- "#sValue#"');</script>" );
-                                  sRet = sRet#' '#sValue;  
+                                  sRet = sRet#' '#sValue;
                                 }
                               }
                             }
@@ -236,7 +263,11 @@ function ::WriteConditionText()
                   if( (!bOptionList) && (!bBinary) && (!bSpecial) )
                   {
                     !sRet = sRet#' <i>im Wertebereich</i> ';
-                    sRet = sRet#' <i>${ruleConditionLblWithinValueRange}</i> ';
+
+                    if (iCT1 != 5) {
+                      Write( ' <i>${ruleConditionLblWithinValueRange}</i> ' );
+                    }
+
                     string sCT = "";
                     string sValueUnit = oLV.ValueUnit();
                     if( sValueUnit == "100%")
@@ -260,12 +291,13 @@ function ::WriteConditionText()
                       sValueUnit = "";
                     }
                     
-                    if( (iCT1 != 6) && (iCT1 != 8) && (iCT1 != 10) & (iCT1 != 11) & (iCT1 != 9) )
+                    if((iCT1 != 5) &&  (iCT1 != 6) && (iCT1 != 8) && (iCT1 != 10) & (iCT1 != 11) & (iCT1 != 9) )
                     {
                       oSC.ConditionType(6);
                       iCT1 = 6;
                     }
-                    
+
+                    if( iCT1 == 5 ) { sCT = "${ruleConditionLblIsEqual} "#iRV1.ToString(2)#sValueUnit; }
                     !if( iCT1 == 6 ) { sCT = "von "#iRV1.ToString(2)#sValueUnit#" bis kleiner "#iRV2.ToString(2)#sValueUnit; }
                     if( iCT1 == 6 ) { sCT = "${ruleConditionLblRangeFrom} "#iRV1.ToString(2)#sValueUnit#" ${ruleConditionLblRangeLessThan} "#iRV2.ToString(2)#sValueUnit; }
                     !if( iCT1 == 8 ) { sCT = "größer als "#iRV1.ToString(2)#sValueUnit; }
@@ -297,8 +329,9 @@ function ::WriteConditionText()
               }
               
               !--------------------------SysVar---------------------
+
               if( (iLVT == ivtSystemId) || (iLVT == 19) )
-              {        
+              {
                 if( bOptionList )
                 {
                   !Write( "<script>conInfo('- bOptionList ');</script>" );
@@ -312,18 +345,20 @@ function ::WriteConditionText()
                     sRet = sRet#' '#sVLValue;
                   }
                 }
-                if( bBinary )
-                {
-                  if( iRV1 == 0 ) 
-                  {
-                    sRet = sRet#' '#oLV.ValueName0();
-                  }
-                  if( iRV1 == 1 ) 
-                  {
-                    sRet = sRet#' '#oLV.ValueName1();
-                  }
-                }
+                ! SPHM-934
+                ! if( bBinary )
+                !{
+                !  if( iRV1 == 0 )
+                !  {
+                !    sRet = sRet#' '#oLV.ValueName0();
+                !  }
+                !  if( iRV1 == 1 )
+                !  {
+                !    sRet = sRet#' '#oLV.ValueName1();
+                !  }
+                !}
               }
+
               if( iLVT == ivtCurrentDate )
               {
                 !Write( "<script>conInfo('- aktuelles Datum')</script>" );
@@ -452,12 +487,19 @@ function ::WriteDestinationText()
 
                 if( oDP )
                 {
+                  string hssid = "";
+
+                  if ( oDP.IsTypeOf( OT_HSSDP ) )
+                  {
+                    hssid = oDP.HSSID();
+                  }
+
                   object oCH = dom.GetObject( oDP.Channel() );
                   if( oCH )
                   { 
                     integer iDPvt = oDP.ValueType();
                     integer iDPst = oDP.ValueSubType();
-                    string sKey = oCH.ChnLabel()#"|"#oDP.HSSID();
+                    string sKey; = oCH.ChnLabel()#"|"#hssid;
                     boolean showVal = true;
 
                     if( (iDPvt == ivtInteger) && (iDPst == istEnum) )
@@ -473,11 +515,11 @@ function ::WriteDestinationText()
                       {
                         if( iV == 0 )
                         {
-                          string sKey = oCH.ChnLabel()#"|"#oDP.HSSID()#"=FALSE";
+                          string sKey = oCH.ChnLabel()#"|"#hssid#"=FALSE";
                           string sValue = web.webKeyFromStringTable(sKey);
                           if( sValue.Length() == 0 )
                           {
-                            sKey = oDP.HSSID()#"=FALSE";
+                            sKey = hssid#"=FALSE";
                             string sValue = web.webKeyFromStringTable(sKey);
                             if( !sValue.Length() )
                             {
@@ -488,11 +530,11 @@ function ::WriteDestinationText()
                         }
                         if( iV == 1 )
                         {
-                          string sKey = oCH.ChnLabel()#"|"#oDP.HSSID()#"=TRUE";
+                          string sKey = oCH.ChnLabel()#"|"#hssid#"=TRUE";
                           string sValue = web.webKeyFromStringTable(sKey);
                           if( sValue.Length() == 0 )
                           {
-                            sKey = oDP.HSSID()#"=TRUE";
+                            sKey = hssid#"=TRUE";
                             string sValue = web.webKeyFromStringTable(sKey);
                             if( !sValue.Length() )
                             {
@@ -504,12 +546,12 @@ function ::WriteDestinationText()
                       }
                       else
                       {
-                        string sKey = oCH.ChnLabel()#"|"#oDP.HSSID();
+                        string sKey = oCH.ChnLabel()#"|"#hssid;
                         string sValue = web.webKeyFromStringTable(sKey);
                         sRet = sRet#sValue;
                         if( sValue.Length() == 0 )
                         {
-                          sKey = oDP.HSSID();
+                          sKey = hssid;
                           string sValue = web.webKeyFromStringTable(sKey);
                           if( !sValue.Length() )
                           {
@@ -579,7 +621,14 @@ function ::WriteDestinationText()
                           if (unit == "&#176;C") {
                             sRet=sRet#value.ToString(2);
                           } else {
-                           if ( (value.ToString().Find("0x02") != -1) || (value.ToString().Find("ACT_") != -1) ) {
+                           ! Device specific program description
+                           ! a) e. g. HM-Dis-EP-WM55
+                           ! b) e. g. HmIP-WRCD
+                           if (
+                              (value.ToString().Find("0x02") != -1) || (value.ToString().Find("ACT_") != -1)  ||
+                              (value.ToString().Find("DDBC=") != -1)
+                              ) {
+
                               ! This is because the value of the status display or the RGBW-Controller can be very long
                               sRet=sRet#" ${ruleDescrHexString}";
                             } else {
@@ -693,7 +742,8 @@ function ::SetBreakOnRestart()
 
 function ::SetActive()
 {
-  if( system.IsVar("id") )
+  object oUser = dom.GetObject( system.GetSessionVar("sessionUserID") );
+  if( (oUser.UserLevel() == iulAdmin) && (system.IsVar("id")) )
   {
     object oTmp = dom.GetObject( system.GetVar("id") );
     if( oTmp )
@@ -713,7 +763,8 @@ function ::SetActive()
 
 function ::SetVisible()
 {
-  if( system.IsVar("id") )
+  object oUser = dom.GetObject( system.GetSessionVar("sessionUserID") );
+  if( (oUser.UserLevel() == iulAdmin) && (system.IsVar("id")) )
   {
     object oTmp = dom.GetObject( system.GetVar("id") );
     if( oTmp )
@@ -733,7 +784,8 @@ function ::SetVisible()
 
 function ::SetOperate()
 {
-  if( system.IsVar("id") )
+  object oUser = dom.GetObject( system.GetSessionVar("sessionUserID") );
+  if( (oUser.UserLevel() == iulAdmin) && (system.IsVar("id")) )
   {
     object oTmp = dom.GetObject( system.GetVar("id") );
     if( oTmp )
@@ -803,7 +855,8 @@ function ::SetVisibility()
 
 function ::DeleteProgram()
 {
-  if( system.IsVar("id") )
+  object oUser = dom.GetObject( system.GetSessionVar("sessionUserID") );
+  if( (oUser.UserLevel() == iulAdmin) && (system.IsVar("id")) )
   {
     object oTmp = dom.GetObject( system.GetVar("id") );
     if( oTmp )
@@ -841,7 +894,8 @@ function ::RestoreProgram()
 
 function ::CopyToNewProgram()
 {
-  if( system.IsVar("id") )
+  object oUser = dom.GetObject( system.GetSessionVar("sessionUserID") );
+  if( (oUser.UserLevel() == iulAdmin) && (system.IsVar("id")) )
   {
     object oCopy = dom.GetObject( system.GetVar("id") );
     if( oCopy )
@@ -882,19 +936,23 @@ function ::SetProgram()
 
 function ::NewProgram()
 {
-  object oPTmp = dom.GetObject( ID_PROGRAMS );
-  object oTmp = dom.CreateObject( OT_PROGRAM );
-  boolean bRet = false;
-  if( oTmp )
+  object oUser = dom.GetObject( system.GetSessionVar("sessionUserID") );
+  if( oUser.UserLevel() == iulAdmin )
   {
-    !oTmp.Name( "Neues Programm" );
-    oTmp.Name( "${ruleTmpProgramName}" );
-    boolean bF1 = oPTmp.Add( oTmp.ID() );
-    boolean bF2 = system.SetSessionVar("sessionPRGID", oTmp.ID());
-    boolean bF3 = system.SetSessionVar("sessionORIGPRGID", oTmp.ID());
-    if( bF1 && bF2 && bF3 ) { bRet = true; }
+    object oPTmp = dom.GetObject( ID_PROGRAMS );
+    object oTmp = dom.CreateObject( OT_PROGRAM );
+    boolean bRet = false;
+    if( oTmp )
+    {
+      !oTmp.Name( "Neues Programm" );
+      oTmp.Name( "${ruleTmpProgramName}" );
+      boolean bF1 = oPTmp.Add( oTmp.ID() );
+      boolean bF2 = system.SetSessionVar("sessionPRGID", oTmp.ID());
+      boolean bF3 = system.SetSessionVar("sessionORIGPRGID", oTmp.ID());
+      if( bF1 && bF2 && bF3 ) { bRet = true; }
+    }
+    Write( bRet );
   }
-  Write( bRet );
   return;
 }
 
@@ -952,7 +1010,8 @@ function ::ReloadRule()
 
 function ::AddCondition()
 {
-  if( system.IsVar("rid") )
+  object oUser = dom.GetObject( system.GetSessionVar("sessionUserID") );
+  if( (oUser.UserLevel() == iulAdmin) && (system.IsVar("rid")) )
   {
     object oTmp = dom.GetObject( system.GetVar("rid") );
     if( oTmp )
@@ -987,7 +1046,8 @@ function ::AddCondition()
 
 function ::DeleteCondition()
 {
-  if( system.IsVar("rid") && system.IsVar("cid") )
+  object oUser = dom.GetObject( system.GetSessionVar("sessionUserID") );
+  if( (oUser.UserLevel() == iulAdmin) && (system.IsVar("rid")) && (system.IsVar("cid")) )
   {
     object oTmp = dom.GetObject( system.GetVar("rid") );
     if( oTmp )
@@ -999,7 +1059,8 @@ function ::DeleteCondition()
 
 function ::AddSingleCondition()
 {
-  if( system.IsVar("cid") )
+  object oUser = dom.GetObject( system.GetSessionVar("sessionUserID") );
+  if( (oUser.UserLevel() == iulAdmin) && (system.IsVar("cid")) )
   {
     object oTmp = dom.GetObject( system.GetVar("cid") );
     if( oTmp )
@@ -1029,7 +1090,8 @@ function ::AddSingleCondition()
 
 function ::DeleteSingleCondition()
 {
-  if( system.IsVar("cid") && system.IsVar("sid") )
+  object oUser = dom.GetObject( system.GetSessionVar("sessionUserID") );
+  if( (oUser.UserLevel() == iulAdmin) && (system.IsVar("cid")) && (system.IsVar("sid")) )
   {
     object oTmp = dom.GetObject( system.GetVar("cid") );
     if( oTmp )
@@ -1052,7 +1114,8 @@ function ::DeleteSingleCondition()
 
 function ::AddSingleDestination()
 {
-  if( system.IsVar("did") )
+  object oUser = dom.GetObject( system.GetSessionVar("sessionUserID") );
+  if( (oUser.UserLevel() == iulAdmin) && (system.IsVar("did")) )
   {
     object oTmp = dom.GetObject( system.GetVar("did") );
     if( oTmp )
@@ -1064,7 +1127,8 @@ function ::AddSingleDestination()
 
 function ::DeleteSingleDestination()
 {
-  if( system.IsVar("did") && system.IsVar("sid") )
+  object oUser = dom.GetObject( system.GetSessionVar("sessionUserID") );
+  if( (oUser.UserLevel() == iulAdmin) && (system.IsVar("did")) && (system.IsVar("sid")) )
   {
     object oTmp = dom.GetObject( system.GetVar("did") );
     if( oTmp )
@@ -1076,7 +1140,8 @@ function ::DeleteSingleDestination()
 
 function ::AddSubRule()
 {
-  if( system.IsVar("rid") )
+  object oUser = dom.GetObject( system.GetSessionVar("sessionUserID") );
+  if( (oUser.UserLevel() == iulAdmin) && (system.IsVar("rid")) )
   {
     object oTmp = dom.GetObject( system.GetVar("rid") );
     if( oTmp )
@@ -1088,7 +1153,8 @@ function ::AddSubRule()
 
 function ::AddSubRuleDest()
 {
-  if( system.IsVar("rid") )
+  object oUser = dom.GetObject( system.GetSessionVar("sessionUserID") );
+  if( (oUser.UserLevel() == iulAdmin) && (system.IsVar("rid")) )
   {
     object oTmp = dom.GetObject( system.GetVar("rid") );
     if( oTmp )
@@ -1108,7 +1174,8 @@ function ::AddSubRuleDest()
 
 function ::AddSubRuleBOR()
 {
-  if( system.IsVar("rid") )
+  object oUser = dom.GetObject( system.GetSessionVar("sessionUserID") );
+  if( (oUser.UserLevel() == iulAdmin) && (system.IsVar("rid")) )
   {
     object oTmp = dom.GetObject( system.GetVar("rid") );
     if( oTmp )
@@ -1126,7 +1193,8 @@ function ::AddSubRuleBOR()
 
 function ::AddNewElseRule()
 {
-  if( system.IsVar("rid") )
+  object oUser = dom.GetObject( system.GetSessionVar("sessionUserID") );
+  if( (oUser.UserLevel() == iulAdmin) && (system.IsVar("rid")) )
   {
     object oTmp = dom.GetObject( system.GetVar("rid") );
     if( oTmp )
@@ -1151,7 +1219,8 @@ function ::AddNewElseRule()
 
 function ::DeleteSubRule()
 {
-  if( system.IsVar("rid") )
+  object oUser = dom.GetObject( system.GetSessionVar("sessionUserID") );
+  if( (oUser.UserLevel() == iulAdmin) && (system.IsVar("rid")) )
   {
     object oTmp = dom.GetObject( system.GetVar("rid") );
     if( oTmp )
@@ -1163,7 +1232,8 @@ function ::DeleteSubRule()
 
 function ::SetOperatorType()
 {
-  if( system.IsVar("id") && system.IsVar("value") )
+  object oUser = dom.GetObject( system.GetSessionVar("sessionUserID") );
+  if( (oUser.UserLevel() == iulAdmin) && (system.IsVar("id")) && (system.IsVar("value")) )
   {
     object oTmp = dom.GetObject( system.GetVar("id") );
     if( oTmp )

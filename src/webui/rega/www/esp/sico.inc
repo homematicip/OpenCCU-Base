@@ -1,16 +1,4 @@
 <%
-  string excludeParty = "PARTY_";
-  string includePartyMode = "PARTY_MODE";
-  string excludeHmIPSection =  "SECTION";
-  string excludeHmIPProcess =  "PROCESS";
-  string excludeHmIPCDT =  "CONTROL_DIFFERENTIAL_TEMPERATURE";
-  string excludeHmIPValveState =  "VALVE_STATE";
-  string excludeHmIPSmokeDetTestResultNone = "SMOKE_DETECTOR_TEST_RESULT=NONE";
-
-  string excludeHmIPRSSI_DEVICE = "RSSI_DEVICE";
-  string excludeHmIPRSSI_PEER = "RSSI_PEER";
-
-
   integer iLV = oSC.LeftVal();
   integer iLVT = oSC.LeftValType();
   integer iRV1 = oSC.RightVal1();
@@ -21,6 +9,9 @@
   integer iCT2 = oSC.ConditionType2();
   integer iCC = oSC.ConditionChannel();
   string sSelected = "";
+
+  boolean showChannelParam = true;
+
   Write( '<select class="SelectBox" onchange="LeftValSelectChange(this.selectedIndex,'#oSC.ID()#');">' );
   if( iLVT == ivtEmpty ) { sSelected = " selected"; } else { sSelected = ""; }
   Write( '<option'#sSelected#'></option>' );
@@ -39,6 +30,9 @@
     object oCC = dom.GetObject( iCC );
     object oLV = dom.GetObject( iLV );
     boolean bOK = false;
+
+    string sVLValue = "";
+
     if( iLVT == ivtObjectId )
     {
       bOK = ( oCC && oLV );
@@ -71,7 +65,7 @@
       boolean isGenericValueType = ((oLV.ValueType() == ivtFloat) || (oLV.ValueType() == ivtInteger));
       boolean bSysVarGeneric = ( (iLVT == ivtSystemId) && (isGenericValueType)  && (oLV.ValueSubType() == istGeneric ) );
       boolean bSysVarString  = ( (iLVT == ivtSystemId) && (oLV.ValueType() == ivtString) && (oLV.ValueSubType() == istChar8859) );
-      
+
       if (bSysVarString)
       {
         !Write("<i>bei</i>");
@@ -80,21 +74,21 @@
         Write("<input type='text' onblur='iseSingleCondition.SetRightValue(" # oSC.ID() # ",this.value);' value='" # iRV1 # "' class='SelectBox' />");
 
       }
-        
+
       if( (!bSysVarGeneric) && (!bSysVarString) )
       {
         !Write( ' <i>bei</i> ' );
         Write( ' <i>${ruleConditionLblWhen}</i> ' );
-        Write( '<select onchange="SetLeftValue('#oSC.ID()#',this.value);" class="SelectBox">' );
+        Write( '<select id="selectConditionWhen'#oSC.ID()#'" name="selectConditionWhen" onchange="SetLeftValue('#oSC.ID()#',this.value); setOptionWidthSelectConditionWhen();" class="SelectBox">' );
       }
 
       if( iLVT == ivtObjectId )
       {
-        
         string sDP;
         foreach( sDP, oCC.DPs().EnumEnabledVisibleIDs() )
         {
           object oDP = dom.GetObject( sDP );
+
           if( oDP )
           {
             if( (oDP.Operations() & (OPERATION_READ|OPERATION_EVENT)) != 0 )
@@ -102,7 +96,7 @@
               integer iDPvt = oDP.ValueType();
               integer iDPst = oDP.ValueSubType();
               string sSelected = "";
-              
+
               if( (iDPvt == ivtInteger) && (iDPst == istEnum) )
               {
                 integer iVLCount = web.webGetValueListCount( oDP.ValueList() );
@@ -110,15 +104,20 @@
                 string sVLKey;
                 foreach( sVLKey, system.GenerateEnum(0,iVLCount) )
                 {
-                  string sVLValue = web.webGetValueFromList( oDP.ValueList(), sVLKey );
+                  sVLValue = web.webGetValueFromList( oDP.ValueList(), sVLKey );
                   if( sVLValue.Length())
                   {
-                    ! Some parameters shouldn't be visible
+
                     string optionVal = "";
                     if( !oDP.IsTypeOf( OT_VARDP ) ) {
                       optionVal = oDP.HSSID()#"="#sVLValue;
                     }
-                    if ((oDP.HSSID().Find(excludeHmIPProcess) == -1) && (oDP.HSSID().Find(excludeHmIPValveState) == -1) && (optionVal != excludeHmIPSmokeDetTestResultNone )) {
+
+                    ! Some parameters shouldn't be visible
+                    Call("/esp/functions.fn::conditionIsParameterVisible()");
+                    if (showChannelParam == true)
+                    {
+
                       if( (oDP.ID() == iLV) && (iRV1 == sVLKey) ) { sSelected = " selected"; } else { sSelected = ""; }
                       Write( '<option value="'#oDP.ID()#':'#sVLKey#'"'#sSelected#'>' );
                       string sValue = oDP.Name()#": "#sVLValue;
@@ -136,6 +135,7 @@
                           }
                         }
                       }
+                      Call("/esp/functions.fn::getSpecialTranslationPrgCond()");
                       Write( sValue );
                       Write( '</option>' );
                     }
@@ -144,58 +144,68 @@
               }
               else
               {
-                if( (iDPvt == ivtBinary) && ((iDPst != istAction)) )
+                if( (iDPvt == ivtBinary) && ((iDPst != istAction)))
                 {
-                  if( (oDP.ID() == iLV) && (iRV1 == 1) ) { sSelected = " selected"; } else { sSelected = ""; }
-                  Write( '<option value="'#oDP.ID()#':1"'#sSelected#'>' );
-                  string sValue = oDP.Name()#": "#oDP.ValueName1();
-                  if( (!oDP.IsTypeOf( OT_VARDP )) && (!oDP.IsTypeOf( OT_ALARMDP )) )
+                  ! Some parameters shouldn't be visible
+                  Call("/esp/functions.fn::conditionIsParameterVisible()");
+                  if (showChannelParam == true)
                   {
-                    string sLongKey = oCC.ChnLabel()#"|"#oDP.HSSID()#"=TRUE";
-                    string sShortKey = oDP.HSSID()#"=TRUE";
-                    sValue = web.webKeyFromStringTable(sLongKey);
-                    if( sValue.Length() == 0 )
+                    if( (oDP.ID() == iLV) && (iRV1 == 1) ) { sSelected = " selected"; } else { sSelected = ""; }
+                    Write( '<option value="'#oDP.ID()#':1"'#sSelected#'>' );
+                    string sValue = oDP.Name()#": "#oDP.ValueName1();
+                    if( (!oDP.IsTypeOf( OT_VARDP )) && (!oDP.IsTypeOf( OT_ALARMDP )) )
                     {
-                      string sValue = web.webKeyFromStringTable(sShortKey);
-                      if( !sValue.Length() )
+                      string sLongKey = oCC.ChnLabel()#"|"#oDP.HSSID()#"=TRUE";
+                      string sShortKey = oDP.HSSID()#"=TRUE";
+                      sValue = web.webKeyFromStringTable(sLongKey);
+                      if( sValue.Length() == 0 )
                       {
-                        sValue = sShortKey;
+                        string sValue = web.webKeyFromStringTable(sShortKey);
+                        if( !sValue.Length() )
+                        {
+                          sValue = sShortKey;
+                        }
                       }
                     }
-                  }
-                  Write( sValue );
-                  Write( '</option>' );
-                  if( (oDP.ID() == iLV) && (iRV1 == 0) ) { sSelected = " selected"; } else { sSelected = ""; }
-                  Write( '<option value="'#oDP.ID()#':0"'#sSelected#'>' );
-                  string sValue = oDP.Name()#": "#oDP.ValueName0();
-                  if( (!oDP.IsTypeOf( OT_VARDP )) && (!oDP.IsTypeOf( OT_ALARMDP )) )
-                  {
-                    string sLongKey = oCC.ChnLabel()#"|"#oDP.HSSID()#"=FALSE";
-                    string sShortKey = oDP.HSSID()#"=FALSE";
-                    sValue = web.webKeyFromStringTable(sLongKey);
-                    if( sValue.Length() == 0 )
+                    Call("/esp/functions.fn::getSpecialTranslationPrgCond()");
+                    Write( sValue );
+
+                    Write( '</option>' );
+
+                    Call("/esp/functions.fn::conditionIsBinaryOptionVisible()");
+                    if (showChannelParam == true)
                     {
-                      string sValue = web.webKeyFromStringTable(sShortKey);
-                      if( !sValue.Length() )
+                      if( (oDP.ID() == iLV) && (iRV1 == 0) ) { sSelected = " selected"; } else { sSelected = ""; }
+
+                      Write( '<option value="'#oDP.ID()#':0"'#sSelected#'>' );
+                      string sValue = oDP.Name()#": "#oDP.ValueName0();
+                      if( (!oDP.IsTypeOf( OT_VARDP )) && (!oDP.IsTypeOf( OT_ALARMDP )) )
                       {
-                        sValue = sShortKey;
+                        string sLongKey = oCC.ChnLabel()#"|"#oDP.HSSID()#"=FALSE";
+                        string sShortKey = oDP.HSSID()#"=FALSE";
+                        sValue = web.webKeyFromStringTable(sLongKey);
+                        if( sValue.Length() == 0 )
+                        {
+                          string sValue = web.webKeyFromStringTable(sShortKey);
+                          if( !sValue.Length() )
+                          {
+                            sValue = sShortKey;
+                          }
+                        }
                       }
+
+                      Call("/esp/functions.fn::getSpecialTranslationPrgCond()");
+                      Write( sValue );
+                      Write( '</option>' );
                     }
                   }
-                  Write( sValue );
-                  Write( '</option>' );
+
                 }
                 else
                 {
                   ! Some parameter shouldn´t be visible
-                  if(
-                    ((oDP.HSSID().Find(excludeParty) == -1) || (oDP.HSSID().Find(includePartyMode) != -1))
-                    && (oDP.HSSID().Find(excludeHmIPSection) == -1)
-                    && (oDP.HSSID().Find(excludeHmIPCDT) == -1)
-                    && (oDP.HSSID().Find(excludeHmIPRSSI_DEVICE) == -1)
-                    && (oDP.HSSID().Find(excludeHmIPRSSI_PEER) == -1)
-                   ) {
-
+                  Call("/esp/functions.fn::conditionIsParameterVisible()");
+                  if(showChannelParam == true) {
                     if( oDP.ID() == iLV ) { sSelected = " selected"; } else { sSelected = ""; }
                     Write( '<option value="'#oDP.ID()#':1"'#sSelected#'>' );
                     string sValue = oDP.Name();
@@ -213,6 +223,7 @@
                         }
                       }
                     }
+                    Call("/esp/functions.fn::getSpecialTranslationPrgCond()");
                     Write( sValue );
                     Write( '</option>' );
                   }
@@ -237,6 +248,7 @@
                     sValue = sShortKey;
                   }
                 }
+                Call("/esp/functions.fn::getSpecialTranslationPrgCond()");
                 Write( sValue );
                 Write( '</option>' );
               }
@@ -244,12 +256,12 @@
           }
         }
       }
-      
+
       boolean bOptionList = ( (oLV.ValueType() == ivtInteger) && (oLV.ValueSubType() == istEnum) );
       boolean bBinary = ( oLV.ValueType() == ivtBinary );
-      
+
       if( iLVT == ivtSystemId )
-      {        
+      {
         if( bOptionList )
         {
           integer iVLCount = web.webGetValueListCount( oLV.ValueList() );
@@ -258,7 +270,7 @@
           string sVLKey;
           foreach( sVLKey, system.GenerateEnum(0,iVLCount) )
           {
-            string sVLValue = web.webGetValueFromList( oLV.ValueList(), sVLKey );
+            sVLValue = web.webGetValueFromList( oLV.ValueList(), sVLKey );
             if( iRV1 == sVLKey ) { sSelected = " selected"; } else { sSelected = ""; }
             Write( '<option value="'#oLV.ID()#':'#sVLKey#'"'#sSelected#'>' );
             Write( sVLValue );
@@ -277,18 +289,20 @@
           Write( '</option>' );
         }
       }
-      
+
       if( (!bSysVarGeneric) && (!bSysVarString) )
       {
         Write( '</select>' );
       }
-      
+
       boolean bSpecial = (iRV1T==ivtSpecialValue);
-      
+
       if( (!bOptionList) && (!bBinary) && (!bSpecial) && (!bSysVarString) )
       {
         !Write( ' <i>im Wertebereich</i> ' );
-        Write( ' <i>${ruleConditionLblWithinValueRange}</i> ' );
+        if (iCT1 != 5) {
+          Write( ' <i>${ruleConditionLblWithinValueRange}</i> ' );
+        }
         string sCT = "";
         string sValueUnit = oLV.ValueUnit();
         if( sValueUnit == "100%" )
@@ -297,27 +311,28 @@
           iRV1 = iRV1*100;
           iRV2 = iRV2*100;
         }
-        
+
         if( sValueUnit == "°C" )
         {
-          sValueUnit = "° C";
+          ! sValueUnit = "° C";
         }
         else
         {
           sValueUnit = " "#sValueUnit;
         }
-        
+
         if( sValueUnit == " " )
         {
           sValueUnit = "";
         }
-        
-        if( (iCT1 != 6) && (iCT1 != 8) && (iCT1 != 10) & (iCT1 != 11) & (iCT1 != 9) )
+
+        if( (iCT1 != 5) && (iCT1 != 6) && (iCT1 != 8) && (iCT1 != 10) & (iCT1 != 11) & (iCT1 != 9) )
         {
           oSC.ConditionType(6);
           iCT1 = 6;
         }
-        
+
+        if( iCT1 == 5 ) { sCT = "${ruleConditionLblIsEqual} "#iRV1.ToString(2)#sValueUnit; }
         !if( iCT1 == 6 ) { sCT = "von "#iRV1.ToString(2)#sValueUnit#" bis kleiner "#iRV2.ToString(2)#sValueUnit; }
         if( iCT1 == 6 ) { sCT = "${ruleConditionLblRangeFrom} "#iRV1.ToString(2)#sValueUnit#" ${ruleConditionLblRangeLessThan} "#iRV2.ToString(2)#sValueUnit; }
         !if( iCT1 == 8 ) { sCT = "größer als "#iRV1.ToString(2)#sValueUnit; }
@@ -338,7 +353,7 @@
         {
           oSC.ConditionType2(4);
         }
-      
+
         Write( '&nbsp;<select class="SelectBox" onchange="iseSingleCondition.SetConditionType2('#oSC.ID()#',this.value);">' );
         string sSelected = "";
         if( oSC.ConditionType2() == 13 ) { sSelected = " selected"; } else { sSelected = ""; }
@@ -364,7 +379,7 @@
       Call("/esp/system.fn::TmToString()");
       Write(sTm);
       Write( '</b> ' );
-      
+
       if( (oSC.ConditionType2() != 15) && (oSC.ConditionType2() != 13) )
       {
         oSC.ConditionType2(13);

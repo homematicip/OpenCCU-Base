@@ -118,6 +118,7 @@ function ::CreateRGBWAutomaticControl() {
     ! Set selectbox to the active program
     WriteLine("jQuery('#"+chnId#"').val("#oProgram.Value()#");");
 
+    ! NOT IN USE ANYMORE
     !WriteLine("var hsvValMin =  parseInt("#oMinBorder.Value()#" / 199 * 360); ");
     !WriteLine("var hsvValMax =  parseInt("#oMaxBorder.Value()#" / 199 * 360); ");
 
@@ -224,7 +225,7 @@ function ::CreateVIR-LGRGBWColorControl() {
 
  WriteLine("<script type='text/javascript'>");
    ! WriteLine(" jQuery('#colorPicker"+chnId#"').spectrum({id: 'rgbwBtnColor"#chnId#"', color:'rgb(255,255,255)', preferredFormat: 'rgb', showPalette: true, palette: ['white'],cancelText: translateKey('btnCancel'),chooseText: translateKey('btnOk')}) ");
-   WriteLine(" jQuery('#colorPicker"+chnId#"').spectrum({id: 'rgbwBtnColor"#chnId#"', color:'"#rgbValue#"', preferredFormat: 'rgb', showPalette: true, palette: ['white'],cancelText: translateKey('btnCancel'),chooseText: translateKey('btnOk')}) ");
+   WriteLine(" jQuery('#colorPicker"+chnId#"').spectrum({id: 'rgbwBtnColor"#chnId#"', color:'"#rgbValue#"', preferredFormat: 'rgb', showPalette: true, showInput: true, palette: ['white'],cancelText: translateKey('btnCancel'),chooseText: translateKey('btnOk')}) ");
 
    WriteLine("var opts = {};");
    WriteLine("opts.Type = 'RGBW';");
@@ -269,7 +270,7 @@ function ::CreateVIR-LGWhiteLevelControl() {
         WriteLine("</tr>");
         WriteLine("<tr>");
           WriteLine("<td colspan='2'>");
-            WriteLine("<div id='slider"#chnId#"' class='ControlBtnInfo' style='width:220px;'></div>");
+            WriteLine("<div id='slider"#chnId#"' class='ControlBtnInfo' style='width:220px;min-height:unset'></div>");
           WriteLine("</td>");
         WriteLine("</tr>");
       WriteLine("</table>");

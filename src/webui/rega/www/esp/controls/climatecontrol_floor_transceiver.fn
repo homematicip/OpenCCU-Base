@@ -7,17 +7,27 @@ function ::CreateClimateControlFloorTransceiver()
   object objEmergencyOperation = cObj.DPByControl("CLIMATECONTROL_FLOOR_TRANSCEIVER.EMERGENCY_OPERATION");
   object objFrostProtection = cObj.DPByControl("CLIMATECONTROL_FLOOR_TRANSCEIVER.FROST_PROTECTION");
   object objState = cObj.DPByControl("CLIMATECONTROL_FLOOR_TRANSCEIVER.STATE");
+  object objLevelStatus = cObj.DPByControl("CLIMATECONTROL_FLOOR_TRANSCEIVER.LEVEL_STATUS");
+  object objLevel = cObj.DPByControl("CLIMATECONTROL_FLOOR_TRANSCEIVER.LEVEL");
+  object oValveState = cObj.DPByControl("CLIMATECONTROL_FLOOR_TRANSCEIVER.VALVE_STATE");
+
+  var chActive = ch.MetaData("chnActive");
+
+  if (chActive != true) {
+    chActive = false;
+  }
 
   string classStateActive = "";
   string classHumidityLimiterActive = "";
   string classExternalClockActive = "";
+  boolean showValveState = false;
 
   string classDewPoint = "hidden";
   string classEmergencyMode = "hidden";
   string classFrostProtection = "hidden";
   string classHumidityLimiter = "hidden";
 
-  string stateSwitchingStatus =  "${actionStatusControlLblOff}";
+  string stateSwitchingStatus =  "--";
   string stateHumidityLimiter = "${lblNotActiv}";
   string stateExternalClock = "${lblNotActiv}";
   string stateDewPoint = "${lblNotActiv}";
@@ -25,9 +35,44 @@ function ::CreateClimateControlFloorTransceiver()
   string stateFrostProtection = "${lblNotActiv}";
 
   ! Parameter permanent visible
-  if (objState.Value() == true) {
-    classStateActive = "btnActive";
-    stateSwitchingStatus = "${actionStatusControlLblOn}";
+  if (objState) {
+    if (objState.Value() == true) {
+      classStateActive = "btnActive";
+      stateSwitchingStatus = "${actionStatusControlLblOn}";
+    } else {
+      stateSwitchingStatus = "${actionStatusControlLblOff}";
+    }
+  }
+
+  ! The max value is 1 although the current channeldescription of the FALMOT-C12 says it is 1.005
+  if (objLevel) {
+    if (objLevel.State() >= 0) {
+      real level = objLevel.State() * 100;
+      stateSwitchingStatus = level.ToString(1)#" %";
+      if (level >= 0) {
+        classStateActive = "btnActive";
+      }
+    } else {
+      if (objLevelStatus) {
+        ! Status 0 == Normal
+        if (objLevelStatus.State() == 0) {
+          stateSwitchingStatus = "0.0 %";
+          classStateActive = "btnActive";
+        }
+      }
+    }
+  }
+
+  if (objLevelStatus && oValveState) {
+    ! Status 0 = NORMAL, 1 = UNKNOWN, 4 = ERROR
+
+    if (chActive) {
+      showValveState = true;
+    }
+
+    if (objLevelStatus.Value() == 4) {
+      stateSwitchingStatus = "${lblError}";
+    }
   }
 
   ! Parameter permanent visible
@@ -56,6 +101,19 @@ function ::CreateClimateControlFloorTransceiver()
     classFrostProtection = "";
     stateFrostProtection = "${lblActiv}";
   }
+
+  if (oValveState && (showValveState == true)) {
+    integer valveState = oValveState.Value();
+    ! 4 is the default, which we don't show
+    if (valveState != 4) {
+      WriteLine("<tr>");
+        WriteLine("<td>");
+          WriteLine("<div class='ControlBtnInfo CLASS02532d'>${stringTableClimateControlVentDriveValveState}:<br/>${stringTableValveState_"#valveState#"}</div>");
+        WriteLine("</td>");
+      WriteLine("</tr>");
+    }
+  }
+
 
   WriteLine("<tr>");
     WriteLine("<td>");

@@ -8,10 +8,10 @@ system.SetSessionVar("sessionTAB", "systemconfig");
 <div id="subOffsetDiv"></div>
 <table class="StdTable j_translate" cellspacing="20">
   <colgroup>
-    <col width="25%"/>
-    <col width="25%"/>
-    <col width="25%"/>
-    <col width="25%"/>
+    <col style="width:25%;"/>
+    <col style="width:25%;"/>
+    <col style="width:25%;"/>
+    <col style="width:25%;"/>
   </colgroup>
   <tr class="CLASS05500">
     <td class="sysConfigHeight">
@@ -101,7 +101,14 @@ system.SetSessionVar("sessionTAB", "systemconfig");
     </td>
 
     <td class="sysConfigHeight">
-      <div class="StdTableBtn" onclick="WebUI.enter(DeviceFirmware);">${submenuDeviceFirmware}</div>
+      <div class="StdTableBtn" onclick="WebUI.enter(DeviceFirmwareInformation);">${submenuDeviceFirmwareInformation}</div>
+      <ul>
+        <li>${lblSettingsDeviceFirmwareMain0}
+          <ul>
+            <li>${lblSettingsDeviceFirmwareMain1}</li>
+          </ul>
+        </li>
+      </ul>
       <ul>
         <li>${lblSettingsDeviceFirmware0}
           <ul>

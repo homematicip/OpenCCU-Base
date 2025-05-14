@@ -22,8 +22,10 @@
     destElm.change();
   };
 
-  SetSysVarDestValue = function( id, value, min, max, unit)
+  SetSysVarDestValue = function( id, value, min, max, unit, isSysVar)
   {
+    isSysVar = (typeof isSysVar == "undefined") ? false : isSysVar;
+
     var iPos = value.indexOf(":");
     if( iPos == -1 )
     {
@@ -34,7 +36,7 @@
       {
         //alert( id +'.........'+ value );
         iseSingleDestination.reload = true;
-        iseSingleDestination.SetValue( id, value, unit );
+        iseSingleDestination.SetValue( id, value, unit, isSysVar );
       }
       else
       {
@@ -48,7 +50,7 @@
       //alert( value.substr(0,iPos) +'::::::'+ value.substr(iPos+1) );
       iseSingleDestination.reload = true;
       //value.substr(0,iPos)
-      iseSingleDestination.SetValue( id, value.substr(iPos+1), '' );
+      iseSingleDestination.SetValue( id, value.substr(iPos+1), '', isSysVar);
     }    
   };
   
@@ -114,6 +116,7 @@
 
     var req = jQuery.ajax({
       url : url +"?sid=" + SessionId,
+      cache: false,
       dataType: "html"
     });
 
@@ -141,15 +144,29 @@
   };
 
   SetStatusDisplay = function(regaDialogID, mode) {
-    var elm = (mode == "DIS") ? jQuery("#setStatusDisplay" + regaDialogID) : jQuery("#setStatusDisplayEPaper" + regaDialogID) ;
+    var url = "/pages/msg/setStatusDisplay.htm";
+    var elm;
+
+    switch (mode) {
+      case "DIS":
+        elm = jQuery("#setStatusDisplay" + regaDialogID);
+        break;
+      case "DIS-EP":
+        elm = jQuery("#setStatusDisplayEPaper" + regaDialogID);
+        break;
+      case "ACOUSTIC_DIS-EP":
+        elm = jQuery("#ePaperAcousticDisplay" + regaDialogID);
+        break;
+    }
 
     jQuery(elm).prop("disabled", true);
 
-    var url = "/pages/msg/setStatusDisplay.htm";
+
     var inputElm = jQuery(elm).prev(); // this is the element which contains the relevant string to transmit
 
     var req = jQuery.ajax({
       url : url +"?sid=" + SessionId,
+      cache: false,
       dataType: "html"
     });
     req.done(function(htmlContent) {
@@ -179,6 +196,17 @@
             inputElm.change();
           }
         }, "html");
+      } else if (mode == "ACOUSTIC_DIS-EP") {
+        statusDisplayDialog = new StatusDisplayDialogAcousticEPaper(translateKey("statusDisplayDialogTitle"), htmlContent, jQuery(inputElm).val(), function (result) {
+          if (result == this.RESULT_YES) {
+            var configString = this.getConfigString();
+            var inputElm = jQuery(elm).prev();
+            inputElm.val(configString);
+            inputElm.change();
+          }
+        },"html");
+        statusDisplayDialog.btnTextYes(translateKey("footerBtnOk"));
+        statusDisplayDialog.btnTextNo(translateKey("footerBtnCancel"));
       }
 
 
@@ -193,6 +221,7 @@
 
       var req = jQuery.ajax({
         url : url +"?sid=" + SessionId,
+        cache: false,
         dataType: "html"
       });
       req.done(function(htmlContent) {
@@ -212,13 +241,14 @@
 
 
   Set_VIR_LG_RGBWController = function(regaDialogID, param) {
-      var elm = jQuery("#setRGBWController" + regaDialogID), // this is the notepad symbol
-      url = "/pages/msg/setVIR_LG_RGBWController.htm";
-      jQuery(elm).prop("disabled", true);
-      var inputElm = jQuery(elm).prev(); // this is the element which contains the relevant string to transmit
+    var elm = jQuery("#setRGBWController" + regaDialogID), // this is the notepad symbol
+    url = "/pages/msg/setVIR_LG_RGBWController.htm";
+    jQuery(elm).prop("disabled", true);
+    var inputElm = jQuery(elm).prev(); // this is the element which contains the relevant string to transmit
 
       var req = jQuery.ajax({
         url : url +"?sid=" + SessionId,
+        cache: false,
         dataType: "html"
       });
       req.done(function(htmlContent) {
@@ -249,6 +279,7 @@
 
       var req = jQuery.ajax({
         url : url +"?sid=" + SessionId,
+        cache: false,
         dataType: "html"
       });
       req.done(function(htmlContent) {
@@ -273,6 +304,7 @@
 
     var req = jQuery.ajax({
       url : url +"?sid=" + SessionId,
+      cache: false,
       dataType: "html"
     });
 
@@ -304,6 +336,7 @@
 
     var req = jQuery.ajax({
       url : url +"?sid=" + SessionId,
+      cache: false,
       dataType: "html"
     });
 
@@ -321,6 +354,367 @@
           inputElm.change();
         }
       }, "html");
+
+    });
+  };
+
+  chooseSoundFiles = function(initValues) {
+    var dialog = new SoundfileChooserDialog(initValues, function(result) {
+      if (result != this.RESULT_NO) {
+        jQuery("#combinedParam_ChoosenFiles").val(result.replace(/;/g, ","));
+      }
+    });
+  };
+
+
+  setAcousticSignalController = function(regaDialogID, param) {
+    var elm = jQuery("#prgStringOptionValue" + regaDialogID),
+    url = "/pages/msg/setAcousticSignalCombinedParam.htm";
+    jQuery(elm).prop("disabled", true);
+    var inputElm = jQuery(elm).prev(); // this is the element which contains the relevant string to transmit
+
+    var req = jQuery.ajax({
+      url : url +"?sid=" + SessionId,
+      dataType: "html"
+    });
+
+    req.done(function(htmlContent) {
+
+      var dialog = new AcousticSignalController(translateKey("titleConfigDialog"), htmlContent, jQuery(elm).val(), function(result) {
+        jQuery(elm).prop("disabled", false);
+        if (result != 0) {
+          conInfo("AcousticSignalController: Yes pressed");
+          var inputElm = jQuery(elm);
+          var cfgString = this.getConfigString();
+          conInfo(cfgString);
+          inputElm.val(cfgString);
+          inputElm.change();
+        }
+      }, "html");
+      dialog.btnTextNo(translateKey("footerBtnCancel"));
+      dialog.btnTextYes(translateKey("footerBtnOk"));
+    });
+  };
+
+  setBlindLevelController = function(regaDialogID, param, chAddress) {
+    var ch = DeviceList.getChannelByAddress(chAddress),
+      virtChannelType = (typeof ch.virtChannelType != "undefined") ? ch.virtChannelType : "";
+
+    if (virtChannelType == "") {
+      if (ch.multiMode == "blind") {virtChannelType = "BLIND_VIRTUAL_RECEIVER";}
+      if (ch.multiMode == "shutter") {virtChannelType = "SHUTTER_VIRTUAL_RECEIVER";}
+    }
+
+    var elm = jQuery("#prgStringOptionValue" + regaDialogID); // this is the element which contains the relevant string to transmit
+
+    if (virtChannelType == "SHUTTER_VIRTUAL_RECEIVER") {
+      var url = "/pages/msg/setShutterVirtualReceiverCombinedParam.htm";
+      // see SPHM-1302 - elm.val(elm.val().split(",")[0]);
+    } else {
+      var url = "/pages/msg/setBlindVirtualReceiverCombinedParam.htm";
+    }
+
+    jQuery(elm).prop("disabled", true);
+
+    var req = jQuery.ajax({
+      url : url +"?sid=" + SessionId,
+      dataType: "html"
+    });
+
+    req.done(function(htmlContent) {
+      var dialog = new BlindCombinedParamDialog(translateKey("titleConfigDialog"), htmlContent, jQuery(elm).val(), virtChannelType, function (result) {
+        jQuery(elm).prop("disabled", false);
+        if (result != 0) {
+          conInfo("setBlindLevelController: Yes pressed");
+          var cfgString = this.getConfigString();
+          conInfo(cfgString);
+          elm.val(cfgString);
+          elm.change();
+        }
+      }, "html");
+      dialog.btnTextNo(translateKey("footerBtnCancel"));
+      dialog.btnTextYes(translateKey("footerBtnOk"));
+      dialog.setWidth(400);
+    });
+  };
+
+  setDimmerLevelController = function(regaDialogID, deviceType, chnAddress) {
+    var elm = jQuery("#prgStringOptionValue" + regaDialogID), // this is the element which contains the relevant string to transmit
+    url = "/pages/msg/setDimmerVirtualReceiverCombinedParam.htm";
+    jQuery(elm).prop("disabled", true);
+
+    var req = jQuery.ajax({
+      url : url +"?sid=" + SessionId,
+      dataType: "html"
+    });
+
+    req.done(function(htmlContent) {
+      var dialog = new DimmerCombinedParamDialog(translateKey("titleConfigDialog"), htmlContent, deviceType, chnAddress ,jQuery(elm).val(), function(result) {
+        jQuery(elm).prop("disabled", false);
+          if (result != 0) {
+            conInfo("setDimmerLevelController: Yes pressed");
+            var cfgString = this.getConfigString();
+            conInfo(cfgString);
+            elm.val(cfgString);
+            elm.change();
+          }
+
+      }, "html");
+      dialog.btnTextNo(translateKey("footerBtnCancel"));
+      dialog.btnTextYes(translateKey("footerBtnOk"));
+      dialog.setWidth(400);
+    });
+  };
+
+  setHmipRGBWTunableWhiteController = function(regaDialogID, deviceType, chnAddress) {
+    var elm = jQuery("#prgStringOptionValue" + regaDialogID), // this is the element which contains the relevant string to transmit
+      url = "/pages/msg/setRGBWTunableWhiteCombinedParam.htm";
+    jQuery(elm).prop("disabled", true);
+
+    var req = jQuery.ajax({
+      url : url +"?sid=" + SessionId,
+      dataType: "html"
+    });
+
+    req.done(function(htmlContent) {
+      var dialog = new RGBWTunableWhiteControllerDialog(translateKey("titleConfigDialog"), htmlContent, deviceType, chnAddress ,jQuery(elm).val(), function(result) {
+        jQuery(elm).prop("disabled", false);
+        if (result != 0) {
+          conInfo("setRGBWTunableWhiteController: Yes pressed");
+          var cfgString = this.getConfigString();
+          conInfo(cfgString);
+          elm.val(cfgString);
+          elm.change();
+        }
+
+      }, "html");
+      dialog.btnTextNo(translateKey("footerBtnCancel"));
+      dialog.btnTextYes(translateKey("footerBtnOk"));
+      dialog.setWidth(500);
+    });
+  };
+
+  setDALI_CombinedParameter = function(regaDialogID, deviceType, chnAddress) {
+    // maxCap > 0 = SWITCH, 1 = DIMMER, 2 = Tunable White, 3 = RGB + Tunable White, 4 = RGBW + Tunable White
+    var optionString = "",
+      maxCap = homematic("Interface.getMasterValue", {"interface": "HmIP-RF", "address": chnAddress, "valueKey": "UNIVERSAL_LIGHT_MAX_CAPABILITIES"}),
+      optionElm = jQuery("#prgStringOptionValue" + regaDialogID);
+
+    if (deviceType == "HmIP-LSC") {maxCap = 3;}
+
+    switch (parseInt(maxCap)) {
+      case 0:
+        // Switch
+        optionString = optionElm.val();
+        if (optionString == "0") {
+          optionElm.val("S=true");
+        }
+        setCombinedParameter(regaDialogID,deviceType,chnAddress,"switchState");
+        break;
+      case 1:
+        // Dimmer
+        optionString = optionElm.val();
+        if (optionString == "0") {
+          optionElm.val("L=100,DV=31,DU=2,RTV=0,RTU=1,C=7");
+        }
+        setDimmerLevelController(regaDialogID,deviceType,chnAddress);
+        break;
+      case 2:
+        // Tunable White;
+        optionString = optionElm.val();
+        if (optionString == "0") {
+          optionElm.val("L=100,OT=0,RT=0,TC=4500,RTTDV=0,RTTDU=0");
+        }
+        //setHmipRGBWTunableWhiteController(regaDialogID, deviceType, chnAddress);
+        setHmipRGBWController(regaDialogID,deviceType,chnAddress);
+        break;
+      case 3:
+      case 4:
+        // RGB + Tunable White;
+        optionString = optionElm.val();
+        if (optionString == "0") {
+          optionElm.val( "L=100,OT=0,RT=0,H=0,SAT=100");
+        }
+        setHmipRGBWController(regaDialogID,deviceType,chnAddress);
+        break;
+      default :
+        console.log("setDALI_CombinedParameter: ERROR");
+        break;
+    }
+  };
+
+  setHmipRGBWController = function(regaDialogID, deviceType, chnAddress) {
+    var elm = jQuery("#prgStringOptionValue" + regaDialogID), // this is the element which contains the relevant string to transmit
+      url = "/pages/msg/setRGBWCombinedParam.htm";
+    jQuery(elm).prop("disabled", true);
+
+    var req = jQuery.ajax({
+      url : url +"?sid=" + SessionId,
+      dataType: "html"
+    });
+
+    req.done(function(htmlContent) {
+      var dialog = new hmipRGBWControllerDialog(translateKey("titleConfigDialog"), htmlContent, deviceType, chnAddress ,jQuery(elm).val(), function(result) {
+        jQuery(elm).prop("disabled", false);
+        if (result != 0) {
+          conInfo("setHmipRGBWController: Yes pressed");
+          var cfgString = this.getConfigString();
+          conInfo(cfgString);
+          elm.val(cfgString);
+          elm.change();
+        }
+
+      }, "html");
+      dialog.btnTextNo(translateKey("footerBtnCancel"));
+      dialog.btnTextYes(translateKey("footerBtnOk"));
+      dialog.setWidth(500);
+    });
+  };
+
+  setWindowDriveReceiverLevelController = function(regaDialogID, deviceType, chnAddress) {
+    var elm = jQuery("#prgStringOptionValue" + regaDialogID), // this is the element which contains the relevant string to transmit
+      url = "/pages/msg/setWindowDriveCombinedParam.htm";
+    jQuery(elm).prop("disabled", true);
+
+    var req = jQuery.ajax({
+      url : url +"?sid=" + SessionId,
+      dataType: "html"
+    });
+
+    req.done(function(htmlContent) {
+      var dialog = new SwitchCombinedParamDialog(translateKey("titleConfigDialog"), htmlContent, deviceType, chnAddress ,jQuery(elm).val(), function(result) {
+        jQuery(elm).prop("disabled", false);
+        if (result != 0) {
+          conInfo("setWindowDriveReceiverLevelController: Yes pressed");
+          var cfgString = this.getConfigString();
+          conInfo(cfgString);
+          elm.val(cfgString);
+          elm.change();
+        }
+
+      }, "html");
+      dialog.btnTextNo(translateKey("footerBtnCancel"));
+      dialog.btnTextYes(translateKey("footerBtnOk"));
+      dialog.setWidth(400);
+    });
+  };
+  _setSwitchStateController = function (regaDialogID, deviceType, chnAddress) {
+    var elm = jQuery("#prgStringOptionValue" + regaDialogID), // this is the element which contains the relevant string to transmit
+      url = "/pages/msg/setSwitchVirtualReceiverCombinedParam.htm";
+    jQuery(elm).prop("disabled", true);
+
+    var req = jQuery.ajax({
+      url: url + "?sid=" + SessionId,
+      dataType: "html"
+    });
+
+    req.done(function (htmlContent) {
+      var dialog = new SwitchCombinedParamDialog(translateKey("titleConfigDialog"), htmlContent, deviceType, chnAddress, jQuery(elm).val(), function (result) {
+        jQuery(elm).prop("disabled", false);
+        if (result != this.RESULT_NO) {
+          conInfo("setSwitchStateController: Yes pressed");
+          var cfgString = this.getConfigString();
+          conInfo(cfgString);
+          elm.val(cfgString);
+          elm.change();
+        }
+
+      }, "html");
+      dialog.btnTextNo(translateKey("footerBtnCancel"));
+      dialog.btnTextYes(translateKey("footerBtnOk"));
+      dialog.setWidth(400);
+    });
+  };
+
+  setHmIPWeeklyProgramController = function(regaDialogID, chAddress, userNoExpert) {
+    var chn = DeviceList.getChannelByAddress(chAddress),
+    chnInterface = "HmIP-RF",
+    elm = jQuery("#prgStringOptionValue" + regaDialogID),
+    dialog;
+
+    jQuery(elm).prop("disabled", true);
+
+    var inputElm = jQuery(elm).prev(); // this is the element which contains the relevant string to transmit
+
+    function callBack (result) {
+      jQuery(elm).prop("disabled", false);
+      if (result != 0) {
+        conInfo("HmIPWeeklyProgramController: Yes pressed");
+        var inputElm = jQuery(elm);
+        var cfgString = this.getConfigString();
+        conInfo(cfgString);
+        inputElm.val(cfgString);
+        inputElm.change();
+      }
+    }
+
+    var opts = {"deviceID": chn.device.id, "deviceLabel":chn.typeName, "chnAddress":chn.address, "chInterface":chnInterface, "channelLocks":"channelLocks", "userEasyLinkMode":userNoExpert};
+    if ((chn.deviceType.id.toLowerCase() == "hmip-dld") || (chn.deviceType.id.toLowerCase() == "hmip-dld-a") || (chn.deviceType.id.toLowerCase() == "hmip-dld-s")) {
+      dialog = new iseHmIPWeeklyProgramAccessReceiver(regaDialogID, opts, callBack);
+    } else {
+      dialog = new iseHmIPWeeklyProgram(regaDialogID, opts, callBack);
+    }
+    dialog.getModeDialog();
+    window.setTimeout(function(){
+     dialog.modeElm = jQuery("#wpChannelMode_" + regaDialogID);
+     dialog.chnElems = jQuery("[name='wpChannelSel_"+regaDialogID+"']");
+    },500);
+  };
+
+  setCombinedParameter = function (regaDialogID, deviceType, chnAddress, type) {
+    var elm = jQuery("#prgStringOptionValue" + regaDialogID), // this is the element which contains the relevant string to transmit
+        dialog,
+        url = "";
+
+    switch (type) {
+      case "switchState" :
+        url = "/pages/msg/setSwitchVirtualReceiverCombinedParam.htm";
+      break;
+      case "wiredDisplaySysKey" :
+        url = "/pages/msg/setWiredDisplayKeyCombinedParam.htm";
+        break;
+    }
+
+    jQuery(elm).prop("disabled", true);
+
+    var req = jQuery.ajax({
+      url: url + "?sid=" + SessionId,
+      dataType: "html"
+    });
+
+    req.done(function (htmlContent) {
+      switch (type) {
+        case "switchState" :
+          dialog = new SwitchCombinedParamDialog(translateKey("titleConfigDialog"), htmlContent, deviceType, chnAddress, jQuery(elm).val(), function (result) {
+              jQuery(elm).prop("disabled", false);
+              if (result != this.RESULT_NO) {
+                conInfo("SwitchCombinedParamDialog: Yes pressed");
+                var cfgString = this.getConfigString(type);
+                conInfo(cfgString);
+                elm.val(cfgString);
+                elm.change();
+              }
+
+            }, "html");
+            dialog.setWidth(400);
+            break;
+        case "wiredDisplaySysKey" :
+          dialog = new WiredDisplaySystemKey(translateKey("titleConfigDialog"), htmlContent, deviceType, chnAddress, jQuery(elm).val(), function (result) {
+            jQuery(elm).prop("disabled", false);
+            if (result != this.RESULT_NO) {
+              conInfo("WiredDisplaySystemKey: Yes pressed");
+              var cfgString = this.getConfigString(type);
+              conInfo(cfgString);
+              elm.val(cfgString);
+              elm.change();
+            }
+
+          }, "html");
+          dialog.setWidth(400);
+          break;
+      }
+      dialog.btnTextNo(translateKey("footerBtnCancel"));
+      dialog.btnTextYes(translateKey("footerBtnOk"));
 
     });
   };
@@ -372,6 +766,29 @@
         iseSingleDestination.SetScript(sdid,dlgResult);
       }
     };
+  };
+
+  // Sets the width of a selectbox with the name 'selectConditionWhen' according to the width of the selected option
+  // This is necessary because of the length of some parameters which causes the line with the condition to reach into the second line.
+  setOptionWidthSelectConditionWhen = function() {
+      var jElm = jQuery("[name='selectConditionWhen']"),
+        arrowWidth = 30;
+
+      jQuery.each(jElm, function (index, elm) {
+        var text = jQuery(elm).find("option:selected").text();
+        // create test element
+        var _test = jQuery("<span>").html(text).css({
+          "font-size": jQuery(elm).css("font-size"), // ensures same size text
+          "visibility": "hidden"               // prevents FOUC
+        });
+
+        // add to body, get width, and get out
+        //_test.appendTo(elm.parent());
+        _test.appendTo(body);
+        var width = _test.width();
+        _test.remove();
+        jQuery(elm).width(width + arrowWidth);
+      });
   };
 
   SetLeftValue = function(scid,dpid)
@@ -431,7 +848,16 @@
   {
     var callback = function ( result )
     {
-      if (result) { iseSingleDestination.SetChannel(scid, result); }
+      if (result) {
+        window.setTimeout(function() {
+          iseSingleDestination.SetChannel(scid, result);
+          // Necessary for the COMBINED_PARAMETER
+          window.setTimeout(function () {
+            jQuery("#setDestinationDPSelectChange" + scid).change();
+            jQuery("#prgStringOptionValue"+scid).change();
+          }, 750);
+        },500);
+      }
     };
 
     ChannelChooser.show(callback, ChannelChooser.SHOW_WRITABLE, ChannelChooser.PRG_ACTIVITY);
@@ -441,7 +867,15 @@
   {
     var callback = function ( result )
     {
-      if (result) { iseSingleCondition.SetChannel(scid, result); }
+      if (result) {
+
+        window.setTimeout(function() {
+          iseSingleCondition.SetChannel(scid, result);
+          window.setTimeout(function() {
+            jQuery("#selectConditionWhen" + scid).change();
+          },250);
+        },500);
+      }
     };
     ChannelChooser.show(callback, ChannelChooser.SHOW_READABLE | ChannelChooser.SHOW_EVENTABLE, ChannelChooser.PRG_CONDITION);
   };
@@ -456,8 +890,12 @@
       var sIDX = dpid.substr(iPosColon+1);
       iseSingleDestination.reload = false;
       iseSingleDestination.SetValueAndDP(chid,sIDX,sDPID, elem);
-      //iseSingleDestination.SetDP(chid,sDPID);
-    }   
+
+      // Necessary for the COMBINED_PARAMETER
+      window.setTimeout(function() {
+        jQuery("#prgStringOptionValue"+chid).change();
+      }, 500);
+    }
   };
   DestinationParamSelectChange = function(idx,sdid)
   {
@@ -508,7 +946,7 @@
     isePrograms.Delete(copy);
   };
   SaveProgramEdit = function(orig,copy)
-  {  
+  {
     setTimeout( "isePrograms.Restore("+orig+","+copy+")", 500 );
   };
   CopyToNewProgram = function(copy)
@@ -544,10 +982,13 @@
       "ruleConditionButtonDeviceList, ruleConditionButtonSystemVar, ruleConditionButtonTimeModul," +
       "ruleActivityButtonDeviceList, ruleActivityButtonSystemState, ruleActivityButtonCreateScript";
 
-      // Erst aktivieren, wenn benötigt.
       setConditionBlockColor();
       translatePage('#prgrulecontent');
       translateButtons(buttons);
+
+      // Set the width of the selectbox for the condition rules to the width of the selected option.
+      // Otherwise the width of the selectbox equals the size of the longest option
+      setOptionWidthSelectConditionWhen();
   };
 
   ReloadSiDeCallback = function(t)
@@ -577,7 +1018,7 @@
     var pb = '';
     pb += 'string action = "ReloadSiCo";';
     pb += 'string id = "'+scid+'";';
-    var opts = { postBody: pb, onComplete: ReloadSiCoCallback }
+    var opts = { postBody: pb, onComplete: ReloadSiCoCallback };
     new Ajax.Updater("sico"+scid,url,opts);
   };
   LoadRuleCallback = function(t)
@@ -621,7 +1062,7 @@
     var pb = '';
     pb += 'string action = "ReloadRule";';
     pb += 'string rid = "'+rid+'";';
-    var opt = { postBody: pb, onComplete: ReloadRuleCallback }
+    var opt = { postBody: pb, onComplete: ReloadRuleCallback };
     new Ajax.Updater("rule"+rid,url,opt);
   };
   LoadRule = function(pid,rid)
@@ -641,13 +1082,13 @@
   var s = "";
   s += "<table cellspacing='8'>";
   s += "<tr>";
-    s += "<td align='center' valign='middle'><div class='FooterButton' onclick='CancelProgramEdit(<% Write(oPrg.ID()); %>);'>${footerBtnCancel}</div></td>";
-    s += "<td align='center' valign='middle'><div class='FooterButton' onclick='SaveProgramEdit(<% Write(oOrigPrg.ID()); %>,<% Write(oPrg.ID()); %>);'>${footerBtnOk}</div></td>";
-    s += "<td align='center' valign='middle'><div class='FooterButton CLASS04800' onclick='CopyToNewProgram(<% Write(oPrg.ID()); %>);' >${footerBtnSaveNewProgram}</div></td>";
-    s += "<td align='center' valign='middle'><div class='FooterButton CLASS04801' onclick='new HMScriptExecutor();'>${footerBtnTestScript}</div></td>";
+    s += "<td style='text-align:center; vertical-align:middle;'><div class='FooterButton' onclick='CancelProgramEdit(<% Write(oPrg.ID()); %>);'>${footerBtnCancel}</div></td>";
+    s += "<td style='text-align:center; vertical-align:middle;'><div class='FooterButton' onclick='SaveProgramEdit(<% Write(oOrigPrg.ID()); %>,<% Write(oPrg.ID()); %>);'>${footerBtnOk}</div></td>";
+    s += "<td style='text-align:center; vertical-align:middle;'><div class='FooterButton CLASS04800' onclick='CopyToNewProgram(<% Write(oPrg.ID()); %>);' >${footerBtnSaveNewProgram}</div></td>";
+    s += "<td style='text-align:center; vertical-align:middle;'><div class='FooterButton CLASS04801' onclick='new HMScriptExecutor();'>${footerBtnTestScript}</div></td>";
     if(dbg)
     {
-      s += "<td align='center' valign='middle'><div class='FooterButton' onclick='reloadPage();'>Aktualisieren</div></td>";
+      s += "<td style='text-align:center; vertical-align:middle;'><div class='FooterButton' onclick='reloadPage();'>Aktualisieren</div></td>";
     }
   s += "</tr>";
   s += "</table>";

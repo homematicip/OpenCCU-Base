@@ -99,13 +99,33 @@
             Write('<div id="tdEdit">');
             !Write('<a class="CLASS01206">auf</a>');
             Write('<a class="CLASS01206">${ruleDescrSetValueA}</a>');
-            Write('<input id="txtVal" type="text" class="CLASS01207" value="0" size="4" />');
-            Write('<a class="CLASS01213">');
-            Write('<img src="/ise/img/up.png" onclick="valueUp()" class="CLASS01208"/>');
-            Write('</a>');
-            Write('<a class="CLASS01214">');
-            Write('<img src="/ise/img/down.png" onclick="valueDown()" class="CLASS01208"/>');
-            Write('</a>');
+            ! Write('<input id="txtVal" type="text" class="CLASS01207" value="0" size="4" />');
+
+            Write('<select id="txtVal" class="CLASS01207">');
+
+              Write('<option value="0" selected>0</option>');
+              Write('<option value="10">10</option>');
+              Write('<option value="20">20</option>');
+              Write('<option value="30">30</option>');
+              Write('<option value="40">40</option>');
+              Write('<option value="50">50</option>');
+              Write('<option value="60">60</option>');
+              Write('<option value="70">70</option>');
+              Write('<option value="80">80</option>');
+              Write('<option value="90">90</option>');
+              Write('<option value="100">100</option>');
+              Write('<option value="100.5">${optionLastValue}</option>');
+              Write('<option value="101">${optionNoModification}</option>');
+
+            Write('</select>');
+
+
+            ! Write('<a class="CLASS01213">');
+            ! Write('<img src="/ise/img/up.png" onclick="valueUp()" class="CLASS01208"/>');
+            ! Write('</a>');
+            ! Write('<a class="CLASS01214">');
+            ! Write('<img src="/ise/img/down.png" onclick="valueDown()" class="CLASS01208"/>');
+            ! Write('</a>');
             Write('<a class="CLASS01209">');
             
             if (oDP.ValueUnit() == "100%")
@@ -185,7 +205,8 @@ SaveSettings = function()
         <%
           if( oDP.ValueUnit() == "100%" )
           {
-            Write( 'value = parseInt(value,10);' );
+            ! Write( 'value = parseInt(value,10);' );
+            Write( 'value = parseFloat(value);' );
             Write( 'value = value/100.0;' );
           }
         %>
@@ -201,7 +222,7 @@ SaveSettings = function()
         break;
     }
   }
-}
+};
 
 valueUp = function()
 {
@@ -209,7 +230,7 @@ valueUp = function()
   newVal = parseInt($("txtVal").value) + 10;
   if (newVal > 100) newVal = 100;
   $("txtVal").value = newVal;
-}
+};
 
 valueDown = function()
 {
@@ -217,7 +238,7 @@ valueDown = function()
   newVal = parseInt($("txtVal").value) - 10;
   if (newVal <= 0) newVal = 0;
   $("txtVal").value = newVal;
-}
+};
 
 channelChooser = function()
 {
@@ -229,7 +250,7 @@ channelChooser = function()
       loadChannelEdit();
     }
   }, ChannelChooser.SHOW_ALL);
-}
+};
 
   sysvarChooser = function()
   {
@@ -245,13 +266,13 @@ channelChooser = function()
         dpID = dlgResult;
       }
       loadSystemEdit();
-    }
+    };
     chooserPopup.ShowPopup();
-  }
+  };
 
   // Eingegebenen Werte speichern
   saveSysVar = function() {
-  }
+  };
 
   changeType = function()
   {
@@ -271,7 +292,7 @@ channelChooser = function()
         loadSystemEdit();
         break;
     }
-  }
+  };
   
   loadInsertEdit = function()
   {
@@ -376,7 +397,7 @@ channelChooser = function()
     new Ajax.Updater("chnDP", url, opts);
 
 
-  }
+  };
   
   loadSystemEdit = function()
   {
@@ -417,7 +438,7 @@ channelChooser = function()
     };
     new Ajax.Updater("sysName", url, opts);
     $("sysName").show();
-  }
+  };
   
   <%
     if( iVT == ivtObjectId )
