@@ -33,6 +33,7 @@ jQuery.extend(true,langJSON, {
     "ELV-SH-KRCO" : "ELV Smart Home Taster Kompakt - Outdoor",
     "ELV-SH-SB8" : "ELV Smart Home<br/>Status-Board",
     "ELV-SH-SMSI" : "ELV Smart Home<br/>Bodenfeuchtesensor",
+    "ELV-SH-SPS25" : "ELV Smart Home<br/>Spannungsversorgung, schaltbar",
     "ELV-SH-TACO" : "ELV Smart Home<br/>Temperatur- und Beschleunigungssensor<br/>Au%DFen",
     "ELV-SH-WSM" : "ELV Smart Home<br/>Bew%E4sserungsaktor",
     "FDT": "Homematic IP Dimmaktor, Unterputzmontage",
