@@ -6,11 +6,11 @@
 
 ROMFSINST = /usr/bin/romfs-inst.sh
 
-SUBDIRS = www_source
+SUBDIRS = www_source 
 
-all: subdirs
+all: subdirs 
 
-install: preinstall subdirs_install
+install: preinstall subdirs_install scripts_install
 	$(ROMFSINST) -s /var/EULA.de 		       		/www/rega/EULA.de
 	$(ROMFSINST) -s /var/EULA.en		       		/www/rega/EULA.en
 	$(ROMFSINST) -s /var/EULA.tr 		       		/www/rega/EULA.tr
@@ -51,6 +51,9 @@ preinstall:
 	mkdir -p $(ROMFSDIR)/www
 	cd www ;\
 	find . -path '*/.svn*' -o -path '*/vssver.scc' -o -path '*/debug.htm' -prune -o -type d -exec mkdir -p $(ROMFSDIR)/www/\{\} \; -o -type f -exec cp \{\} $(ROMFSDIR)/www/\{\} \;
+
+scripts_install:
+	make ROMFSDIR=$(ROMFSDIR) ROMFSINST=$(ROMFSINST) -C scripts install
 
 clean: subdirs_clean
 
