@@ -12,7 +12,7 @@ set DESCRIPTION "PSMCO"
 #lappend PATHLIST <Pixellänge maximale Ausdehnung> <Pfad zum Bild>
 #-----------------------------------------------------------------------
 set     PATHLIST ""
-lappend PATHLIST [list  50	"/config/img/devices/50/235_hmip-psmco_thumb.png"]
-lappend PATHLIST [list  250	"/config/img/devices/250/235_hmip-psmco.png"]
+lappend PATHLIST [list  50	"/config/img/devices/50/249_elv-sh-psmci_thumb.png"]
+lappend PATHLIST [list  250	"/config/img/devices/250/249_elv-sh-psmci.png"]
 
 set P ""
