@@ -399,8 +399,8 @@ bool HS485Manager::ListDevices(XmlRpc::XmlRpcValue* devs)
 
 std::string HS485Manager::BuildStringAddress(const std::string&  address, int channel/*=-1*/)
 {
-	char buffer[4];
-	if(channel>=0 && channel<=255)sprintf(buffer, ":%d", channel);
+	char buffer[5];
+	if(channel>=0 && channel<=255)snprintf(buffer, sizeof(buffer), ":%d", channel);
 	else *buffer=0;
 	return address+buffer;
 }

@@ -48,6 +48,7 @@ public:
 	bool GetLinkInfo(const std::string& sender_address, const std::string& receiver_address, std::string* name, std::string* description);
 	bool RemoveLink(const std::string& sender_address, const std::string& receiver_address);
 	void ProcessIncomingFrame(HS485Frame& frame);
+	using HSSManager::Init;
 	bool Init(const std::string& configfilePath);
 	static HS485Manager* GetSingleton(){
 		return singleton;

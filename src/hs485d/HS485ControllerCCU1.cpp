@@ -269,7 +269,7 @@ void HS485ControllerCCU1::ProcessReceivedMessage(CommMessage* msg)
 
 unsigned HS485ControllerCCU1::handleEvent(unsigned eventType)
 {
-	HS485Controller::handleEvent(eventType);
+	return HS485Controller::handleEvent(eventType);
 }
 
 

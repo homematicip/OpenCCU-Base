@@ -87,9 +87,9 @@ bool HMWLGWTransportFrame::addIncomingFrameData(const std::string& frameData, st
 			expectedMsgSize += 2; // start character + 1 byte length = 2 bytes
 		}
 		if( ((int)payload.size() >= expectedMsgSize) && (expectedMsgSize != -1)) {
-			if( (i+1) < frameData.size() ) {
-				frameData.substr( (i+1) );
-			}
+			//if( (i+1) < frameData.size() ) {
+			//	frameData.substr( (i+1) );
+			//}
 			leftOver.clear();
 			leftOver.append( frameData.substr(i) );
 

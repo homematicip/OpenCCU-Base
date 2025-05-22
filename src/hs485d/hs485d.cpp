@@ -68,12 +68,14 @@ XmlRpcServerProxy serverProxy(&s);
 
 bool run=true;
 
+/*
 static void sigterm_handler(int sig)
 {
 	printf("Received SIGTERM. Shutting down...\n");
 
 	run=false;
 }
+*/
 
 static void usage(const char* procname)
 {

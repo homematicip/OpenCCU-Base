@@ -680,8 +680,8 @@ const std::string& HS485Device::GetAvailableFirmware()
 {
 	if(available_firmware.size())return available_firmware;
 	if(sysinfo.size()>=2){
-		char buffer[8];
-		sprintf(buffer, "H%dV%d", (int)sysinfo[0], (int)sysinfo[1]);
+		char buffer[16];
+		snprintf(buffer, sizeof(buffer), "H%dV%d", sysinfo[0], sysinfo[1]);
 		available_firmware=HS485Manager::GetSingleton()->GetFirmwareManager()->GetFirmwareVersion(buffer);
 	}
 	return available_firmware;
@@ -814,8 +814,8 @@ bool HS485Device::UpdateFirmware()
 {
 	if(sysinfo.size()<2)return false;
 
-	char buffer[8];
-	sprintf(buffer, "H%dV%d", (int)sysinfo[0], (int)sysinfo[1]);
+	char buffer[16];
+	snprintf(buffer, sizeof(buffer), "H%dV%d", sysinfo[0], sysinfo[1]);
 	Hexfile* firmware=HS485Manager::GetSingleton()->GetFirmwareManager()->GetFirmware(buffer);
 
 	if( !firmware )

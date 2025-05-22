@@ -91,7 +91,7 @@ bool HS485PhysicalDataInterfaceCentralCommand::PutData(LogicalInstance* inst, Xm
 			}
 		}
 	}
-	return true;
+	return retval;
 }
 
 bool HS485PhysicalDataInterfaceCentralCommand::CheckCreationTag(const char *tag)

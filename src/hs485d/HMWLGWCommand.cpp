@@ -33,7 +33,7 @@ HMWLGWCommand::HMWLGWCommand(const std::string& cmdRawData)
 ,hmwSenderAddress(0)
 ,hmwTimeout(0)
 {
-	bool done = parseFromRawData(cmdRawData);
+	parseFromRawData(cmdRawData);
 }
 
 HMWLGWCommand::~HMWLGWCommand()

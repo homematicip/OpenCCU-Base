@@ -62,7 +62,8 @@ void HS485Controller::ProcessReceivedMessage(CommMessage* msg)
 	#ifdef WIN32
 		send(pipe_fds[1], "", 1, 0);
 	#else
-		write(pipe_fds[1], "", 1);
+		if(write(pipe_fds[1], "", 1) != 1)
+			LOG(Logger::LOG_ERROR, "HS485Controller::ProcessReceivedMessage(): Could not write().");
 	#endif
 }
 
@@ -134,7 +135,8 @@ unsigned int HS485Controller::handleEvent(unsigned int)
 #ifdef WIN32
     recv(getfd(), buffer, 32, 0);
 #else
-	read(getfd(), buffer, 32);
+	if(read(getfd(), buffer, 32) == -1)
+	  LOG(Logger::LOG_ERROR, "HS485Controller::handleEvent(): could not read().");
 #endif
     CommMessage * msg = rxq.GetNextMessage();
     while(msg){
