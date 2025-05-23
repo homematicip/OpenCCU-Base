@@ -8,6 +8,7 @@
 #ifndef INFOLED_H_
 #define INFOLED_H_
 #include <string>
+#include <cstdint>
 #include "led.h"
 #include "ServiceMessage.h"
 #include "AlarmMessage.h"
@@ -38,8 +39,8 @@ private:
   #else
 	led infoLed;
   #endif
-	const unsigned long infoLedRefreshTime;
-	unsigned long nextInfoUpdate;
+	const uint64_t infoLedRefreshTime;
+	uint64_t nextInfoUpdate;
 	ServiceMessage service;
 	AlarmMessage alarm;
   #if !defined(PLATFORM_CCU3)

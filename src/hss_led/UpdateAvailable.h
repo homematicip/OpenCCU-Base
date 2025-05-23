@@ -20,8 +20,8 @@ private:
 	std::string currentVersion;
 	std::string serialNumber;
 	std::string availableVersion;
-	unsigned long lastUpdateServerRequest;
-	unsigned long waitRequesTime;
+	uint64_t lastUpdateServerRequest;
+	uint64_t waitRequesTime;
 	bool requestUpdateServer();
 
 };
