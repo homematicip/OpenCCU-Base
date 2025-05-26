@@ -406,7 +406,7 @@ int main(int argc, char* argv[])
 
 	try{
 		while(run ){
-			long timeout=TimerTarget::s_timerQueue.TimeBeforeNextDue();
+			int64_t timeout=TimerTarget::s_timerQueue.TimeBeforeNextDue();
 			while(!timeout){
 				TimerTarget::s_timerQueue.Execute();
 				timeout=TimerTarget::s_timerQueue.TimeBeforeNextDue();
