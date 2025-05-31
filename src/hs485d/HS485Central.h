@@ -58,6 +58,7 @@ public:
 	
 protected:
 	void PeerListDirty();
+	virtual void ReportEvent(const std::string& id, XmlRpc::XmlRpcValue& val, uint32_t burst_suppression=0) {};
 	inline HS485Channel* CreateChannel(){return new HS485CentralChannel();};
 	static HS485Central* singleton;
 	HS485CentralChannel* listener_channel;

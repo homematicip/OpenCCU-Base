@@ -117,6 +117,7 @@ protected:
     bool ReadEEProm(unsigned int address, unsigned int count, data_t* data);
     bool WriteEEProm(unsigned int address, const data_t& data);
 	bool GetEEPromUsage(unsigned int address, unsigned int block_size, unsigned int count, data_t* used_bits);
+	virtual void ReportEvent(const std::string& id, XmlRpc::XmlRpcValue& val, uint32_t burst_suppression=0) {};
 	virtual inline HS485Channel* CreateChannel(){return new HS485Channel();};
   uint32_t address;
 	std::string serial;
