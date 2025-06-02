@@ -36,7 +36,7 @@ OBJS = $(TARGET).o
 CC = $(CROSS)g++
 CXX = $(CROSS)g++
 STRIP = $(CROSS)strip
-CXXFLAGS += -O2 -Wall
+CXXFLAGS += -std=c++11 -D_TIME_BITS=64 -D_FILE_OFFSET_BITS=64 -O2 -Wall
 LDFLAGS += -lpthread
 
 all: configure info $(TARGET)
