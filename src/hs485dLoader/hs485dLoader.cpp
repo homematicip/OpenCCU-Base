@@ -210,7 +210,7 @@ bool updateInterfacesXML(const std::string& path, const bool wiredInterfaceAvail
 	xmlfileStream.open(ifListFilePath.c_str(), std::ifstream::in);
 	std::string xmlstring;
 	char* buffer = new char[1024];
-	unsigned int readChars = 0;
+	std::streamsize readChars = 0;
 	do {
 		readChars = xmlfileStream.readsome(buffer, 1024);
 		xmlstring.append(buffer, readChars);
@@ -218,14 +218,14 @@ bool updateInterfacesXML(const std::string& path, const bool wiredInterfaceAvail
 	delete[] buffer;
 	xmlfileStream.close();
 
-	unsigned int nameTagBeginIndex = xmlstring.find("<name>BidCos-Wired</name>");
+	std::string::size_type nameTagBeginIndex = xmlstring.find("<name>BidCos-Wired</name>");
 	if(wiredInterfaceAvailable) {//Available
 		//if(hmwlgwIPCNodeIndex == -1) {// but not defined in InterfaceList.xml
 
 		if(nameTagBeginIndex == std::string::npos) {
 			//-> Add Entry
 			//find closing interfaces tag
-			unsigned int index = xmlstring.find_last_of("</interfaces>");
+			std::string::size_type index = xmlstring.find_last_of("</interfaces>");
 			if(index != std::string::npos) {
 				std::string wiredEntry("\n\t<ipc>\n\t\t<name>BidCos-Wired</name>\n\t\t<url>xmlrpc_bin://127.0.0.1:");
 						wiredEntry.append(port);
@@ -239,14 +239,14 @@ bool updateInterfacesXML(const std::string& path, const bool wiredInterfaceAvail
 	}
 	else {//Not available
 		if(nameTagBeginIndex != std::string::npos) { //but defined in InterfaceList.xml
-			unsigned int indexStart = xmlstring.rfind("<ipc>", nameTagBeginIndex);
+			std::string::size_type indexStart = xmlstring.rfind("<ipc>", nameTagBeginIndex);
 			if(indexStart != std::string::npos) {
 				//remove leading white space
 				while( (indexStart-1 > 0) && ((xmlstring.at(indexStart-1) == ' ') || (xmlstring.at(indexStart-1) == '\t') || (xmlstring.at(indexStart-1) == '\n')) ) {
 					indexStart--;
 				}
 
-				unsigned int indexEnd = xmlstring.find("</ipc>", nameTagBeginIndex);
+				std::string::size_type indexEnd = xmlstring.find("</ipc>", nameTagBeginIndex);
 				indexEnd += 5;
 				std::string resultStr(xmlstring.substr(0, indexStart));
 				resultStr.append(xmlstring.substr(indexEnd+1));
@@ -310,12 +310,12 @@ std::string retrieveXmlRpcPort()
 
 std::string trim(const std::string& str)
 {
-    unsigned int first = str.find_first_not_of(' ');
+    std::string::size_type first = str.find_first_not_of(' ');
     if (std::string::npos == first)
     {
         return str;
     }
-    unsigned int last = str.find_last_not_of(' ');
+    std::string::size_type last = str.find_last_not_of(' ');
     return str.substr(first, (last - first + 1));
 }
 
