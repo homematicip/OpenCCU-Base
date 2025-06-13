@@ -618,7 +618,7 @@ bool HS485Manager::LoadDeviceList()
         std::string filename(deviceFilesPath);
         filename+="/";
         filename+=pEntry->d_name;
-		unsigned int dotpos=filename.rfind('.');
+		std::string::size_type dotpos=filename.rfind('.');
 		if(dotpos!=std::string::npos && filename.substr(dotpos)==".dev"){
 	        XMLNode rootNode = XMLNode::parseFile( filename.c_str(), "RF", &xmlResult );
 		    if(!xmlResult.error){
