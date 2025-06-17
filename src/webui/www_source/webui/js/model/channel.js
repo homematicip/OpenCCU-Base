@@ -44,7 +44,8 @@ Channel = Class.create({
         "objectId" : data["id"],
         "dataId" :  "chnActive"
       }, function(result) {
-        self.isActive = (result != "null") ? (result == "true") ? true : "unknown" : false;
+        self.isActive = (result == "true") ? true : false;
+        homematic('Interface.suppressServiceMessages', {'interface':'HmIP-RF','channelAddress': data.address, 'parameterId': '', 'suppress': !self.isActive});
       });
     }
 
@@ -192,6 +193,7 @@ Channel = Class.create({
       this.isReadable = data["isReadable"];      
       this.isWritable = data["isWritable"];      
       this.isEventable = data["isEventable"];
+      this.isActive = data["isChannelActive"];
 
       if (typeof data["mode_multi_mode"] != "undefined") {
         this.multiMode = data["mode_multi_mode"];
