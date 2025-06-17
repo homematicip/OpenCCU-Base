@@ -229,7 +229,7 @@ void InfoLed::updateLedState() {
 
   if(((newStateRed != oldStateRed || newStateGreen != oldStateGreen || newStateBlue != oldStateBlue) &&
       (newStateRed != led::UNKNOWN && newStateGreen != led::UNKNOWN && newStateBlue != led::UNKNOWN)) ||
-     (this->nextInfoUpdate > time_millis()))
+     (this->nextInfoUpdate < time_millis()))
   {
     // check that a file /var/status/startupFinished exists and if not
     // we skip setting the leds
@@ -279,7 +279,7 @@ void InfoLed::updateLedState() {
 	}
 	oldState = this->infoLed.getLedState();
 	if((newState != oldState) ||
-     (this->nextInfoUpdate > time_millis()))
+     (this->nextInfoUpdate < time_millis()))
 	{
 		switch (newState) {
 		case led::LED_OFF:
