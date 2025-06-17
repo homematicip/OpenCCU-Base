@@ -2877,7 +2877,7 @@ HmIPWeeklyProgram.prototype = {
     selectTargetChannelAll = function (chn, number, prn) {
       number = (parseInt(number) < 10) ? "0" + number : number;
       var arTargetChannels;
-      arTargetChannels = jQuery("[name='targetChannel" + chn + "_" + number + "']");
+      arTargetChannels = jQuery("[name='targetChannel" + chn + "_" + number + "']:visible");
       jQuery("#separate_CHANNEL_" + chn + "_" + prn).val(0);
       if (!self.isDoorLockDrive) {
         arTargetChannels.prop("checked", true).change();
