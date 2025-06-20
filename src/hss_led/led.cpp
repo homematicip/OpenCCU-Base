@@ -67,10 +67,10 @@ void led::LedOn() {
 	fclose(trigger);
 }
 
-void led::LedFlashSlow(int cycle) {
+void led::LedFlashSlow(int start) {
 
-  if(cycle > 0)
-    usleep((cycle*DELAY_ON_SLOW)*1000); // ms -> us
+	if(start > 0)
+		usleep((start*DELAY_ON_SLOW)*1000); // ms -> us
 
 	std::string pathToDelayOnFile = this->ledDirectory + "delay_on";
 	std::string pathToDelayOffFile = this->ledDirectory + "delay_off";
@@ -100,10 +100,10 @@ void led::LedFlashSlow(int cycle) {
 	fclose(delay_on);
 }
 
-void led::LedFlashFast(int cycle) {
+void led::LedFlashFast(int start) {
 
-  if(cycle > 0)
-    usleep((cycle*DELAY_ON_FAST)*1000); // ms -> us
+	if(start > 0)
+		usleep((start*DELAY_ON_FAST)*1000); // ms -> us
 
 	std::string pathToTriggerFile = this->ledDirectory + "trigger";
 	std::string pathToDelayOnFile = this->ledDirectory + "delay_on";
@@ -135,7 +135,7 @@ void led::LedFlashFast(int cycle) {
 	fclose(delay_on);
 }
 
-void led::switchLed(enum LedState state) {
+void led::switchLed(enum LedState state, int start) {
   switch(state) {
     case led::LED_OFF:
       LedOff();
@@ -144,16 +144,10 @@ void led::switchLed(enum LedState state) {
       LedOn();
     break;
     case led::LED_SLOW:
-      LedFlashSlow();
+      LedFlashSlow(start);
     break;
     case led::LED_FAST:
-      LedFlashFast();
-    break;
-    case led::LED_SLOW1:
-      LedFlashSlow(1);
-    break;
-    case led::LED_FAST1:
-      LedFlashFast(1);
+      LedFlashFast(start);
     break;
     default:
       // nothing
@@ -184,7 +178,7 @@ led::LedState led::getLedState() {
 				pathToTriggerFile.c_str());
 		return led::UNKNOWN;
 	}
-	dataSize = fread(data, 1, 1024, trigger);
+	dataSize = fread(data, 1, sizeof(data), trigger);
 	if (dataSize > 0) {
 		char *modeStart = NULL;
 		char *modeEnd = NULL;
@@ -217,8 +211,8 @@ led::LedState led::checkDelayTimes() {
 	LedState state = led::UNKNOWN;
 	std::string pathToDelayOnFile = this->ledDirectory + "delay_on";
 	std::string pathToDelayOffFile = this->ledDirectory + "delay_off";
-	char dataDelay_on[1024];
-	char dataDelay_off[1024];
+	char dataDelay_on[16];
+	char dataDelay_off[16];
 	FILE* delay_on = fopen(pathToDelayOnFile.c_str(), "r");
 	if(delay_on == NULL)
 	{
@@ -230,17 +224,18 @@ led::LedState led::checkDelayTimes() {
 		fclose(delay_on);
 		return led::UNKNOWN;
 	}
-	fread(dataDelay_off,1,1024,delay_off);
-	fread(dataDelay_on,1,1024,delay_on);
-	if(strstr((const char*)dataDelay_off,delay_off_fast.c_str())!=0 &&  strstr((const char*)dataDelay_on,delay_on_fast.c_str())!=0)
-	{
-		state = led::LED_FAST;
-	}
-	else if(strstr((const char*)dataDelay_off,delay_off_slow.c_str())!=0 &&  strstr((const char*)dataDelay_on,delay_on_slow.c_str())!=0)
-	{
-		state = led::LED_SLOW;
-	}
+	fread(dataDelay_off,1,sizeof(dataDelay_off),delay_off);
+	fread(dataDelay_on,1,sizeof(dataDelay_on),delay_on);
 
+	int delay_off_val = atoi(dataDelay_off);
+	int delay_on_val = atoi(dataDelay_on);
+	if(delay_off_val > 0 && delay_on_val > 0)
+	{
+		if(delay_off_val < DELAY_OFF_SLOW && delay_on_val < DELAY_ON_SLOW)
+			state = led::LED_FAST;
+		else
+			state = led::LED_SLOW;
+  }
 
 	fclose(delay_off);
 	fclose(delay_on);

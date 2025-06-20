@@ -138,6 +138,9 @@ void InfoLed::updateLedState() {
   led::LedState newStateGreen = led::UNKNOWN;
   led::LedState newStateBlue = led::UNKNOWN;
   led::LedState newStateLGW = led::UNKNOWN;
+  int newStateRedStart = 0;
+  int newStateGreenStart = 0;
+  int newStateBlueStart = 0;
 
   switch(netState)
   {
@@ -159,7 +162,8 @@ void InfoLed::updateLedState() {
           // Standard-Mode + Service-Mode: blink yellow + blue
           newStateRed = led::LED_SLOW;
           newStateGreen = led::LED_SLOW;
-          newStateBlue = led::LED_SLOW1;
+          newStateBlue = led::LED_SLOW;
+          newStateBlueStart = 1;
           newStateLGW = led::LED_SLOW;
           //printf("STANDARD+SERVICE\n");
         }
@@ -169,7 +173,8 @@ void InfoLed::updateLedState() {
         // Standard-Mode + Alarm-mode: blink red + blue
         newStateRed = led::LED_SLOW;
         newStateGreen = led::LED_OFF;
-        newStateBlue = led::LED_SLOW1;
+        newStateBlue = led::LED_SLOW;
+        newStateBlueStart = 1;
         newStateLGW = led::LED_FAST;
         //printf("STANDARD+ALARM\n");
       }
@@ -254,9 +259,9 @@ void InfoLed::updateLedState() {
      this->greenLed.LedOff();
      this->blueLed.LedOff();
 
-     this->redLed.switchLed(newStateRed);
-     this->greenLed.switchLed(newStateGreen);
-     this->blueLed.switchLed(newStateBlue);
+     this->redLed.switchLed(newStateRed, newStateRedStart);
+     this->greenLed.switchLed(newStateGreen, newStateGreenStart);
+     this->blueLed.switchLed(newStateBlue, newStateBlueStart);
   }
 
   // set LAN Gateway LED regularly

@@ -18,17 +18,15 @@ public:
 			LED_ON,
 			LED_SLOW,
 			LED_FAST,
-			LED_SLOW1,
-			LED_FAST1,
 		};
 	led(std::string ledDirectory);
 	virtual ~led();
 	void LedOff();
 	void LedOn();
-	void LedFlashSlow(int cycle=0);
-	void LedFlashFast(int cycle=0);
+	void LedFlashSlow(int start=0);
+	void LedFlashFast(int start=0);
 	LedState getLedState();
-  void switchLed(enum LedState state);
+	void switchLed(enum LedState state, int start=0);
 private:
 	std::string ledDirectory;
 	void timerOn();
