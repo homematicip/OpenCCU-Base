@@ -137,6 +137,8 @@ jQuery.extend(true, langJSON, {
     "stringTableSoilMoistureRaw" : "Rohwert Bodenfeuchte",
     "stringTableSoilTemperature" : "Bodentemperatur",
 
+    "hintAutomaticDeviceUpdate" : "Das Update wird automatisch im Hintergrund durchgef%FChrt.",
+
     "noMoreKeys" : ""
   }
 });

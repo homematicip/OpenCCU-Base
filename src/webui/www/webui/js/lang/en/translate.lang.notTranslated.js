@@ -130,6 +130,8 @@ jQuery.extend(true, langJSON, {
     "stringTableSoilMoistureRaw" : "Raw value soil moisture",
     "stringTableSoilTemperature" : "Soil temperature",
 
+    "hintAutomaticDeviceUpdate" : "The update is carried out automatically in the background.",
+
     "noMoreKeys" : ""
   }
 });
