@@ -5,7 +5,7 @@ source [file join $env(DOCUMENT_ROOT) config/easymodes/etc/options.tcl]
 
 proc getMaintenance {chn p descr} {
 
-  puts "RF - VARIANT"
+  puts "WIRED - VARIANT"
 
   global dev_descr ch_descr env iface
 
