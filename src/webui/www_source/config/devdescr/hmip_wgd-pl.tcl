@@ -6,7 +6,7 @@ set TYPE "HmIP-WGD-PL"
 
 #Beschreibung des Gerätetyps
 #-----------------------------------------------------------------------
-set DESCRIPTION "HmIPW-WGD-PL"
+set DESCRIPTION "HmIP-WGD-PL"
 
 #Pfade zu den Bildern verschiedener Größe
 #lappend PATHLIST <Pixellänge maximale Ausdehnung> <Pfad zum Bild>

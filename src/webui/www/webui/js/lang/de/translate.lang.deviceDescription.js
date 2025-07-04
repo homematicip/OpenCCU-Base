@@ -256,6 +256,7 @@ jQuery.extend(true,langJSON, {
     "HmIP-SWO-PR": "Homematic IP Wettersensor - pro",
     "HmIP-USBSM" : "Homematic IP Schalt-Mess-Aktor f%FCr USB",
     "HmIP-WGC": "Homematic IP Garagentortaster",
+    "HmIP-WGD-PL": "Homematic IP Funk Glasdisplay - plus",
     "HmIP-WGS": "Homematic IP Glastaster",
     "HmIP-WGT": "Homematic IP Glasthermostat - 230 V",
     "HmIP-WHS2": "Homematic IP Schaltaktor f%FCr Heiz-Systeme - 2 Kanal",
