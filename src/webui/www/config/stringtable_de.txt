@@ -2047,16 +2047,15 @@ WATERDETECTIONSENSOR|STATE=WET	${stringTableWDSStateWet}
 WATERLEVEL_DETECTED=TRUE	${stringTableWaterLevelDetectedTrue}
 WATERLEVEL_DETECTED=FALSE	${stringTableWaterLevelDetectedFalse}
 WEATHER	${stringTableWeatherTitle}
-WEATHER_RECEIVER	${stringTableWeatherReceiver}
 
-WEATHER_RECEIVER|DISPLAY_DATA_ID	${stringTableWeatherReceiverDataId}
+WEATHER_DISPLAY_RECEIVER|DISPLAY_DATA_ID	${stringTableWeatherReceiverDataId}
+WEATHER_RECEIVER	${stringTableWeatherReceiver}
 
 WEATHER_TRANSMIT|ALARMSTATE=FALSE	${stringTableWeatherTransmitAlarmEventFalse}
 WEATHER_TRANSMIT|ALARMSTATE=TRUE	${stringTableWeatherTransmitAlarmEventTrue}
 WEATHER_TRANSMIT|HUMIDITY	${stringTableWeatherHumidity}
 WEATHER_TRANSMIT|TEMPERATURE	${stringTableWeatherTemperature}
 
-# WEATHER SENSOR
 
 AIR_PRESSURE	${stringTableWeatherAirPressure}
 BRIGHTNESS	${stringTableWeatherBrightness}
@@ -2107,7 +2106,6 @@ WIND_SPEED_RESULT_SOURCE=AVERAGE_VALUE	${stringTableWeatherWindSpeedResultSource
 WIND_SPEED_RESULT_SOURCE=MAX_VALUE	${stringTableWeatherWindSpeedResultSourceMax}
 WIND_THRESHOLD_OVERRUN=FALSE	${stringTableWeatherWindThresholdOverrunFalse}
 WIND_THRESHOLD_OVERRUN=TRUE	${stringTableWeatherWindThresholdOverrunTrue}
-# END WEATHER SENSOR
 
 WEEK_PROGRAM_CHANNEL_LOCKS	${stringTableWeekProgramChannelLocks}
 WEEK_PROGRAM_TARGET_CHANNEL_LOCKS	${stringTableWeekProgramTargetChannelLocks}
