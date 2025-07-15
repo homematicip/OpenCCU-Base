@@ -6841,9 +6841,9 @@ proc getBacklightingReceiver {chn p descr} {
 
     incr prn
     set feedbackLevelMode $ps($param)
-   array_clear options
+    array_clear options
     set options(0) "\${optionAbsolut}"
-   set options(1) "\${optionRelativ}"
+    set options(1) "\${optionRelativ}"
     append html "<tr><td>\${lblFeedbackLevelMode}</td><td>"
     append html "[get_ComboBox options $param separate_$special_input_id\_$prn ps $param onchange=changeFeedbackLevelOptions(this.value)]&nbsp;[getHelpIcon $param]"
     append html "</td></tr>"
