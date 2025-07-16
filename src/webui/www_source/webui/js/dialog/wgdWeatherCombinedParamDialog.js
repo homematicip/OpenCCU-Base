@@ -8,9 +8,11 @@ WGDWeatherCombinedParamDialog = Class.create(YesNoDialog,{
     },
 
   init: function () {
+    /* for later use
     this.deviceType = this.extraParam.deviceType;
     this.channelType = this.extraParam.channelType;
     this.channelAddress = this.extraParam.chnAddress;
+    */
     this.arInitialValue = this.extraParam.value.split(",");
 
     this.initDDI = this.arInitialValue[0];
