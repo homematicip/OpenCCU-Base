@@ -298,7 +298,7 @@
       jQuery("#forceUpdate").remove();
   }
 
-  if (isNaN(parseInt(WEBUI_VERSION))) {
+  if (isNaN(parseInt(WEBUI_VERSION)) || WEBUI_VERSION == "0.0.0") {
     conInfo("Determine WEBUI_VERSION");
     homematic("Interface.getDeviceDescription", {"interface": "BidCos-RF", "address": "BidCoS-RF"}, function (result) {
       if (result != null) {
