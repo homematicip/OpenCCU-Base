@@ -1157,7 +1157,6 @@ proc getMultiModeInputTransmitter {chn p descr address} {
     append html "</script>"
   }
 
-
   append html "<script type=\"text/javascript\">"
 
     append html "showHideKeyParams = function(mode, ch) {"
@@ -1224,11 +1223,11 @@ proc getMultiModeInputTransmitter {chn p descr address} {
     append html "};"
 
     append html "window.setTimeout(function() {"
-      append html "var elmOperationMode = jQuery(\"#separate_$CHANNEL\_2\"),"
+      append html "var elmOperationMode = jQuery(\"\[name='CHANNEL_OPERATION_MODE'\]\"),"
       append html "mode = elmOperationMode.val(),"
       append html "chn = elmOperationMode.prop(\"id\").split(\"_\")\[2\];"
       append html "showHideKeyParams(mode, chn);"
-    append html "},100);"
+    append html "},25);"
 
   append html "</script>"
 
