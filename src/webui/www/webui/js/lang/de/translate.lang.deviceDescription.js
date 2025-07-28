@@ -33,6 +33,7 @@ jQuery.extend(true,langJSON, {
     "ELV-SH-KRC" : "ELV Smart Home Schl%FCsselbundfernbedienung",
     "ELV-SH-KRCO" : "ELV Smart Home Taster Kompakt - Outdoor",
     "ELV-SH-SB8" : "ELV Smart Home<br/>Status-Board",
+    "ELV-SH-SMS2" : "ELV Smart Home<br/>Oberfl%E4chen-montierter Schalt-Aktor<br/>2-fach",
     "ELV-SH-SMSI" : "ELV Smart Home<br/>Bodenfeuchtesensor",
     "ELV-SH-SPS25" : "ELV Smart Home<br/>Spannungsversorgung, schaltbar",
     "ELV-SH-TACO" : "ELV Smart Home<br/>Temperatur- und Beschleunigungssensor<br/>Au%DFen",

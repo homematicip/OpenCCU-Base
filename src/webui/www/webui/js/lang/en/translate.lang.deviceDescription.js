@@ -33,6 +33,7 @@ jQuery.extend(true,langJSON, {
     "ELV-SH-KRC" : "ELV smart home key ring remote control",
     "ELV-SH-KRCO" : "ELV smart home key ring remote control outdoor",
     "ELV-SH-SB8" : "ELV Smart Home<br/>Status Board",
+    "ELV-SH-SMS2" : "ELV Smart Home<br/>Surface mounted switch<br/>2 channels",
     "ELV-SH-SMSI" : "ELV Smart Home<br/>Soil moisture sensor",
     "ELV-SH-SPS25" : "ELV smart home<br/>Switched power supply",
     "ELV-SH-TACO" : "ELV Smart Home<br/>Temperature and Acceleration Sensor<br/>Outdoor",
