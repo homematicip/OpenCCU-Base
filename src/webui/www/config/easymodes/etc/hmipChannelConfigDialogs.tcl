@@ -7061,12 +7061,7 @@ proc getDoorStateTranseiver {chn p descr} {
   upvar $descr psDescr
   upvar special_input_id special_input_id
 
-  set CHANNEL $special_input_id
-
-  set specialID "[getSpecialID $special_input_id]"
-
   set html ""
-  set specialParam 0
   set prn 0
 
   set param CHANNEL_OPERATION_MODE
