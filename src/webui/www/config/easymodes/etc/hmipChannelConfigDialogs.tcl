@@ -7094,6 +7094,211 @@ proc getDoorStateTranseiver {chn p descr} {
     append html "<td>[getTextField $param $ps($param) $chn $prn]&nbsp;[getMinMaxValueDescr $param]&nbsp;[getHelpIcon $param\_door_lock]</td>"
     append html "</tr>"
   }
+}
+
+proc getDoorLockTranseiver {chn p descr} {
+
+  global env dev_descr
+
+  upvar $p ps
+  upvar $descr psDescr
+  upvar special_input_id special_input_id
+
+  set specialID "[getSpecialID $special_input_id]"
+
+  set html ""
+  set prn 0
+
+  set param EVENT_DELAY_UNIT
+  if { [info exists ps($param)] == 1  } {
+    incr prn
+    append html "<tr>"
+    append html "<td>\${stringTableEventDelay}</td>"
+    append html [getComboBox $chn $prn "$specialID" "eventDelay"]
+    append html "</tr>"
+
+    append html [getTimeUnitComboBoxShortwoHour $param $ps($param) $chn $prn $special_input_id]
+
+    incr prn
+    set param EVENT_DELAY_VALUE
+    append html "<tr id=\"timeFactor_$chn\_$prn\" class=\"hidden\">"
+    append html "<td>\${stringTableEventDelayValue}</td>"
+
+    append html "<td>[getTextField $param $ps($param) $chn $prn]&nbsp;[getMinMaxValueDescr $param]</td>"
+
+    append html "</tr>"
+    append html "<tr id=\"space_$chn\_$prn\" class=\"hidden\"><td><br/></td></tr>"
+    append html "<script type=\"text/javascript\">setTimeout(function() {setCurrentDelayShortOptionPanelB($chn, [expr $prn - 1], '$specialID');}, 100)</script>"
+  }
+
+  set param EVENT_RANDOMTIME_UNIT
+  if { [info exists ps($param)] == 1  } {
+    incr prn
+    append html "<tr>"
+    append html "<td>\${stringTableRandomTime}</td>"
+    append html [getComboBox $chn $prn "$specialID" "eventRandomTime"]
+    append html "</tr>"
+
+    append html [getTimeUnitComboBoxShort $param $ps($param) $chn $prn $special_input_id]
+
+    incr prn
+    set param EVENT_RANDOMTIME_VALUE
+    append html "<tr id=\"timeFactor_$chn\_$prn\" class=\"hidden\">"
+    append html "<td>\${stringTableRamdomTimeValue}</td>"
+
+    append html "<td>[getTextField $param $ps($param) $chn $prn]&nbsp;[getMinMaxValueDescr $param]</td>"
+
+    append html "</tr>"
+    append html "<tr id=\"space_$chn\_$prn\" class=\"hidden\"><td><br/></td></tr>"
+    append html "<script type=\"text/javascript\">setTimeout(function() {setCurrentDelayShortOptionPanelA($chn, [expr $prn - 1], '$specialID');}, 100)</script>"
+  }
+
+   append html "[getHorizontalLine]"
+
+  set param DISABLE_ACOUSTIC_CHANNELSTATE
+  if { [info exists ps($param)] == 1 } {
+    incr prn
+    append html "<tr>"
+      append html "<td>\${stringTableDisableAcousticChannelState}</td>"
+      append html  "<td>[getCheckBox '$param' $ps($param) $chn $prn]</td>"
+    append html "</tr>"
+    # set specialParam 1
+  }
+
+  set param CHANNEL_OPERATION_MODE
+  if { [info exists ps($param)] == 1 } {
+    incr prn
+    append html "<tr>"
+      append html "<td>\${stringTableDigitalAnalogInputCalibration}</td>"
+      array_clear options
+      set options(0) "\${optionIgnoreDoorOpen}"
+      set options(1) "\${optionSkipHoldTimeOpening}"
+      set options(2) "\${optionSkipRelockDelayClosing}"
+      set options(3) "\${optionSkipHoldTimeOpeningRelockDelayClosing}"
+      append html  "<td>[getOptionBox '$param' options $ps($param) $chn $prn]&nbsp;[getHelpIcon $param]</td>"
+    append html "</tr>"
+  }
+
+  set param DOOR_LOCK_DIRECTION
+  if { [info exists ps($param)] == 1 } {
+    incr prn
+    append html "<tr>"
+      append html "<td>\${lblDoorLockDirection}</td>"
+      array_clear options
+      set options(0) "\${optionRight}"
+      set options(1) "\${optionLeft}"
+      append html  "<td>[getOptionBox '$param' options $ps($param) $chn $prn]&nbsp;[getHelpIcon $param]</td>"
+    append html "</tr>"
+  }
+
+  set param DOOR_LOCK_END_STOP_OFFSET_LOCKED
+  if { [info exists ps($param)] == 1 } {
+    incr prn
+    append html "<tr>"
+      append html "<td>\${lblDoorEndStopOffsetLocked}</td>"
+        set min [expr {int([expr [getMinValue $param]])}]
+        set max [expr {int([expr [getMaxValue $param]])}]
+        array_clear options
+        for {set val $min} {$val <= $max} {incr val} {
+            set options($val) "$val"
+        }
+      append html  "<td>[getOptionBox '$param' options $ps($param) $chn $prn]&nbsp;[getHelpIcon $param]</td>"
+    append html "</tr>"
+  }
+
+  set param DOOR_LOCK_END_STOP_OFFSET_OPEN
+  if { [info exists ps($param)] == 1 } {
+    incr prn
+    append html "<tr>"
+      append html "<td>\${lblDoorEndStopOffsetOpen}</td>"
+        set min [expr {int([expr [getMinValue $param]])}]
+        set max [expr {int([expr [getMaxValue $param]])}]
+        array_clear options
+        for {set val $min} {$val <= $max} {incr val} {
+            set options($val) "$val"
+        }
+      append html  "<td>[getOptionBox '$param' options $ps($param) $chn $prn]&nbsp;[getHelpIcon $param]</td>"
+    append html "</tr>"
+  }
+
+  set param DOOR_LOCK_TURNS
+  if { [info exists ps($param)] == 1 } {
+    incr prn
+    append html "<tr>"
+      append html "<td>\${lblDoorLockTurns}</td>"
+        set min [expr {int([expr [getMinValue $param]])}]
+        set max [expr {int([expr [getMaxValue $param]])}]
+        array_clear options
+        for {set val $min} {$val <= $max} {incr val} {
+            set options($val) "$val"
+        }
+      append html  "<td>[getOptionBox '$param' options $ps($param) $chn $prn]&nbsp;[getHelpIcon $param]</td>"
+    append html "</tr>"
+  }
+
+  set param DOOR_LOCK_NEUTRAL_POS
+  if { [info exists ps($param)] == 1 } {
+    incr prn
+    append html "<tr>"
+      append html "<td>\${lblDoorLockNeutralPos}</td>"
+      array_clear options
+      set options(0) "\${optionVertical}"
+      set options(1) "\${optionHorizontal}"
+      append html  "<td>[getOptionBox '$param' options $ps($param) $chn $prn]&nbsp;[getHelpIcon $param]</td>"
+    append html "</tr>"
+  }
+
+  set param DOOR_OPENING_DIRECTION
+  if { [info exists ps($param)] == 1 } {
+    incr prn
+    append html "<tr>"
+      append html "<td>\${lblDoorOpeningDirection}</td>"
+      array_clear options
+      set options(0) "\${optionInwards}"
+      set options(1) "\${optionOutwards}"
+      append html  "<td>[getOptionBox '$param' options $ps($param) $chn $prn]&nbsp;[getHelpIcon $param]</td>"
+    append html "</tr>"
+  }
+
+  set param HOLD_TIME
+  if { [info exists ps($param)] == 1  } {
+    incr prn
+    append html "<tr>"
+      append html "<td>\${lblHoldTime}</td>"
+      append html  "<td>[getTextField $param $ps($param) $chn $prn]&nbsp;[getMinMaxValueDescr $param]</td>"
+    append html "</tr>"
+  }
+
+    set param POWERUP_ONTIME_UNIT
+    if { [info exists ps($param)] == 1  } {
+      incr prn
+      append html "<tr>"
+      append html "<td>\${stringTableAutoRelockDelay}</td>"
+      append html "[getComboBox $chn $prn "$specialID" "timeOnOff_autorelock"]"
+      append html "</tr>"
+
+      append html [getTimeUnitComboBox $param $ps($param) $chn $prn $special_input_id]
+
+      incr prn
+      set param POWERUP_ONTIME_VALUE
+      append html "<tr id=\"timeFactor_$chn\_$prn\" class=\"hidden\">"
+      append html "<td>\${stringTableOnTimeValue}</td>"
+
+      append html "<td>[getTextField $param $ps($param) $chn $prn]&nbsp;[getMinMaxValueDescr $param]</td>"
+
+      append html "</tr>"
+      append html "<tr id=\"space_$chn\_$prn\" class=\"hidden\"><td><br/></td></tr>"
+      append html "<script type=\"text/javascript\">setTimeout(function() {setCurrentTimeOption($chn, [expr $prn - 1], '$specialID');}, 100)</script>"
+    }
+
+    set param SENSOR_SENSITIVITY
+    if { [info exists ps($param)] == 1 } {
+      incr prn
+      append html "<tr>"
+        append html "<td>\${stringTableDeviceSensorSensibility}</td>"
+      append html "<td>[getTextField $param $ps($param) $chn $prn]&nbsp;[getMinMaxValueDescr $param]&nbsp;[getHelpIcon $param\_door_lock]</td>"
+      append html "</tr>"
+    }
 
 }
 

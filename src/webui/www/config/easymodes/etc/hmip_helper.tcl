@@ -57,6 +57,10 @@ proc getComboBox {prn pref specialElement type {extraparam ""}} {
         append s [getTimeOnOff $prn $pref $specialElement]
       }
 
+      "timeOnOff_autorelock" {
+        append s [getTimeOnOff $prn $pref $specialElement "autoRelock"]
+      }
+
       "timeOnOffShort" {
         append s [getTimeOnOffShort $prn $pref $specialElement]
       }
@@ -1233,33 +1237,38 @@ proc getTimeOnOffShort {prn pref specialElement {extraparam ""}} {
 }
 
 # Returns a option list with values for the ontime delay, offtime delay and so on
-proc getTimeOnOff {prn pref specialElement} {
+proc getTimeOnOff {prn pref specialElement {paramType ""}} {
       set s ""
       append s "<td>"
-      append s  "<select id=\"timeOnOff\_$prn\_$pref\" name=\"timeOnOff\_$prn\" onchange=\"setTimeValues(this.id, $prn, $pref, \'$specialElement\');\" onmouseup=\"preventOnOffNonActive(this)\">"
-        append s "<option value=\"0\">\${optionNotActive}</option>"
-        append s "<option value=\"1\">\${optionUnit100MS}</option>"
-        append s "<option value=\"2\">\${optionUnit1S}</option>"
-        append s "<option value=\"3\">\${optionUnit2S}</option>"
-        append s "<option value=\"4\">\${optionUnit3S}</option>"
-        append s "<option value=\"5\">\${optionUnit5S}</option>"
-        append s "<option value=\"6\">\${optionUnit10S}</option>"
-        append s "<option value=\"7\">\${optionUnit30S}</option>"
-        append s "<option value=\"8\">\${optionUnit1M}</option>"
-        append s "<option value=\"9\">\${optionUnit2M}</option>"
-        append s "<option value=\"10\">\${optionUnit5M}</option>"
-        append s "<option value=\"11\">\${optionUnit10M}</option>"
-        append s "<option value=\"12\">\${optionUnit30M}</option>"
-        append s "<option value=\"13\">\${optionUnit1H}</option>"
-        append s "<option value=\"14\">\${optionUnit2H}</option>"
-        append s "<option value=\"15\">\${optionUnit3H}</option>"
-        append s "<option value=\"16\">\${optionUnit5H}</option>"
-        append s "<option value=\"17\">\${optionUnit8H}</option>"
-        append s "<option value=\"18\">\${optionUnit12H}</option>"
-        append s "<option value=\"19\">\${optionUnit24H}</option>"
-        append s "<option value=\"20\">\${stringTablePermanent}</option>"
-        append s "<option value=\"21\">\${stringTableEnterValue}</option>"
-      append s "</select>"
+        append s  "<select id=\"timeOnOff\_$prn\_$pref\" name=\"timeOnOff\_$prn\" onchange=\"setTimeValues(this.id, $prn, $pref, \'$specialElement\');\" onmouseup=\"preventOnOffNonActive(this)\">"
+          append s "<option value=\"0\">\${optionNotActive}</option>"
+          append s "<option value=\"1\">\${optionUnit100MS}</option>"
+          append s "<option value=\"2\">\${optionUnit1S}</option>"
+          append s "<option value=\"3\">\${optionUnit2S}</option>"
+          append s "<option value=\"4\">\${optionUnit3S}</option>"
+          append s "<option value=\"5\">\${optionUnit5S}</option>"
+          append s "<option value=\"6\">\${optionUnit10S}</option>"
+          append s "<option value=\"7\">\${optionUnit30S}</option>"
+          append s "<option value=\"8\">\${optionUnit1M}</option>"
+          append s "<option value=\"9\">\${optionUnit2M}</option>"
+          append s "<option value=\"10\">\${optionUnit5M}</option>"
+          append s "<option value=\"11\">\${optionUnit10M}</option>"
+          append s "<option value=\"12\">\${optionUnit30M}</option>"
+          append s "<option value=\"13\">\${optionUnit1H}</option>"
+          append s "<option value=\"14\">\${optionUnit2H}</option>"
+          append s "<option value=\"15\">\${optionUnit3H}</option>"
+          append s "<option value=\"16\">\${optionUnit5H}</option>"
+          append s "<option value=\"17\">\${optionUnit8H}</option>"
+          append s "<option value=\"18\">\${optionUnit12H}</option>"
+          append s "<option value=\"19\">\${optionUnit24H}</option>"
+          append s "<option value=\"20\">\${stringTablePermanent}</option>"
+          append s "<option value=\"21\">\${stringTableEnterValue}</option>"
+        append s "</select>"
+
+        if {$paramType == "autoRelock"} {
+          append s "&nbsp;[getHelpIcon POWERUP_ONTIME_UNIT 320 170]"
+        }
+
       append s "</td>"
 
       append s "<script type=\"text/javascript\">"
