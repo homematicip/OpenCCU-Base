@@ -274,6 +274,7 @@ HmIPWeeklyProgram.prototype = {
     this.isWSM = ((this.device.deviceType.id.includes("HmIP-WSM")) || (this.device.deviceType.id.includes("ELV-SH-WSM")))? true : false;
     this.isWRC6230 = (this.device.deviceType.id.includes("HmIP-WRC6-230"))? true : false;
     this.isWGTC = (this.device.deviceType.id.includes("HmIP-WGTC"))? true : false;
+    this.isDLP = (this.device.deviceType.id.includes("HmIP-DLP"))? true : false;
 
     this.isHmIPLSS = false;
 
@@ -689,7 +690,11 @@ HmIPWeeklyProgram.prototype = {
     } else if (this.chnType == this.SWITCH) {
       if (!this.isDoorLockDrive) {
         if ((! this.isAccessTransmitterHmIP_FWI) && (! this.isAccessTransceiver_WKP)) {
-          programEntry += "<td id='lblState_" +number+"'>" + translateKey('lblWPState') + "</td>"; // Is Level, but we call it here state because it's only on/off
+          if (this.isDLP) {
+            programEntry += "<td id='lblState_" + number + "'>" + translateKey('lblWPPermission') + "</td>"; // Is Level, but we call it here state because it's only on/off
+          } else {
+            programEntry += "<td id='lblState_" + number + "'>" + translateKey('lblWPState') + "</td>"; // Is Level, but we call it here state because it's only on/off
+          }
         } else {
           if (this.isAccessTransmitterHmIP_FWI) {
             programEntry += "<td>" + translateKey('lblWPState_Access') + "</td>";
