@@ -174,22 +174,22 @@ function ::CreateDoorLockStateTransmitter() {
 
   object oLockStateDurationUnit = cObj.DPByControl("DOOR_LOCK_STATE_TRANSMITTER.DURATION_UNIT");
   object oLockStateDurationValue = cObj.DPByControl("DOOR_LOCK_STATE_TRANSMITTER.DURATION_VALUE");
-  object oLockStateLockState = cObj.DPByControl("DOOR_LOCK_STATE_TRANSMITTER.LOCK_STATE");
-  object oLockStateLockStateStatus = cObj.DPByControl("DOOR_LOCK_STATE_TRANSMITTER.LOCK_STATE_STATUS");
+  object oLockState = cObj.DPByControl("DOOR_LOCK_STATE_TRANSMITTER.LOCK_STATE");
+  object oLockStateStatus = cObj.DPByControl("DOOR_LOCK_STATE_TRANSMITTER.LOCK_STATE_STATUS");
   object oLockStateLockTargetLevel = cObj.DPByControl("DOOR_LOCK_STATE_TRANSMITTER.LOCK_TARGET_LEVEL");
   object oLockStateWPOptions = cObj.DPByControl("DOOR_LOCK_STATE_TRANSMITTER.WP_OPTIONS");
 
 
-  if (oLockStateLockState) {
-     ! WriteLine("<script type='text/javascript'>console.log('oLockStateLockState: "#oLockStateLockState.Value()#"' );</script>");
+  if (oLockState) {
+     ! WriteLine("<script type='text/javascript'>console.log('oLockState: "#oLockState.Value()#"' );</script>");
       string stateTxt = "${stringTableKeyMaticStateUncertainTrue}";
       string statePic = "dialog-questionmark_80px.png";
 
-      if (oLockStateLockState.Value() == 1) {
+      if (oLockState.Value() == 1) {
        stateTxt = "${stringTableKeyMaticStateFalse}";
        statePic = "lock/closed.png";
       }
-      if (oLockStateLockState.Value() == 2) {
+      if (oLockState.Value() == 2) {
        stateTxt = "${stringTableKeyMaticStateTrue}";
        statePic = "lock/open.png";
       }
@@ -206,7 +206,7 @@ function ::CreateDoorLockStateTransmitter() {
             WriteLine("<td style='width:50px;'></td>");
 
             WriteLine("<td>");
-              WriteLine("<table id='"#oLockStateLockState.ID()#"' class='ControlBtnOff CLASS02511'>");
+              WriteLine("<table id='"#oLockState.ID()#"' class='ControlBtnOff CLASS02511'>");
               WriteLine("<tr>");
                 WriteLine("<td  class='CLASS02513'>");
                   WriteLine("<div align='center'>");
@@ -224,19 +224,19 @@ function ::CreateDoorLockStateTransmitter() {
 }
 
 function ::CreateDoorLockStateTranseiver() {
-  object oLockStateLockState = cObj.DPByControl("DOOR_LOCK_STATE_TRANSCEIVER.LOCK_STATE");
+  object oLockState = cObj.DPByControl("DOOR_LOCK_STATE_TRANSCEIVER.LOCK_STATE");
 
 
-  if (oLockStateLockState) {
+  if (oLockState) {
 
       string stateTxt = "${stringTableKeyMaticStateUncertainTrue}";
       string statePic = "dialog-questionmark_80px.png";
 
-      if (oLockStateLockState.Value() == 1) {
+      if (oLockState.Value() == 1) {
        stateTxt = "${stringTableKeyMaticStateFalse}";
        statePic = "lock/closed.png";
       }
-      if (oLockStateLockState.Value() == 2) {
+      if (oLockState.Value() == 2) {
        stateTxt = "${stringTableKeyMaticStateTrue}";
        statePic = "lock/open.png";
       }
@@ -245,7 +245,7 @@ function ::CreateDoorLockStateTranseiver() {
         WriteLine("<table>");
           WriteLine("<tr>");
             WriteLine("<td>");
-              WriteLine("<table id='"#oLockStateLockState.ID()#"' class='ControlBtnOff CLASS02511'>");
+              WriteLine("<table id='"#oLockState.ID()#"' class='ControlBtnOff CLASS02511'>");
               WriteLine("<tr>");
                 WriteLine("<td  class='CLASS02513'>");
                   WriteLine("<div align='center'>");
@@ -262,7 +262,93 @@ function ::CreateDoorLockStateTranseiver() {
   }
 }
 
+function ::CreateDoorStateTranseiver() {
+  object oLockState = cObj.DPByControl("DOOR_STATE_TRANSCEIVER.STATE");
+  object oLockCalibrate = cObj.DPByControl("DOOR_STATE_TRANSCEIVER.CALIBRATE");
 
+  if (oLockState) {
+
+      string stateTxt = "${stringTableKeyMaticStateUncertainTrue}";
+      string statePic = "dialog-questionmark_80px.png";
+
+      if (oLockState.Value() == 0) {
+       stateTxt = "${stringTableKeyMaticStateFalse}";
+       statePic = "lock/closed.png";
+      }
+      if (oLockState.Value() == 1) {
+       stateTxt = "${stringTableKeyMaticStateTrue}";
+       statePic = "lock/open.png";
+      }
+
+      WriteLine("<td>");
+        WriteLine("<table>");
+          WriteLine("<tr>");
+            WriteLine("<td>");
+              WriteLine("<table id='"#oLockState.ID()#"' class='ControlBtnOff CLASS02511'>");
+              WriteLine("<tr>");
+                WriteLine("<td  class='CLASS02513'>");
+                  WriteLine("<div align='center'>");
+                    WriteLine("<img src='/ise/img/"#statePic#"' width='80' height='70' />");
+                  WriteLine("</div>");
+                WriteLine("</td>");
+              WriteLine("</tr>");
+              WriteLine("<tr><td>"#stateTxt#"</td></tr>");
+              WriteLine("</table>");
+            WriteLine("</td>");
+          WriteLine("</tr>");
+        WriteLine("</table");
+      WriteLine("</td>");
+  }
+}
+
+function ::CreateDoorLockTranseiver() {
+  object oActivityState = cObj.DPByControl("DOOR_LOCK_TRANSCEIVER.ACTIVITY_STATE");
+  object oErrorJammed = cObj.DPByControl("DOOR_LOCK_TRANSCEIVER.ERROR_JAMMED");
+  object oErrorLoadTooLow = cObj.DPByControl("DOOR_LOCK_TRANSCEIVER.ERROR_LOAD_TOO_LOW");
+  object oErrorNoEndStopLock = cObj.DPByControl("DOOR_LOCK_TRANSCEIVER.ERROR_NO_END_STOP_LOCK");
+  object oErrorNoEndStopUnlock = cObj.DPByControl("DOOR_LOCK_TRANSCEIVER.ERROR_NO_END_STOP_UNLOCK");
+  object oLastLockDriveLoad = cObj.DPByControl("DOOR_LOCK_TRANSCEIVER.LAST_LOCK_DRIVE_LOAD");
+  object oLockState = cObj.DPByControl("DOOR_LOCK_TRANSCEIVER.LOCK_STATE");
+  object oLockTargetLevel = cObj.DPByControl("DOOR_LOCK_TRANSCEIVER.LOCK_TARGET_LEVEL");
+  object oLockTeachInState = cObj.DPByControl("DOOR_LOCK_TRANSCEIVER.LOCK_TEACH_IN_STATE");
+
+
+  ! oLockTargetLevel is writeable, all other parameters are only readable
+
+  if (oLockState) {
+
+      string stateTxt = "${stringTableKeyMaticStateUncertainTrue}";
+      string statePic = "dialog-questionmark_80px.png";
+
+      if (oLockState.Value() == 1) {
+       stateTxt = "${stringTableKeyMaticStateFalse}";
+       statePic = "lock/closed.png";
+      }
+      if (oLockState.Value() == 2) {
+       stateTxt = "${stringTableKeyMaticStateTrue}";
+       statePic = "lock/open.png";
+      }
+
+      WriteLine("<td>");
+        WriteLine("<table>");
+          WriteLine("<tr>");
+            WriteLine("<td>");
+              WriteLine("<table id='"#oLockState.ID()#"' class='ControlBtnOff CLASS02511'>");
+              WriteLine("<tr>");
+                WriteLine("<td  class='CLASS02513'>");
+                  WriteLine("<div align='center'>");
+                    WriteLine("<img src='/ise/img/"#statePic#"' width='80' height='70' />");
+                  WriteLine("</div>");
+                WriteLine("</td>");
+              WriteLine("</tr>");
+              WriteLine("<tr><td>"#stateTxt#"</td></tr>");
+              WriteLine("</table>");
+            WriteLine("</td>");
+          WriteLine("</tr>");
+        WriteLine("</table");
+      WriteLine("</td>");
+  }
+}
 
 
 

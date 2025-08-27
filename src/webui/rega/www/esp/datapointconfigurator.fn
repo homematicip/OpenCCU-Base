@@ -119,9 +119,11 @@ function ::dcCreate()
     var CN_DIMMER_REAL     = "DIMMER_REAL.";
     var CN_DOOR_LOCK_STATE_TRANSCEIVER = "DOOR_LOCK_STATE_TRANSCEIVER.";
     var CN_DOOR_LOCK_STATE_TRANSMITTER = "DOOR_LOCK_STATE_TRANSMITTER.";
+    var CN_DOOR_LOCK_TRANSCEIVER = "DOOR_LOCK_TRANSCEIVER.";
     var CN_DOOR_OPENER     = "DOOROPENER.";
     var CN_DOOR_RECEIVER     = "DOOR_RECEIVER.";
     var CN_DOOR_SENSOR     = "DOOR_SENSOR.";
+    var CN_DOOR_STATE_TRANSCEIVER = "DOOR_STATE_TRANSCEIVER.";
     var CN_DUAL_WHITE_BRIGHTNESS = "DUAL_WHITE_BRIGHTNESS";
     var CN_DUAL_WHITE_COLOR = "DUAL_WHITE_COLOR";
     var CN_FLOW_METER_TRANSMITTER = "FLOW_METER_TRANSMITTER";
@@ -555,6 +557,26 @@ function ::dcCreate()
             isKnownControl = true;
             sLastControlName = CN_DOOR_LOCK_STATE_TRANSCEIVER;
             Call("/esp/controls/door_opener.fn::CreateDoorLockStateTranseiver()");
+          }
+
+          !# DOOR_LOCK_TRANSCEIVER
+          bIsControl = ( sControlName.Find(CN_DOOR_LOCK_TRANSCEIVER) > -1 );
+          if( bIsControl && (sLastControlName != CN_DOOR_LOCK_TRANSCEIVER) )
+          {
+            WriteLine( "<script>conInfo('Control CN_DOOR_LOCK_TRANSCEIVER found.');</script>" );
+            isKnownControl = true;
+            sLastControlName = CN_DOOR_LOCK_TRANSCEIVER;
+            Call("/esp/controls/door_opener.fn::CreateDoorLockTranseiver()");
+          }
+
+          !# DOOR_STATE_TRANSCEIVER
+          bIsControl = ( sControlName.Find(CN_DOOR_STATE_TRANSCEIVER) > -1 );
+          if( bIsControl && (sLastControlName != CN_DOOR_STATE_TRANSCEIVER) )
+          {
+            WriteLine( "<script>conInfo('Control CN_DOOR_STATE_TRANSCEIVER found.');</script>" );
+            isKnownControl = true;
+            sLastControlName = CN_DOOR_STATE_TRANSCEIVER;
+            Call("/esp/controls/door_opener.fn::CreateDoorStateTranseiver()");
           }
 
           !# DOOR_LOCK_STATE_TRANSMITTER
