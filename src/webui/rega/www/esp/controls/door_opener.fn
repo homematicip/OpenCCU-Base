@@ -307,7 +307,7 @@ function ::CreateDoorStateTranseiver() {
       WriteLine("<table width='100%' _height='100%' cellspacing='4'>");
         WriteLine("<tr>");
           WriteLine("<td>");
-            WriteLine("<div class='ControlBtnOff CLASS02550' style='line-height:35px' id='"#chnId#"resetEnergyCounter' onclick='calibrate(this);' >${stringTableDigitalAnalogInputCalibration}</div>");
+            WriteLine("<div class='ControlBtnOff CLASS02550' style='line-height:35px' id='"#chnId#"calibrate' onclick='calibrate(this);' >${stringTableDigitalAnalogInputCalibration}</div>");
           WriteLine("</td>");
         WriteLine("</tr>");
       WriteLine("</table>");
@@ -372,6 +372,51 @@ function ::CreateDoorLockTranseiver() {
   }
 }
 
+function ::CreateAutoRelockTransceiver() {
+  object oAutoRelockState = cObj.DPByControl("AUTO_RELOCK_TRANSCEIVER.AUTO_RELOCK_STATE");
+
+  if (oAutoRelockState) {
+
+    string btnOffState = "";
+    string btnOnState = "";
+    boolean paramState = oAutoRelockState.Value();
+
+    if (paramState) {
+      btnOffState = "ControlBtnOff";
+      btnOnState = "ControlBtnOn";
+    } else {
+      btnOffState = "ControlBtnOn";
+      btnOnState = "ControlBtnOff";
+    }
+
+
+    WriteLine("<td>");
+    WriteLine("</td>");
+
+    WriteLine("<td>");
+      WriteLine("<table width='100%' _height='100%' cellspacing='4'>");
+        WriteLine("<tr>");
+          WriteLine("<td>");
+            WriteLine("<div class='"#btnOffState#" _CLASS02550' style='line-height:50px; cursor:pointer;' id='"#chnId#"setAutoRelockOff' onclick='setAutoRelock(this, 0);' >${btnAutoRelockOff}</div>");
+          WriteLine("</td>");
+
+          WriteLine("<td>");
+            WriteLine("<div class='"#btnOnState#" _CLASS02550' style='line-height:50px; cursor:pointer;' id='"#chnId#"setAutoRelockOn' onclick='setAutoRelock(this, 1);' >${btnAutoRelockOn}</div>");
+          WriteLine("</td>");
+
+        WriteLine("</tr>");
+      WriteLine("</table>");
+    WriteLine("</td>");
+
+    WriteLine("<script type='text/javascript'>");
+      WriteLine("setAutoRelock = function(elm, mode) {");
+        WriteLine("JControlBtn.on(jQuery(elm));");
+        WriteLine("setDpState("#oAutoRelockState.ID()#", mode);");
+      WriteLine("}");
+
+    WriteLine("</script>");
+  }
+}
 
 
 

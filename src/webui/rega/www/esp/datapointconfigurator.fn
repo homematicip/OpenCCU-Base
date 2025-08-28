@@ -97,6 +97,7 @@ function ::dcCreate()
     var CN_ACOUSTIC_SIGNAL_VIRTUAL_RECEIVER = "ACOUSTIC_SIGNAL_VIRTUAL_RECEIVER.";
     var CN_ALARM_SWITCH_VIRTUAL_RECEIVER = "ALARM_SWITCH_VIRTUAL_RECEIVER.";
     var CN_ANALOG_INPUT = "ANALOG_INPUT.";
+    var CN_AUTO_RELOCK_TRANSCEIVER = "AUTO_RELOCK_TRANSCEIVER.";
     var CN_ARMING          = "ARMING.";
     var CN_BACKLIGHTING_RECEIVER  = "BACKLIGHTING_RECEIVER.";
     var CN_BLIND           = "BLIND.";
@@ -607,6 +608,16 @@ function ::dcCreate()
             isKnownControl = true;
             sLastControlName = CN_DOOR_RECEIVER;
             Call("/esp/controls/door_opener.fn::CreateDoorReceiver()");
+          }
+
+          !# AUTO_RELOCK_TRANSCEIVER
+          bIsControl = ( sControlName.Find(CN_AUTO_RELOCK_TRANSCEIVER) > -1 );
+          if( bIsControl && (sLastControlName!=CN_AUTO_RELOCK_TRANSCEIVER) )
+          {
+            WriteLine( "<script>conInfo('Control CN_AUTO_RELOCK_TRANSCEIVER found.');</script>" );
+            isKnownControl = true;
+            sLastControlName = CN_AUTO_RELOCK_TRANSCEIVER;
+            Call("/esp/controls/door_opener.fn::CreateAutoRelockTransceiver()");
           }
 
           !# DOOR_WINDOW_CONTACT
