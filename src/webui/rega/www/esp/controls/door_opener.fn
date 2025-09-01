@@ -307,7 +307,7 @@ function ::CreateDoorStateTranseiver() {
       WriteLine("<table width='100%' _height='100%' cellspacing='4'>");
         WriteLine("<tr>");
           WriteLine("<td>");
-            WriteLine("<div class='ControlBtnOff CLASS02550' style='line-height:35px' id='"#chnId#"calibrate' onclick='calibrate(this);' >${stringTableDigitalAnalogInputCalibration}</div>");
+            WriteLine("<div class='ControlBtnOff CLASS02550' style='width:125px; line-height:35px' id='"#chnId#"calibrate' onclick='calibrate(this);' >${stringTableDigitalAnalogInputCalibration}</div>");
           WriteLine("</td>");
         WriteLine("</tr>");
       WriteLine("</table>");
@@ -343,52 +343,64 @@ function ::CreateDoorLockTranseiver() {
   string chAddress = oChannel.Address();
   string chType = oChannel.ChannelType();
 
+  boolean errorMsg = false;
+
+  if (
+    ((oErrorJammed) && (oErrorJammed.Value() == true))
+    || ((oErrorLoadTooLow) && (oErrorLoadTooLow == true))
+    || ((oErrorNoEndStopLock) && (oErrorNoEndStopLock == true))
+    || ((oErrorNoEndStopUnlock) && (oErrorNoEndStopUnlock == true))
+    ) {
+    errorMsg = true;
+  }
+
+
   ! oLockTargetLevel is writeable, all other parameters are only readable
 
-  if (oLockState) {
+  WriteLine("<td>");
+    WriteLine("<table class='ctrlTbl CLASS02520'>");
 
-    string stateTxt = "${stringTableKeyMaticStateUncertainTrue}";
-    string statePic = "dialog-questionmark_80px.png";
-
-    if (oLockState.Value() == 1) {
-     stateTxt = "${stringTableKeyMaticStateFalse}";
-     statePic = "lock/closed.png";
-    }
-    if (oLockState.Value() == 2) {
-     stateTxt = "${stringTableKeyMaticStateTrue}";
-     statePic = "lock/open.png";
-    }
-
-    WriteLine("<td>");
-      WriteLine("<table>");
+      if (oLockState || oLockTargetLevel) {
         WriteLine("<tr>");
-          WriteLine("<td>");
-            WriteLine("<table id='"#oLockState.ID()#"' class='ControlBtnOff CLASS02511'>");
-            WriteLine("<tr>");
-              WriteLine("<td  class='CLASS02513'>");
-                WriteLine("<div align='center'>");
-                  WriteLine("<img src='/ise/img/"#statePic#"' width='80' height='70' />");
-                WriteLine("</div>");
-              WriteLine("</td>");
-            WriteLine("</tr>");
-            WriteLine("<tr><td>"#stateTxt#"</td></tr>");
-            WriteLine("</table>");
-          WriteLine("</td>");
-        WriteLine("</tr>");
 
-        WriteLine("<tr><td colspan='2'><hr></td></tr>");
+        if (oLockState) {
+          string stateTxt = "${stringTableKeyMaticStateUncertainTrue}";
+          string statePic = "dialog-questionmark_80px.png";
+
+          if (oLockState.Value() == 1) {
+           stateTxt = "${stringTableKeyMaticStateFalse}";
+           statePic = "lock/closed.png";
+          }
+          if (oLockState.Value() == 2) {
+           stateTxt = "${stringTableKeyMaticStateTrue}";
+           statePic = "lock/open.png";
+          }
+
+            WriteLine("<td>");
+              WriteLine("<table id='"#oLockState.ID()#"' class='ControlBtnOff CLASS02511' width='100%' cellspacing='4'>");
+              WriteLine("<tr>");
+                WriteLine("<td  class='CLASS02513'>");
+                  WriteLine("<div align='center'>");
+                    WriteLine("<img src='/ise/img/"#statePic#"' width='80' height='70' />");
+                  WriteLine("</div>");
+                WriteLine("</td>");
+              WriteLine("</tr>");
+              WriteLine("<tr><td>"#stateTxt#"</td></tr>");
+              WriteLine("</table>");
+            WriteLine("</td>");
+        }
 
         if (oLockTargetLevel) {
           string tmp;
           string options = "LOCKED,UNLOCKED,OPEN,RESET_TEACH_IN,SET_NEUTRAL_LOCKED,SET_NEUTRAL_UNLOCKED,TESTRUN_SAVE_LOCK_UNLOCK,TEACH_IN_DRIVE_OPEN_DOOR_NEUTRAL_UNLOCKED,TEACH_IN_DRIVE_OPEN_DOOR_NEUTRAL_VERTICAL,TEACH_IN_DRIVE_OPEN_DOOR_NEUTRAL_HORIZONTAL,LOAD_CALIBRATION_CLOSED_DOOR,LOAD_CALIBRATION_OPEN_DOOR";
 
-        WriteLine("<tr>");
+          WriteLine("<td></td>");
 
           WriteLine("<td>");
-            WriteLine("<div id='"#chnId#"lockTargetLevel' class='ControlBtnOff' style='line-height:50px; cursor:pointer;'>Set Target Level</div>");
+            WriteLine("<table class='_ControlBtnOff' width='100%' cellspacing='4'><tr><td>");
+              WriteLine("<div id='"#chnId#"lockTargetLevel' class='ControlBtnOff CLASS02550' style='width:125px; line-height:35px; cursor:pointer;'>Set Target Level</div>");
+            WriteLine("</td></tr></table>");
           WriteLine("</td>");
-
-        WriteLine("</tr>");
 
           WriteLine("<script type='text/javascript'>");
             WriteLine("var opts = {};");
@@ -399,11 +411,13 @@ function ::CreateDoorLockTranseiver() {
 
             WriteLine("ipm"#chnId#" = new iseDoorLockTransceiver("#chnId#",opts);");
           WriteLine("</script>");
+        }
+        WriteLine("</tr>");
+        WriteLine("<tr><td colspan='3'><hr></td></tr>");
       }
 
-        WriteLine("</table");
-      WriteLine("</td>");
-  }
+    WriteLine("</table>");
+  WriteLine("</td>");
 }
 
 function ::CreateAutoRelockTransceiver() {
@@ -431,11 +445,11 @@ function ::CreateAutoRelockTransceiver() {
       WriteLine("<table width='100%' _height='100%' cellspacing='4'>");
         WriteLine("<tr>");
           WriteLine("<td>");
-            WriteLine("<div class='"#btnOffState#" _CLASS02550' style='line-height:50px; cursor:pointer;' id='"#chnId#"setAutoRelockOff' onclick='setAutoRelock(this, 0);' >${btnAutoRelockOff}</div>");
+            WriteLine("<div class='"#btnOffState#"' style='line-height:50px; cursor:pointer;' id='"#chnId#"setAutoRelockOff' onclick='setAutoRelock(this, 0);' >${btnAutoRelockOff}</div>");
           WriteLine("</td>");
 
           WriteLine("<td>");
-            WriteLine("<div class='"#btnOnState#" _CLASS02550' style='line-height:50px; cursor:pointer;' id='"#chnId#"setAutoRelockOn' onclick='setAutoRelock(this, 1);' >${btnAutoRelockOn}</div>");
+            WriteLine("<div class='"#btnOnState#"' style='line-height:50px; cursor:pointer;' id='"#chnId#"setAutoRelockOn' onclick='setAutoRelock(this, 1);' >${btnAutoRelockOn}</div>");
           WriteLine("</td>");
 
         WriteLine("</tr>");
