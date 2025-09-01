@@ -24,15 +24,19 @@ iseDoorLockTransceiver.prototype = {
   
   getDialog: function() {
     var self = this,
-      sOutput = this.getDialogHtml();
+      content = this.getDialogHtml();
 
-    var dlg = new YesNoDialog(translateKey("dialogSetDLPTargetLevel"), sOutput, function(result) {
+    var dlg = new YesNoDialog(translateKey("dialogSetDLPTargetLevelTitle"), content, function(result) {
 
       if (result == YesNoDialog.RESULT_YES) {
         setDpState(self.paramID, self.selOptionElem.val() );
       }
 
     },"html");
+
+    dlg.btnTextNo(translateKey("dialogBack"));
+    dlg.btnTextYes(translateKey("btnOk"));
+
   },
 
   getDialogHtml: function() {
@@ -48,9 +52,13 @@ iseDoorLockTransceiver.prototype = {
           html += "</select>";
         html += "</td>";
       html += "</tr>";
+
+      html += "<tr><td><hr></td></tr>";
+
+      html += "<tr><td>"+translateKey('helpLockTargetLevel')+"</td></tr>";
+
     html += "</table>";
 
     return html;
   },
-
 };

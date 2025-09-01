@@ -159,6 +159,10 @@ jQuery.extend(true, langJSON, {
     "btnAutoRelockOff" : "en* Auto Relock Off",
     "btnAutoRelockOn" : "en* Auto Relock On",
 
+    "dialogSetDLPTargetLevelTitle" : "en* Lock Target Level",
+
+    "helpLockTargetLevel" : "en* Hier steht eine Beschreibung des Parameters....",
+
     "noMoreKeys" : ""
   }
 });
