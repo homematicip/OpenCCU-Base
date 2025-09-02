@@ -174,6 +174,42 @@ jQuery.extend(true, langJSON, {
 
     "helpLockTargetLevel" : "Hier steht eine Beschreibung des Parameters....",
 
+    "dlp_LOCK_STATE" : "LOCK_STATE",
+    "dlp_LOCK_STATE_REASON" : "LOCK_STATE_REASON",
+    "dlp_LOCK_TEACH_IN_STATE" : "LOCK_TEACH_IN_STATE",
+    "dlp_LAST_LOCK_DRIVE_LOAD" : "LAST_LOCK_DRIVE_LOAD",
+
+    "dlpLockState_0" : "UNKNOWN",
+    "dlpLockState_1" : "LOCKED",
+    "dlpLockState_2" : "UNLOCKED",
+    "dlpLockState_3" : "INVALID",
+
+    "dlpLockStateReason_0" : "UNKNOWN",
+    "dlpLockStateReason_1" : "MOTOR",
+    "dlpLockStateReason_2" : "MOTOR_INTERNAL_KEY",
+    "dlpLockStateReason_3" : "MOTOR_INTERNAL_PROFILE",
+    "dlpLockStateReason_4" : "MOTOR_AUTO_RELOCK_TIMER",
+    "dlpLockStateReason_5" : "MOTOR_AUTO_RELOCK_STATE",
+    "dlpLockStateReason_6" : "MOTOR_AFTER_OPEN_ACKED",
+    "dlpLockStateReason_7" : "MOTOR_AFTER_OPEN",
+    "dlpLockStateReason_8" : "MOTOR_AFTER_OPEN_INTERNAL_KEY",
+    "dlpLockStateReason_9" : "MANUAL_INSIDE",
+    "dlpLockStateReason_10" : "MANUAL",
+
+    "dlpLockTeachInState_0" : "TEACH_IN_INACTIVE",
+    "dlpLockTeachInState_1" : "NEUTRAL_POSITION_LOCKED_SET",
+    "dlpLockTeachInState_2" : "NEUTRAL_POSITION_UNLOCKED_SET",
+    "dlpLockTeachInState_3" : "NEUTRAL_POSITION_BOTH_SET",
+    "dlpLockTeachInState_4" : "TEACH_IN_DRIVE_RUNNING",
+    "dlpLockTeachInState_5" : "TEACH_IN_SUCCESSFUL",
+    "dlpLockTeachInState_6" : "ERROR_NEUTRAL_POSITION_INCOMPLETE_TURNS",
+    "dlpLockTeachInState_7" : "ERROR_NEUTRAL_POSITION_LESS_ONE_TURN",
+    "dlpLockTeachInState_8" : "ERROR_END_STOP_DRIVE_LOCK_BEFORE_NEUTRAL_POSITION",
+    "dlpLockTeachInState_9" : "ERROR_END_STOP_DRIVE_UNLOCK_BEFORE_NEUTRAL_POSITION",
+    "dlpLockTeachInState_10" : "ERROR_END_STOP_DRIVE_UNLOCK_BEFORE_NEUTRAL_POSITION",
+    "dlpLockTeachInState_11" : "ERROR_TEACH_IN_DRIVE_CANCELED",
+    "dlpLockTeachInState_12" : "ERROR_TEACH_IN_DRIVE_BATTERY_LOW",
+
     "noMoreKeys" : ""
   }
 });
