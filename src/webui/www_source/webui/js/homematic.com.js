@@ -28,7 +28,7 @@ homematic.com =
     var script = document.createElement("script");
     script.id = "homematic_com_script";
     script.type = "text/javascript";
-    script.src = this.m_URLServer + "/firmware/download?cmd=js_check_version&version="+WEBUI_VERSION+"&product="+this.m_product+"&serial=" + this.serial;
+    script.src = this.m_URLServer + "/firmware/download/?cmd=js_check_version&version="+WEBUI_VERSION+"&product="+this.m_product+"&serial=" + this.serial;
     $("body").appendChild(script);
   },
 
@@ -81,7 +81,7 @@ homematic.com =
       var script = document.createElement("script");
       script.id = "homematic_com_script_" + index;
       script.type = "text/javascript";
-      script.src =  this.m_URLServer + "/firmware/download?cmd=js_check_version&product=" + product + "&serial=0";
+      script.src =  this.m_URLServer + "/firmware/download/?cmd=js_check_version&product=" + product + "&serial=0";
       $("body").appendChild(script);
       homematic.com.callback = callback;
   },
@@ -128,7 +128,7 @@ homematic.com =
     var script = document.createElement("script");
     script.id = "homematic_license_script";
     script.type = "text/javascript";
-    script.src = this.m_URLServer + "/firmware/download?cmd=release_note&product="+this.m_product+"&serial=3014&version="+homematic.com.m_latestVersion+"&locale=" + lang;
+    script.src = this.m_URLServer + "/firmware/download/?cmd=release_note&product="+this.m_product+"&serial=3014&version="+homematic.com.m_latestVersion+"&locale=" + lang;
 
     $("body").appendChild(script);
     homematic.com.callback = callback;
