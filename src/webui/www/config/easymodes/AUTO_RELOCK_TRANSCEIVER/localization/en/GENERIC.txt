@@ -1,0 +1,5 @@
+"toggle" : "en* Toggle",
+"autoRelockOn" : "en* Ein",
+"autoRelockOff" : "en* Aus",
+
+"not_active" : "en* nicht aktiv",
