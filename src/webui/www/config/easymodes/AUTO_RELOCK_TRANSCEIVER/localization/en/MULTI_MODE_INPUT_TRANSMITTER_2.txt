@@ -1,5 +1,5 @@
-"description_1" : "<span class=\"translated\">en* Bei Bet%E4tigung des Schalters toggelt der Auto-Relock Status (ein / aus).</span><br/><br/>",
-"description_2" : "<span class=\"translated\">en* Bei Bet%E4tigung des Schalters schaltet Auto-Relock ein.</span><br/><br/>",
-"description_3" : "<span class=\"translated\">en* Bei Bet%E4tigung des Schalters schaltet Auto-Relock aus.</span><br/><br/>",
+"description_1" : "<span class=\"translated\">When actuating the switch, the status of Auto-Relock is toggling (on / off).</span><br/><br/>",
+"description_2" : "<span class=\"translated\">When actuating the switch, Auto-Relock is switchted on.</span><br/><br/>",
+"description_3" : "<span class=\"translated\">When actuating the switch, Auto-Relock is switchted off.</span><br/><br/>",
 
-"description_4" : "<span class=\"translated\">en* Das Profil ist nicht aktiv</span>",
+"description_4" : "<span class=\"translated\">The profile is not active</span>",
