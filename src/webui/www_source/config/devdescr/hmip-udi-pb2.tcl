@@ -12,8 +12,8 @@ set DESCRIPTION "HmIP-UDI-PB2"
 #lappend PATHLIST <Pixellänge maximale Ausdehnung> <Pfad zum Bild>
 #-----------------------------------------------------------------------
 set     PATHLIST ""
-lappend PATHLIST [list  50	"/config/img/devices/50/unknown_device_thumb.png"]
-lappend PATHLIST [list  250	"/config/img/devices/250/unknown_device.png"]
+lappend PATHLIST [list  50	"/config/img/devices/50/254_hmip-udi-pb2_thumb.png"]
+lappend PATHLIST [list  250	"/config/img/devices/250/254_hmip-udi-pb2.png"]
 
 #Koordinaten für Highlight:
 #P {<Formname> <Formtyp> <x,y,dx,dy,r je nach Formtyp>}
