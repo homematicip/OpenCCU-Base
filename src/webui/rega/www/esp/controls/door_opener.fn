@@ -360,7 +360,6 @@ function ::CreateDoorLockTranseiver() {
 
   WriteLine("<td>");
     WriteLine("<table class='ctrlTbl CLASS02520'>");
-
       WriteLine("<tr><td><table>");
         if (oLockState || oLockTargetLevel) {
           WriteLine("<tr>");
@@ -397,7 +396,14 @@ function ::CreateDoorLockTranseiver() {
               string options = "LOCKED,UNLOCKED,OPEN,RESET_TEACH_IN,SET_NEUTRAL_LOCKED,SET_NEUTRAL_UNLOCKED,TESTRUN_SAVE_LOCK_UNLOCK,TEACH_IN_DRIVE_OPEN_DOOR_NEUTRAL_UNLOCKED,TEACH_IN_DRIVE_OPEN_DOOR_NEUTRAL_VERTICAL,TEACH_IN_DRIVE_OPEN_DOOR_NEUTRAL_HORIZONTAL,LOAD_CALIBRATION_CLOSED_DOOR,LOAD_CALIBRATION_OPEN_DOOR";
 
               WriteLine("<td>");
-                  WriteLine("<div id='"#chnId#"lockTargetLevel' class='ControlBtnOff CLASS02550' style='width:125px; line-height:35px; cursor:pointer;'>Set Target Level</div>");
+                WriteLine("<table>");
+                  WriteLine("<tr>");
+                    WriteLine("<td><div id='"#chnId#"lockTargetLevel' class='ControlBtnOff CLASS02550' style='width:125px; line-height:35px; cursor:pointer;'>Set Target Level</div></td>");
+                  WriteLine("</tr>");
+                  WriteLine("<tr>");
+                    WriteLine("<td><div id='"#chnId#"showDLPInfoPanel' class='ControlBtnOff CLASS02550' style='width:125px; line-height:35px; cursor:pointer;'>Show Info</div></td>");
+                  WriteLine("</tr>");
+                WriteLine("</table>");
               WriteLine("</td>");
 
               WriteLine("<script type='text/javascript'>");
@@ -407,52 +413,57 @@ function ::CreateDoorLockTranseiver() {
                 WriteLine("opts.paramID = '"#oLockTargetLevel.ID()#"';");
                 WriteLine("opts.options = '"#options#"';");
 
+                WriteLine("opts.infoLockState = '"#oLockState.Value()#"';");
+                WriteLine("opts.infoReason = '"#oLockStateReason.Value()#"';");
+                WriteLine("opts.infoTeachInState = '"#oLockTeachInState.Value()#"';");
+                WriteLine("opts.infoLastLockDriveLoad = '"#oLastLockDriveLoad.Value()#"';");
+
                 WriteLine("ipm"#chnId#" = new iseDoorLockTransceiver("#chnId#",opts);");
               WriteLine("</script>");
             }
-          WriteLine("</tr>");
 
+          WriteLine("</tr>");
         }
       WriteLine("</table></td></tr>");
 
-      WriteLine("<tr><td><table>");
-        WriteLine("<tr><td colspan='2'><hr></td></tr>");
-        if (oLockState || oLockStateReason) {
-          string widthInfoField = "width:175px;";
-          WriteLine("<tr>");
-            if (oLockState) {
-              integer lockState = oLockState.Value();
-              WriteLine("<td>");
-                WriteLine("<div class='ControlBtnInfo' style='"#widthInfoField#"'>${dlp_LOCK_STATE}: ${dlpLockState_"#lockState#"}</div>");
-              WriteLine("</td>");
-            }
-            if (oLockStateReason) {
-              integer lockStateReason = oLockStateReason.Value();
-              WriteLine("<td>");
-                WriteLine("<div class='ControlBtnInfo' style='"#widthInfoField#"'>${dlp_LOCK_STATE_REASON}: ${dlpLockStateReason_"#lockStateReason#"}</div>");
-              WriteLine("</td>");
-            }
-          WriteLine("</tr>");
-        }
+  !    string widthInfoField = "width:175px;";
+  !    string lineHeight = "line-height:50px;";
+  !    WriteLine("<tr><td colspan='2'><hr></td></tr>");
+  !    if (oLockState) {
+  !      integer lockState = oLockState.Value();
+  !      WriteLine("<tr>");
+  !        WriteLine("<td>");
+  !          WriteLine("<div class='ControlBtnInfo' style="#lineHeight#">${dlp_LOCK_STATE}: ${dlpLockState_"#lockState#"}</div>");
+  !        WriteLine("</td>");
+  !      WriteLine("</tr>");
+  !    }
 
-        if (oLockTeachInState || oLastLockDriveLoad) {
-          WriteLine("<tr>");
-            if (oLockTeachInState) {
-              integer lockTeachInState = oLockTeachInState.Value();
-              WriteLine("<td>");
-                WriteLine("<div class='ControlBtnInfo' style='"#widthInfoField#"'>${dlp_LOCK_TEACH_IN_STATE}: ${dlpLockTeachInState_"#lockTeachInState#"}</div>");
-              WriteLine("</td>");
-            }
-            if (oLastLockDriveLoad) {
-              integer lastLockDriveLoad = oLastLockDriveLoad.Value();
-              WriteLine("<td>");
-                WriteLine("<div class='ControlBtnInfo' style='"#widthInfoField#"'>${dlp_LAST_LOCK_DRIVE_LOAD}: "#lastLockDriveLoad#"</div>");
-              WriteLine("</td>");
-            }
-          WriteLine("</tr>");
-        }
+  !    if (oLockStateReason) {
+  !      integer lockStateReason = oLockStateReason.Value();
+  !      WriteLine("<tr>");
+  !        WriteLine("<td>");
+  !          WriteLine("<div class='ControlBtnInfo' style="#lineHeight#">${dlp_LOCK_STATE_REASON}: ${dlpLockStateReason_"#lockStateReason#"}</div>");
+  !        WriteLine("</td>");
+  !      WriteLine("</tr>");
+  !    }
 
-      WriteLine("</table></td></tr>");
+  !    if (oLockTeachInState) {
+  !      integer lockTeachInState = oLockTeachInState.Value();
+  !      WriteLine("<tr>");
+  !       WriteLine("<td>");
+  !            WriteLine("<div class='ControlBtnInfo' style="#lineHeight#">${dlp_LOCK_TEACH_IN_STATE}: ${dlpLockTeachInState_"#lockTeachInState#"}</div>");
+  !        WriteLine("</td>");
+  !      WriteLine("</tr>");
+  !    }
+
+  !    if (oLastLockDriveLoad) {
+  !      integer lastLockDriveLoad = oLastLockDriveLoad.Value();
+  !      WriteLine("<tr>");
+  !        WriteLine("<td>");
+  !          WriteLine("<div class='ControlBtnInfo' style="#lineHeight#">${dlp_LAST_LOCK_DRIVE_LOAD}: "#lastLockDriveLoad#"</div>");
+  !        WriteLine("</td>");
+  !      WriteLine("</tr>");
+  !    }
 
       if (errorMsg) {
         WriteLine("<tr><td colspan='3'><hr></td></tr>");
@@ -462,7 +473,6 @@ function ::CreateDoorLockTranseiver() {
         if ((oErrorNoEndStopLock) && (oErrorNoEndStopLock.Value() == true)) {WriteLine("<tr><td><div class='ControlBtnOff' style='line-height:50px;'>${errorNoEndStopLock}</div></td></tr>");}
         if ((oErrorNoEndStopUnlock) && (oErrorNoEndStopUnlock.Value() == true)) {WriteLine("<tr><td><div class='ControlBtnOff' style='line-height:50px;'>${errorNoEndStopUnlock}</div></td></tr>");}
       }
-
     WriteLine("</table>");
   WriteLine("</td>");
 }
