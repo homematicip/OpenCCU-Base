@@ -208,8 +208,8 @@ getWPVirtualChannels = function(channels, expert) {
       OpticalSignalID = "OPTICAL_SIGNAL_RECEIVER", // HmIPW-WRC6
       PermissionTranseiverID = "PERMISSION_TRANSCEIVER", // HmIP-FLC/FLD
       SwitchTranseiverID = "SWITCH_TRANSCEIVER", // HmIP-FLC/FLD
-      AutoRelock_Transceiver = "AUTO_RELOCK_TRANSCEIVER", // HmIP-FLC/FLD
-      DoorLockTransceiver = "DOOR_LOCK_TRANSCEIVER", // HmIP-FLC/FLD
+      AutoRelock_Transceiver = "AUTO_RELOCK_TRANSCEIVER", // HmIP-DLP
+      DoorLockTransceiver = "DOOR_LOCK_TRANSCEIVER", // HmIP-DLP
       expertChn;
     if (
       (chn.channelType.indexOf(virtualChID) !== -1)

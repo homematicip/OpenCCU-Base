@@ -513,6 +513,8 @@ iseHmIPWeeklyProgram.prototype = {
     UniversalLightReceiver = "UNIVERSAL_LIGHT_RECEIVER", // HmIP-RGBW
     PermissionTranseiverID = "PERMISSION_TRANSCEIVER", // HmIP-FLC/FLD
     SwitchTranseiverID = "SWITCH_TRANSCEIVER", // HmIP-FLC/FLD
+    AutoRelock_Transceiver = "AUTO_RELOCK_TRANSCEIVER", // HmIP-DLP
+    DoorLockTransceiver = "DOOR_LOCK_TRANSCEIVER", // HmIP-DLP
     expertChn;
 
     jQuery.each(this.device.channels, function(index,chn) {
@@ -525,6 +527,8 @@ iseHmIPWeeklyProgram.prototype = {
         || (chn.channelType.indexOf(UniversalLightReceiver) !== -1)
         || (chn.channelType.indexOf(PermissionTranseiverID) !== -1)
         || (chn.channelType.indexOf(SwitchTranseiverID) !== -1)
+        || (chn.channelType.indexOf(AutoRelock_Transceiver) !== -1)
+        || (chn.channelType.indexOf(DoorLockTransceiver) !== -1)
       ) {
         if (self.expert) {
           result.push(index);
@@ -543,13 +547,13 @@ iseHmIPWeeklyProgram.prototype = {
     var result = null, self=this;
 
       if (
-        channelType == "DIMMER_VIRTUAL_RECEIVER" ||
-        channelType == "SWITCH_VIRTUAL_RECEIVER" ||
-        channelType == "WATER_SWITCH_VIRTUAL_RECEIVER" ||
-        channelType == "BLIND_VIRTUAL_RECEIVER" ||
-        channelType == "SHUTTER_VIRTUAL_RECEIVER" ||
         channelType == "ACOUSTIC_SIGNAL_VIRTUAL_RECEIVER" ||
-        channelType == "SERVO_VIRTUAL_RECEIVER"
+        channelType == "BLIND_VIRTUAL_RECEIVER" ||
+        channelType == "DIMMER_VIRTUAL_RECEIVER" ||
+        channelType == "SERVO_VIRTUAL_RECEIVER" ||
+        channelType == "SHUTTER_VIRTUAL_RECEIVER" ||
+        channelType == "SWITCH_VIRTUAL_RECEIVER" ||
+        channelType == "WATER_SWITCH_VIRTUAL_RECEIVER"
       ) {
         virtChnCounterWP = (virtChnCounterWP >= 3) ? 0 : virtChnCounterWP;
         virtChnCounterWP++;
@@ -561,12 +565,14 @@ iseHmIPWeeklyProgram.prototype = {
       }  else if (
         channelType == "ACCESS_RECEIVER"
         || channelType == "ACCESS_TRANSCEIVER"
+        || channelType == "AUTO_RELOCK_TRANSCEIVER"
         || channelType == "DOOR_LOCK_STATE_TRANSMITTER"
+        || channelType == "DOOR_LOCK_TRANSCEIVER"
         || channelType == "OPTICAL_SIGNAL_RECEIVER"
-        || channelType == "UNIVERSAL_LIGHT_RECEIVER"
         || channelType == "PERMISSION_TRANSCEIVER"
-        || channelType == "SWITCH_TRANSCEIVER")
-        {
+        || channelType == "SWITCH_TRANSCEIVER"
+        || channelType == "UNIVERSAL_LIGHT_RECEIVER"
+        ) {
           return channelNr;
         }
 
