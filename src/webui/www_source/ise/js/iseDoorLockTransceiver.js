@@ -42,6 +42,7 @@ iseDoorLockTransceiver.prototype = {
 
     dlg.btnTextNo(translateKey("dialogBack"));
     dlg.btnTextYes(translateKey("btnOk"));
+    dlg.setWidth(900);
 
   },
 
@@ -63,7 +64,7 @@ iseDoorLockTransceiver.prototype = {
     html += "<table align='center'>";
       html += "<tr>";
         html += "<td>";
-          html += "<select id='"+this.id+"selOptionElem'>";
+          html += "<span>Option: </span> <select id='"+this.id+"selOptionElem'>";
           jQuery.each(this.arOptions, function(index, opt) {
             html += "<option value='"+index+"'>"+opt+"</option>";
           });
@@ -87,25 +88,25 @@ iseDoorLockTransceiver.prototype = {
 
       html += "<tr>";
         html += "<td>";
-          html += "<div class='ControlBtnInfo' style='line-height:50px;'>Code "+this.opts.infoLockState+" - ${dlp_LOCK_STATE}: ${dlpLockState_"+this.opts.infoLockState+"}</div>";
+          html += "<div class='ControlBtnInfo' style='line-height:50px;'>Code "+this.opts.infoLockState+" - ${stringTableLockState}: ${dlpLockState_"+this.opts.infoLockState+"}</div>";
         html += "</td>";
       html += "</tr>";
 
       html += "<tr>";
         html += "<td>";
-          html += "<div class='ControlBtnInfo' style='line-height:50px;'>Code "+this.opts.infoReason+" - ${dlp_LOCK_STATE_REASON}: ${dlpLockStateReason_"+this.opts.infoReason+"}</div>";
+          html += "<div class='ControlBtnInfo' style='line-height:50px;'>Code "+this.opts.infoReason+" - ${stringTableLockStateReason}: ${dlpLockStateReason_"+this.opts.infoReason+"}</div>";
         html += "</td>";
       html += "</tr>";
 
       html += "<tr>";
         html += "<td>";
-          html += "<div class='ControlBtnInfo' style='line-height:50px;'>Code "+this.opts.infoTeachInState+" - ${dlp_LOCK_TEACH_IN_STATE}: ${dlpLockTeachInState_"+this.opts.infoTeachInState+"}</div>";
+          html += "<div class='ControlBtnInfo' style='line-height:50px;'>Code "+this.opts.infoTeachInState+" - ${stringTableLockTeachInState}: ${dlpLockTeachInState_"+this.opts.infoTeachInState+"}</div>";
         html += "</td>";
       html += "</tr>";
 
       html += "<tr>";
         html += "<td>";
-         html += "<div class='ControlBtnInfo' style='line-height:50px;'>${dlp_LAST_LOCK_DRIVE_LOAD}: "+this.opts.infoLastLockDriveLoad+"</div>";
+         html += "<div class='ControlBtnInfo' style='line-height:50px;'>${stringTableLastLockDriveLoad}: "+this.opts.infoLastLockDriveLoad+"</div>";
         html += "</td>";
       html += "</tr>";
 
