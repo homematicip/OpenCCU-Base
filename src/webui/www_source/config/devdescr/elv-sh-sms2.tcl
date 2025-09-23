@@ -12,27 +12,8 @@ set DESCRIPTION "ELV-SH-SMS2"
 #lappend PATHLIST <Pixellänge maximale Ausdehnung> <Pfad zum Bild>
 #-----------------------------------------------------------------------
 set     PATHLIST ""
-lappend PATHLIST [list  50	"/config/img/devices/50/unknown_device_thumb.png"]
-lappend PATHLIST [list  250	"/config/img/devices/250/unknown_device.png"]
-
-#Koordinaten für Highlight:
-#P {<Formname> <Formtyp> <x,y,dx,dy,r je nach Formtyp>}
-#-----------------------------------------------------------------------
-
-#Beispiel Circle: varname kreistyp x y r
-#lappend P {"4"   1 380 475 170}
-#Beispiel Rectangle varname rechtecktyp x y dx dy
-#lappend P {"1+2" 2 187 202 380 302}
-
+lappend PATHLIST [list  50	"/config/img/devices/50/256_ELV-SH-SMS2_thumb.png"]
+lappend PATHLIST [list  250	"/config/img/devices/250/256_ELV-SH-SMS2.png"]
 
 set P ""
 
-lappend P {"Icon" 3 0.092 0.6 'Icon_folgt' 0.14 'verdana' Font.BOLD}
-
-#x: 110 y: 58 fontsize: 45
-lappend P {"1_channel" 3 0.44 0.232 '1' 0.18 'verdana' Font.BOLD}
-lappend P {"1" 5 '1_channel' 'Icon'}
-
-
-lappend P {"2_channel" 3 0.44 0.232 '2' 0.18 'verdana' Font.BOLD}
-lappend P {"2" 5 '2_channel' 'Icon'}
