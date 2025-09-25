@@ -271,12 +271,12 @@ function ::CreateDoorStateTranseiver() {
       string statePic = "dialog-questionmark_80px.png";
 
       if (oLockState.Value() == 0) {
-       stateTxt = "${stringTableKeyMaticStateFalse}";
-       statePic = "lock/closed.png";
+       stateTxt = "${lblDoorClosed}";
+       statePic = "door/closed.png";
       }
       if (oLockState.Value() == 1) {
-       stateTxt = "${stringTableKeyMaticStateTrue}";
-       statePic = "lock/open.png";
+       stateTxt = "${lblDoorOpen}";
+       statePic = "door/open.png";
       }
 
       WriteLine("<td>");
@@ -394,7 +394,7 @@ function ::CreateDoorLockTranseiver() {
             if (oLockTargetLevel) {
               string tmp;
               ! string options = "LOCKED,UNLOCKED,OPEN,RESET_TEACH_IN,SET_NEUTRAL_LOCKED,SET_NEUTRAL_UNLOCKED,TESTRUN_SAVE_LOCK_UNLOCK,TEACH_IN_DRIVE_OPEN_DOOR_NEUTRAL_UNLOCKED,TEACH_IN_DRIVE_OPEN_DOOR_NEUTRAL_VERTICAL,TEACH_IN_DRIVE_OPEN_DOOR_NEUTRAL_HORIZONTAL,LOAD_CALIBRATION_CLOSED_DOOR,LOAD_CALIBRATION_OPEN_DOOR";
-              string options = "A,B,C,D,E,F,G,H,I,J,K,L";
+              string options = "A,B,C,D,E";
 
 
 
@@ -425,10 +425,10 @@ function ::CreateDoorLockTranseiver() {
               WriteLine("<td>");
                 WriteLine("<table>");
                   WriteLine("<tr>");
-                    WriteLine("<td><div id='"#chnId#"lockTargetLevel' class='ControlBtnOff CLASS02550' style='width:125px; line-height:35px; cursor:pointer;'>Set Target Level</div></td>");
+                    WriteLine("<td><div id='"#chnId#"lockTargetLevel' class='ControlBtnOff CLASS02550' style='width:125px; line-height:35px; cursor:pointer;'>${btnTeachInDoorLock}</div></td>");
                   WriteLine("</tr>");
                   WriteLine("<tr>");
-                    WriteLine("<td><div id='"#chnId#"showDLPInfoPanel' class='ControlBtnOff CLASS02550' style='width:125px; line-height:35px; cursor:pointer;'>Show Info</div></td>");
+                    WriteLine("<td><div id='"#chnId#"showDLPInfoPanel' class='ControlBtnOff CLASS02550' style='width:125px; line-height:35px; cursor:pointer;'>${btnInfo}</div></td>");
                   WriteLine("</tr>");
                 WriteLine("</table>");
               WriteLine("</td>");
