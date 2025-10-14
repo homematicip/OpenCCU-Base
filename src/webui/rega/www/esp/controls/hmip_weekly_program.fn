@@ -38,7 +38,7 @@ function ::CreateWeeklyProgram()
       WriteLine("<table>");
 
         WriteLine("<tr>");
-          WriteLine("<td style='border:1px solid #000000; color:black;'>");
+          WriteLine("<td>");
             WriteLine("<div id='anchor_"#chnId#"' style='background-color:#89989b;'></div>");
           WriteLine("</td>");
         WriteLine("</tr>");
