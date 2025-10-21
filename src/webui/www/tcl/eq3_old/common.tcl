@@ -220,7 +220,7 @@ proc get_bat_level {} {
    return 100;
 }
 
-proc _getProduct {} {
+proc getProduct {} {
   set product 3
   catch {
     set product [lindex [split [get_version] .] 0]
@@ -228,9 +228,3 @@ proc _getProduct {} {
   return "[expr $product*1]"
 }
 
-# This is a primilary solution for the release candidate 3.85.3
-# Delete this afterwards and activate the above function again
-proc getProduct {} {
-  set product 3
-  return $product
-}
