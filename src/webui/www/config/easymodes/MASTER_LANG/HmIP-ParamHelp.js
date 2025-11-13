@@ -428,7 +428,7 @@ jQuery.extend(true,langJSON, {
       "Bei langem Tastendruck auf das Icon wird der Picker zur RGB-Farbauswahl aufgerufen.<br/><br/>" +
       "<b>TW</b>: %DCber die +/- Tasten kann das Ziellevel eingestellt werden. " +
       "Bei langem Tastendruck auf das Icon wird der Picker zur Farbtemperatur aufgerufen.<br/><br/>" +
-      "<b>TW/RGB</b>: %DCber die +/--Tasten kann Ziellevel eingestellt werden. " +
+      "<b>TW/RGB</b>: %DCber die +/- Tasten kann das Ziellevel eingestellt werden. " +
       "Bei langem Tastendruck auf das Icon wird der zwischen RGB und Farbtemperatur umschaltbare Picker aufgerufen.<br/><br/>" +
       "<b>Ver-/Entriegeln</b>: %DCber die Schloss - Tasten erh%E4lt ein T%FCrschlossantrieb den Befehl zum Ver- bzw. Entriegeln.<br/><br/>" +
       "<b>Tag/Nacht</b>: %DCber die Tag-Nacht-Tasten kann zwischen Tag und Nachtbetrieb der Zutrittsl%F6sung umgeschaltet werden.<br/><br/>" +
@@ -907,7 +907,7 @@ jQuery.extend(true,langJSON, {
       "using the > selection box under Screen 1. To return from Screen 2 to Screen 1, activate the value 1 in the < selection box under Screen 2.",
 
     "DEVICE_OPERATION_MODE_RGBW" :
-      "The Homematic IP LED Controller – RGBW can be operated in four different modes:<br/><br/>" +
+      "The Homematic IP LED Controller - RGBW can be operated in four different modes:<br/><br/>" +
       " - RGBW: Operation with a Red, Green, Blue, White Strip<br/>" +
       " - RGB: Operation with a Red, Green, Blue Strip<br/>" +
       " - Tunable White: Operation with up to two Tunable White Strips (comprising cold white and warm white LEDs)<br/>" +
@@ -960,15 +960,15 @@ jQuery.extend(true,langJSON, {
       "<b>Blind</b>: The slat angle can be adjusted using the up and down buttons.<br/><br/>" +
       "<b>Shutter/Blind</b>: The up and down buttons can be used to adjust the blind height or slat angle.  " +
       "The function button can be used to switch between blind height and slat angle (not with the 1x1 tile).<br/><br/>" +
-      "<b>HSV</b>: The target level can be set using the +/– buttons. " +
+      "<b>HSV</b>: The target level can be set using the +/- buttons. " +
       "Press and hold the icon to open the picker for RGB colour selection.<br/><br/>" +
-      "<b>TW</b>:  The target level can be set using the +/– buttons. " +
+      "<b>TW</b>:  The target level can be set using the +/- buttons. " +
       "Press and hold the icon to open the picker for colour temperature  selection.<br/><br/>" +
-      "<b>TW/RGB</b>:The target level can be set using the +/– buttons. " +
+      "<b>TW/RGB</b>:The target level can be set using the +/- buttons. " +
       "Press and hold the icon to open the picker, which can be switched between RGB and colour temperature.<br/><br/>" +
       "<b>Lock/Unlock</b>: The lock buttons send a command to a door lock drive to lock or unlock the door.<br/><br/>" +
       "<b>Day/Night</b>: The day/night buttons can be used to switch between day and night mode for the access solution.<br/><br/>" +
-      "<b>Open</b>: By pressing the door open icon, a door lock drive receives the command ‘pull latch’ to open the door.<br/><br/>",
+      "<b>Open</b>: By pressing the door open icon, a door lock drive receives the command 'pull latch' to open the door.<br/><br/>",
 
     "DALI_GROUP" :
       "Here, the DALI device can be assigned to up to 16 groups. " +
