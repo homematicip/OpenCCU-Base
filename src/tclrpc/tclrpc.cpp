@@ -316,36 +316,6 @@ static int StringFromXmlRpcValue(Tcl_Interp * interp, XmlRpcValue& v, std::strin
     
 }
 
-/*
-static int ParseURL(const std::string& url, std::string& protocol, std::string& host, int& port, std::string& uri)
-{
-	port=80;
-	uri="/RPC2";
-	std::string::size_type left, right;
-	left=0;
-	right=url.find("://", left);
-	if(right != std::string::npos){
-		protocol=url.substr(left, right-left);
-		left=right+3;
-	}
-	right=url.find_first_of(":", left);
-	host=url.substr(left, right-left);
-	if(right != std::string::npos){
-                right++;
-		left=right;
-		if(url[left]!='/'){
-			right=url.find('/', left);
-			port=atoi(url.substr(left, right-left).c_str());
-		}
-	}
-	if(right != std::string::npos){
-		left=right;
-		uri=url.substr(left);
-	}
-	return TCL_OK;
-}
-*/
-
 static int Tclrpc_Cmd (ClientData, Tcl_Interp * interp, int argc, CONST84 char* argv[])
 {
 	if(argc < 3) {
@@ -391,7 +361,7 @@ static int Tclrpc_Cmd (ClientData, Tcl_Interp * interp, int argc, CONST84 char* 
         		Tcl_AppendResult(interp, "Fault received on xmlrpc call ", argv[2], "(", params.toText().c_str(), ")\n", buffer, "faultString=", const_cast<char*>(((std::string)response["faultString"]).c_str()), NULL);
 		//retval=TCL_ERROR;
 		/*
-		* C.Niclaus: Reverted change from svn revsision 56882 made to fix something in speedy pick, but broke return code evaluation in
+		* C.Niclaus: Reverted change from svn revsision 56882 made to fix something in another project. The change broke the return code evaluation in
 		* tcl script 'dispatch.tcl'. Since this code was forked in twist project, this should be reverted now, to evaluate new return code
 		* (i.e. -10 TransmissionPending from Legacy API
 		*/
