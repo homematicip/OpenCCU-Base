@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="device.xsl"?>
 <device version="3" has_serial="false" eep_size="0">
-  <docu brief="HS485 ZKL (drahtgebunden)" target="internal" developer="Thole" developer_email="heiko.thole@entwicklung.eq-3.de" developer_telephone_number="747"></docu>
+  <docu brief="HS485 ZKL (drahtgebunden)" target="internal"></docu>
   <supported_types>
     <type name="HS485 ZKL" id="HS485ZKL" priority="2">
       <parameter index="0" size="1" const_value="3" />

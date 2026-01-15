@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="device.xsl"?>
 <device version="8" rx_modes="CONFIG,WAKEUP,LAZY_CONFIG"  peering_sysinfo_expect_channel="false" supports_aes="true">
 
-  <docu brief="Funk-Wandsender ab Firmwareversion 1.4" target="internal,user,oem" developer="Boekhoff" developer_email="hans-juergen.boekhoff@entwicklung.eq-3.de" developer_telephone_number="733">
+  <docu brief="Funk-Wandsender ab Firmwareversion 1.4" target="internal,user,oem">
   </docu>
 
   <supported_types>

@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="device.xsl"?>
 <device version="14" rx_modes="CONFIG,BURST"  peering_sysinfo_expect_channel="false" supports_aes="true">
 
-  <docu brief="Funk- Fernbedienung 19 Tasten mit Display" target="internal,user,oem" developer="Boekhoff" developer_email="hans-juergen.boekhoff@entwicklung.eq-3.de" developer_telephone_number="733">
+  <docu brief="Funk- Fernbedienung 19 Tasten mit Display" target="internal,user,oem">
   </docu>
 
 

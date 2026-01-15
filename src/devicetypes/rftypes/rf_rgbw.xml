@@ -2,9 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="device.xsl"?>
 <device version="41" supports_aes="true">
 
-  <docu brief="HomeMatic Funk-RGBW-Controller, Wandmontage " target="internal,user,oem" developer="Brueckmann"
-        developer_email="Wilhelm.Brueckmann@entwicklung.eq-3.de" developer_telephone_number="734">
-  </docu>
+  <docu brief="HomeMatic Funk-RGBW-Controller, Wandmontage " target="internal,user,oem"></docu>
 
   <supported_types>
     <type name="Wireless RGBW Controller for wall mounting" id="HM-LC-RGBW-WM" updatable="true" priority="2">

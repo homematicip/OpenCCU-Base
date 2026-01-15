@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="device.xsl"?>
 <device version="5" rx_modes="TRIPLE_BURST" supports_aes="true" cyclic_timeout="259200">
 
-  <docu brief="Funk-Rauchmelder" target="internal,user,oem" developer="Reck" developer_email="thorsten.reck@entwicklung.eq-3.de" developer_telephone_number="758">
+  <docu brief="Funk-Rauchmelder" target="internal,user,oem">
   </docu>
 
   <supported_types>

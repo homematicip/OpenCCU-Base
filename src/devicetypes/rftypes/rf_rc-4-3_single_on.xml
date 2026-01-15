@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="device.xsl"?>
 <device version="2" rx_modes="CONFIG,WAKEUP,LAZY_CONFIG"  peering_sysinfo_expect_channel="false" supports_aes="true">
 
-  <docu brief="Funk- Handsender V3 Einzeltasten" target="internal,user,oem" developer="Loof" developer_email="karsten.loof@entwicklung.eq-3.de" developer_telephone_number="742">
+  <docu brief="Funk- Handsender V3 Einzeltasten" target="internal,user,oem">
   </docu>
 
   <supported_types>  

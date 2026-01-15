@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="device.xsl"?>
 <device version="34" rx_modes="CONFIG,WAKEUP" supports_aes="true" cyclic_timeout="600">
 
-  <docu brief="Funk-Sender für Energiezähler-Sensor" target="internal,user,oem" developer="Ysker" developer_email="matthias.ysker@entwicklung.eq-3.de" developer_telephone_number="751">
+  <docu brief="Funk-Sender für Energiezähler-Sensor" target="internal,user,oem">
   </docu>
 
   <supported_types>

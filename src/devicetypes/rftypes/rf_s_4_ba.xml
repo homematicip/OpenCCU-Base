@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="device.xsl"?>
 <device version="3"  rx_modes="BURST"  supports_aes="true">
 
-  <docu brief="Funk- Schaltaktor Bat ab V1.0" target="internal,user,oem" developer="Ysker" developer_email="matthias.ysker@entwicklung.eq-3.de" developer_telephone_number="751">
+  <docu brief="Funk- Schaltaktor Bat ab V1.0" target="internal,user,oem">
   </docu>
 
   <supported_types>

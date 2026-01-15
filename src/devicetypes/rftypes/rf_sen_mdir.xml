@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="device.xsl"?>
 <device version="12" rx_modes="CONFIG,WAKEUP,LAZY_CONFIG" supports_aes="true">
 
-  <docu brief="Funk-Bewegungsmelder ab Firmwareversion 1.6" target="internal,user,oem" developer="Helm" developer_email="christian.helme@entwicklung.eq-3.de" developer_telephone_number="740">
+  <docu brief="Funk-Bewegungsmelder ab Firmwareversion 1.6" target="internal,user,oem">
   </docu>
 
   <supported_types>

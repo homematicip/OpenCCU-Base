@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="device.xsl"?>	
 <device version="7" eep_size="1024">
-	<docu brief="Schließerkontakt-Sensor (drahtgebunden)" target="internal,user,oem" developer="Thole" developer_email="heiko.thole@entwicklung.eq-3.de" developer_telephone_number="747"></docu>
+	<docu brief="Schließerkontakt-Sensor (drahtgebunden)" target="internal,user,oem"></docu>
 	<supported_types>
 		<type name="RS485 shutter contact 12-channel (DIN rails)" id="HMW-Sen-SC-12-DR" priority="2">
 			<parameter index="0" size="1" const_value="25" />

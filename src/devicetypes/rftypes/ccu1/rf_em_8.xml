@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="device.xsl"?>
 <device version="5" rx_modes="CONFIG,WAKEUP,LAZY_CONFIG"  peering_sysinfo_expect_channel="false" supports_aes="true">
 
-  <docu brief="HomeMatic 8-Kanal Sendemodul" target="internal,user,oem" developer="Brueckmann" developer_email="Wilhelm.Brueckmann@entwicklung.eq-3.de" developer_telephone_number="751">
+  <docu brief="HomeMatic 8-Kanal Sendemodul" target="internal,user,oem">
   </docu>
 
   <supported_types>

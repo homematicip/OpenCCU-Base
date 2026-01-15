@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="device.xsl"?>
 <device version="7" eep_size="1024">
 
-	<docu brief="I/O-Modul 12 Eingänge 7 Schaltausgänge Hutschienenmontage (drahtgebunden) V3.02" target="internal,user,oem" developer="Thole" developer_email="heiko.thole@entwicklung.eq-3.de" developer_telephone_number="747">
+	<docu brief="I/O-Modul 12 Eingänge 7 Schaltausgänge Hutschienenmontage (drahtgebunden) V3.02" target="internal,user,oem">
 	</docu>
 
   <supported_types>

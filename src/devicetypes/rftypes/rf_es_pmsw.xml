@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="device.xsl"?>
 <device version="16" supports_aes="true" cyclic_timeout="600">
 
-	<docu brief="Funk-Schaltaktor mit Leistungsmessung ab V2.5" target="internal,user,oem" developer="Grass" developer_email="frank.grass@entwicklung.eq-3.de" developer_telephone_number="737">
+	<docu brief="Funk-Schaltaktor mit Leistungsmessung ab V2.5" target="internal,user,oem">
 	</docu>
 
 	<supported_types>

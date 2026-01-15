@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="device.xsl"?>
 <device version="7">
 
-  <docu brief="Funk-Wetterstation" target="internal,user,oem" developer="Willenborg" developer_email="markus.willenborg@entwicklung.eq-3.de" developer_telephone_number="749">
+  <docu brief="Funk-Wetterstation" target="internal,user,oem">
   </docu>
 
   <supported_types>

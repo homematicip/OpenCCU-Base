@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="device.xsl"?>
 <device version="7"  supports_aes="true">
 
-  <docu brief="Funk- Schaltaktor ab V2.2 bis V2.3" target="internal,user,oem" developer="Grass" developer_email="frank.grass@entwicklung.eq-3.de" developer_telephone_number="737">
+  <docu brief="Funk- Schaltaktor ab V2.2 bis V2.3" target="internal,user,oem">
   </docu>
 
   <supported_types>

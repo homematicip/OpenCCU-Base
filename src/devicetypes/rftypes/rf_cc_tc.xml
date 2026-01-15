@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="device.xsl"?>
 <device version="15" rx_modes="CONFIG,WAKEUP"  cyclic_timeout="600">
 
-	<docu brief="Funk- Wandthermostat ab V2.0" target="internal,user,oem" developer="Beute" developer_email="bartholomeus.beute@entwicklung.eq-3.de" developer_telephone_number="732">
+	<docu brief="Funk- Wandthermostat ab V2.0" target="internal,user,oem">
 	</docu>
 
 	<supported_types>

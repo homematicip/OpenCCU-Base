@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="device.xsl"?>
 <device version="153"  rx_modes="ALWAYS" supports_aes="true" cyclic_timeout="88200">
-  <docu brief="Schueco HM-ReSC-Win-PCB-SC (WCS-TipTronic-Platine)" target="internal,oem" developer="Gerhard" developer_email="hans-hennig.gerhard@entwicklung.eq-3.de" developer_telephone_number="750">
+  <docu brief="Schueco HM-ReSC-Win-PCB-SC (WCS-TipTronic-Platine)" target="internal,oem">
   </docu>
 
 

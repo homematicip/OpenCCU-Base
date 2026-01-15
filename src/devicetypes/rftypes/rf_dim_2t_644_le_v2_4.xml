@@ -2,7 +2,7 @@
 <!-- <?xml-stylesheet type="text/xsl" href="device.xsl"?> -->
 <device version="12" >
 
-  <docu brief="Funk-Abschnitt-Dimmaktor ab V2.0 bis V2.4" target="internal,user,oem" developer="Graß" developer_email="frank.grass@entwicklung.eq-3.de" developer_telephone_number="737">
+  <docu brief="Funk-Abschnitt-Dimmaktor ab V2.0 bis V2.4" target="internal,user,oem">
   </docu>
 
   <supported_types>

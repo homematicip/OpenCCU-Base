@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="device.xsl"?>
 <device version="17" rx_modes="CONFIG"  peering_sysinfo_expect_channel="false" supports_aes="false">
 
-  <docu brief="Display-Statusanzeige AP" target="internal,user,oem" developer="Ysker" developer_email="matthias.ysker@entwicklung.eq-3.de" developer_telephone_number="751">
+  <docu brief="Display-Statusanzeige AP" target="internal,user,oem">
   </docu>
 
   <supported_types>

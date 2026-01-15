@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="device.xsl"?>
 <device version="11" eep_size="1024">
 
-	<docu brief="Dimmaktor 1fach Hutschienenmontage (drahtgebunden) ab V3.02" target="internal,user,oem" developer="Thole" developer_email="heiko.thole@entwicklung.eq-3.de" developer_telephone_number="747">
+	<docu brief="Dimmaktor 1fach Hutschienenmontage (drahtgebunden) ab V3.02" target="internal,user,oem">
 	</docu>
 
   <supported_types>

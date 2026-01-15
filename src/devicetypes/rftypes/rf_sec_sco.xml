@@ -3,7 +3,7 @@
 <!-- cyclic intervall is approx. 1h -> cyclic_timeout set to approx 3h -->
 <device version="3" rx_modes="CONFIG,WAKEUP,LAZY_CONFIG" supports_aes="true" cyclic_timeout="10000">
 
-  <docu brief="Funk- Tür-/Fensterkontakt optisch" target="internal,user,oem" developer="Battermann" developer_email="markus.battermann@entwicklung.eq-3.de" developer_telephone_number="756">
+  <docu brief="Funk- Tür-/Fensterkontakt optisch" target="internal,user,oem">
   </docu>
 
   <supported_types>

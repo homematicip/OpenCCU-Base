@@ -2,7 +2,7 @@
 <!-- <?xml-stylesheet type="text/xsl" href="device.xsl"?> -->
 <device version="3" supports_aes="true" >
 
-  <docu brief="Funk-Abschnitt-Dimmaktor" target="internal,user,oem" developer="Loof" developer_email="karsten.loof@entwicklung.eq-3.de" developer_telephone_number="742">
+  <docu brief="Funk-Abschnitt-Dimmaktor" target="internal,user,oem">
   </docu>
 
   <supported_types>   

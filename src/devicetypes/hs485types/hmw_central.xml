@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="device.xsl"?>
 <device version="3" class="central" ui_flags="dontdelete">
 
-<docu brief="Virtuelle Fernbedienung" target="internal,user,oem" developer="Thole, Werner" developer_email="heiko.thole@entwicklung.eq-3.de, falk.werner@entwicklung.eq-3.de" developer_telephone_number="747, 752">
+<docu brief="Virtuelle Fernbedienung" target="internal,user,oem">
 </docu>
 
 <supported_types>

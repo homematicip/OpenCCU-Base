@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="device.xsl"?>
 <device version="18" rx_modes="CONFIG,WAKEUP,BURST" default="WAKEUP" cyclic_timeout="600">
 
-  <docu brief="Funk-Kombisensor" target="internal,user,oem" developer="Schmidt" developer_email="Bastian.Schmidt@entwicklung.eq-3.de" developer_telephone_number="726">
+  <docu brief="Funk-Kombisensor" target="internal,user,oem">
   </docu>
 
   <supported_types>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="device.xsl"?>
 <device eep_size="1024" version="7">
-  <docu brief="12fach I/O-Modul Unterputzmontage (drahtgebunden)" developer="Thole" developer_email="heiko.thole@entwicklung.eq-3.de" developer_telephone_number="747" target="internal,user,oem"></docu>
+  <docu brief="12fach I/O-Modul Unterputzmontage (drahtgebunden)" target="internal,user,oem"></docu>
   <supported_types>
     <type id="HMW-IO-12-FM" name="RS485 I/O module 12-channel (flush-mount)" priority="2">
       <parameter const_value="27" index="0" size="1"/>

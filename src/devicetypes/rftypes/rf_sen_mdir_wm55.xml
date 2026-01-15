@@ -5,7 +5,7 @@
 -->
 <device version="5" rx_modes="CONFIG,WAKEUP,LAZY_CONFIG" peering_sysinfo_expect_channel="false" supports_aes="true">
   
-  <docu brief="Funk-Bewegungsmelder mit Tastenpaar, Wandmontage" target="internal,user,oem" developer="Witt" developer_email="sebastian.witt@entwicklung.eq-3.de" developer_telephone_number="759">
+  <docu brief="Funk-Bewegungsmelder mit Tastenpaar, Wandmontage" target="internal,user,oem">
   </docu>
   
   <supported_types>

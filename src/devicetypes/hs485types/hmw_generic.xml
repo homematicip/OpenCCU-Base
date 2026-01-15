@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="device.xsl"?>
 <device version="2">
 
-	<docu brief="Generische BidCos-Wired Geräte" target="internal,user,oem" developer="Thole, Werner" developer_email="heiko.thole@entwicklung.eq-3.de, falk.werner@entwicklung.eq-3.de" developer_telephone_number="747, 752">
+	<docu brief="Generische BidCos-Wired Geräte" target="internal,user,oem">
     Falls ein unbekanntes BidCos-Wired Gerät gefunden wurde, wird dieses als generisches BidCos-Wired Gerät angezeigt.
 	</docu>
 

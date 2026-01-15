@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="device.xsl"?>
 
 <device version="5" has_serial="false" eep_size="0">
-	<docu brief="HS485 Lux-Sensor (drahtgebunden)" target="internal" developer="Thole" developer_email="heiko.thole@entwicklung.eq-3.de" developer_telephone_number="747">
+	<docu brief="HS485 Lux-Sensor (drahtgebunden)" target="internal">
 	</docu>
 	
 	<supported_types>
