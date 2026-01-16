@@ -47,7 +47,10 @@ STRIP = $(CROSS)strip
 
 ROMFSINST = /usr/bin/romfs-inst.sh
 
-LD_FLAGS= -L $(EQ3CONFIGCMDMODULES_PATH) -l $(EQ3CONFIGCMDMODULES_LIB) -l pthread -L ../../openssl -lcrypto
+#LIBCRYPTO=-L../../crypttool
+LIBCRYPTO=""
+
+LD_FLAGS= -L $(EQ3CONFIGCMDMODULES_PATH) -l $(EQ3CONFIGCMDMODULES_LIB) -l pthread $(LIBCRYPTO) -lcrypto
 
 ifeq ($(CXXFLAGS),)
 CXXFLAGS = $(OPTIMIZE)
