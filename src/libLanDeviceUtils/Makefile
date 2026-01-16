@@ -48,7 +48,7 @@ BIDCOSUTILSLIB = elvutils
 #OPENSSL=-L ../openssl
 OPENSSL=
 #OPENSSLINCLUDE=-I../openssl/include
-OPENSSLINCLUDE=""
+OPENSSLINCLUDE=
 
 # Inlcude dirs for this target (libLanDeviceUtils.so)
 INCL = -Iinclude -Isrc
