@@ -185,6 +185,7 @@ ATC_ON	${stringTableON}
 AUTO_HYDRAULIC_ADJUSTMENT	${stringTableAutoHydraulicAdjustment}
 AUTO_MODE	${stringTableClimateControlRTTransceiverAutoMode}
 
+AUTO_RELOCK_TRANSCEIVER	${stringTableAutoRelockTransceiverTitle}
 AUTO_RELOCK_TRANSCEIVER|AUTO_RELOCK_STATE=TRUE	${stringTableAutoRelockState}: ${lblYes}
 AUTO_RELOCK_TRANSCEIVER|AUTO_RELOCK_STATE=FALSE	${stringTableAutoRelockState}: ${lblNo}
 
@@ -724,6 +725,7 @@ DOOR_LOCK_STATE_TRANSMITTER|LOCK_TARGET_LEVEL=LOCKED	${stringTableDoorLockStateT
 DOOR_LOCK_STATE_TRANSMITTER|LOCK_TARGET_LEVEL=UNLOCKED	${stringTableDoorLockStateTransmitterLockTargetLevelUnlocked}
 DOOR_LOCK_STATE_TRANSMITTER|LOCK_TARGET_LEVEL=OPEN	${stringTableDoorLockStateTransmitterLockTargetLevelOpen}
 
+DOOR_LOCK_TRANSCEIVER	${stringTableAccessReceiverTitle}
 DOOR_LOCK_TRANSCEIVER|LOCK_TARGET_LEVEL=LOCKED	${stringTableDoorLockStateTransmitterLockTargetLevelLocked}
 DOOR_LOCK_TRANSCEIVER|LOCK_TARGET_LEVEL=UNLOCKED	${stringTableDoorLockStateTransmitterLockTargetLevelUnlocked}
 DOOR_LOCK_TRANSCEIVER|LOCK_TARGET_LEVEL=OPEN	${stringTableDoorLockStateTransmitterLockTargetLevelOpen}
