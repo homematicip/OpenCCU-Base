@@ -424,8 +424,11 @@ ChannelChooser = Singleton.create({
           }
         }
       } else {
-        if (channelTypeName != "hmip-esi") {
-          arChannels.push(channel);
+        if (
+          channelTypeName != "hmip-esi" &&
+          ((channel.channelType != "SHUTTER_TRANSMITTER") || ((channel.channelType == "SHUTTER_TRANSMITTER") && (channelTypeName != "hmip-m-td15")))
+        ) {
+         arChannels.push(channel);
         }
       }
     }

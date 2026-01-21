@@ -846,6 +846,8 @@ ERROR_NO_END_STOP_LOCK=TRUE	${stringTableNoEndStopLock}: ${lblYes}
 ERROR_NO_END_STOP_UNLOCK	${stringTableNoEndStopUnLock}
 ERROR_NO_END_STOP_UNLOCK=FALSE	${stringTableNoEndStopUnLock}: ${lblNo}
 ERROR_NO_END_STOP_UNLOCK=TRUE	${stringTableNoEndStopUnLock}: ${lblYes}
+ERROR_OBSTACLE=FALSE	${stringTableErrorObstacleFalse}
+ERROR_OBSTACLE=TRUE	${stringTableErrorObstacleTrue}
 ERROR_OVERHEAT	${stringTableErrorOverheatTrue}
 ERROR_OVERHEAT=FALSE	${stringTableErrorOverheatFalse}
 ERROR_OVERHEAT=TRUE	${stringTableErrorOverheatTrue}

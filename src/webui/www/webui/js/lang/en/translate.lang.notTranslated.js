@@ -302,6 +302,9 @@ jQuery.extend(true, langJSON, {
 
     "optionSensitive" : "en* Empfindlich",
 
+    "stringTableErrorObstacleFalse": "en* Kein Hindernis erkannt",
+    "stringTableErrorObstacleTrue": "en* Hindernis erkannt",
+
     "noMoreKeys" : ""
   }
 });
