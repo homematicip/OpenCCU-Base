@@ -311,6 +311,9 @@ jQuery.extend(true, langJSON, {
     "stringTableErrorObstacleFalse": "Kein Hindernis erkannt",
     "stringTableErrorObstacleTrue": "Hindernis erkannt",
 
+    "lblDewPointControl" : "Taupunktkontrolle",
+    "lblDewPointTemp" : "Taupunkttemperatur",
+
     "noMoreKeys" : ""
   }
 });

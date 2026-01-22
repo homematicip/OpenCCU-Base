@@ -2676,7 +2676,7 @@ proc getHeatingClimateControlSwitchTransmitter {chn p descr {extraparam ""}} {
   upvar special_input_id special_input_id
 
   set specialID "[getSpecialID $special_input_id]"
-
+  set CHANNEL $special_input_id
   set html ""
 
   set climateFunction ""
@@ -2757,6 +2757,29 @@ proc getHeatingClimateControlSwitchTransmitter {chn p descr {extraparam ""}} {
     append html "</tr>"
   }
 
+  ### DewPoint
+  set param DEW_POINT_CONTROL_ENABLED
+  if { [info exists ps($param)] == 1  } {
+    incr prn
+    append html "<tr id='dewPointControl' class=$paramVisibility>"
+      append html "<td>\${lblDewPointControl}</td>"
+      append html "<td>"
+      append html  "[getCheckBox '$param' $ps($param) $chn $prn]"
+      append html "</td>"
+    append html "</tr>"
+  }
+
+  set param DEW_POINT_TEMPERATURE
+  if { [info exists ps($param)] == 1 } {
+    incr prn
+    append html "<tr id='dewPointTemp' class=$paramVisibility>"
+      append html "<td>\${lblDewPointTemp}</td>"
+    append html "<td>[getTextField $param $ps($param) $chn $prn]&nbsp;[getUnit $param]&nbsp;[getMinMaxValueDescr $param]</td>"
+    append html "</tr>"
+  }
+
+  ### End DewPoint
+
   set param HEATING_COOLING
   if { [info exists ps($param)] == 1  } {
     incr prn
@@ -2793,12 +2816,17 @@ proc getHeatingClimateControlSwitchTransmitter {chn p descr {extraparam ""}} {
       append html "heatingCoolingElmOption2 = heatingCoolingElm.find(\"option\[value='2'\]\"),"
       append html "heatingTwoPointHysteresisElm = jQuery(\"\#twoPointHysteresis\"),"
       append html "heatingTwoPointHysteresisHumidityElm = jQuery(\"\#twoPointHysteresisHumidity\");"
+      append html "dewPointControlElm = jQuery(\"\#dewPointControl\");"
+      append html "dewPointTempElm = jQuery(\"\#dewPointTemp\");"
 
       append html "if (parseInt(selectedMode) == 1) \{"
         append html "humidityLimitValueElm.show();"
         # append html "heatingCoolingElm.val(\"1\");" SPHM-1015
         append html "heatingTwoPointHysteresisElm.hide();"
         append html "heatingTwoPointHysteresisHumidityElm.show();"
+        append html "dewPointControlElm.show();"
+        append html "dewPointTempElm.show();"
+
         append html "heatingCoolingElmOption0.html(translateKey('optionDrying'));"
         append html "heatingCoolingElmOption1.html(translateKey('optionMoistening'));"
         append html "heatingCoolingElmOption2.html(translateKey('optionDryingMoistening'));"
@@ -2812,6 +2840,9 @@ proc getHeatingClimateControlSwitchTransmitter {chn p descr {extraparam ""}} {
         # append html "heatingCoolingElm.val(\"0\");" SPHM-1015
         append html "heatingTwoPointHysteresisElm.show();"
         append html "heatingTwoPointHysteresisHumidityElm.hide();"
+        append html "dewPointControlElm.hide();"
+        append html "dewPointTempElm.hide();"
+
         append html "heatingCoolingElmOption0.html(translateKey('optionHeating'));"
         append html "heatingCoolingElmOption1.html(translateKey('optionCooling'));"
         append html "heatingCoolingElmOption2.html(translateKey('optionHeatingCooling'));"
