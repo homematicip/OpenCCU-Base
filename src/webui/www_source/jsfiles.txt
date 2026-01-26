@@ -163,6 +163,7 @@ ise/js/DoorOpener.js
 ise/js/iseSysProtoLoader.js
 ise/js/iseChannelLoader.js
 ise/js/shutterControl.js
+ise/js/shutterSelfCalibration.js
 ise/js/channelLoader.js
 ise/js/channelPopupLoader.js
 ise/js/progamPopupLoader.js
