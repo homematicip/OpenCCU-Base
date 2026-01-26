@@ -344,7 +344,8 @@ function ::CreateBlindVirtualReceiver()
   }
 
   WriteLine("<td style='"#controlOperable#"'>");
-    WriteLine("<table align='center'>");
+    ! WriteLine("<table align='center'>");
+    WriteLine("<table>");
 
 
       WriteLine("<tr>");
@@ -548,7 +549,8 @@ function ::CreateShutterVirtualReceiver()
   }
 
   WriteLine("<td>");
-    WriteLine("<table align='center'>");
+   ! WriteLine("<table align='center'>");
+    WriteLine("<table>");
       WriteLine("<tr>");
 
         WriteLine("<td colspan='2' id='shutter"#chnId#"' class='CLASS02549' >&nbsp;</td>");
