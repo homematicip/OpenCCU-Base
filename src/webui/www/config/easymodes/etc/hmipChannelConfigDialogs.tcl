@@ -4745,8 +4745,8 @@ proc getAccelerationTransceiver_A {chn p descr address} {
     incr prn
     array_clear options
     set options(0) "\${optionInactiv}"
-    set options(1) "\${optionVibrationControl}"
-    set options(2) "\${optionPositionControl}"
+    set options(1) "\${optionPositionControl}"
+    set options(2) "\${optionVibrationControl}"
     set options(3) "\${optionPositionVibrationControl}"
     append html "<tr><td>\${lblSabotage_A}</td><td>"
       append html [get_ComboBox options $param separate_$CHANNEL\_$prn ps $param]
