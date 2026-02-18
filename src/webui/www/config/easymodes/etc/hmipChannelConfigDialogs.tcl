@@ -7684,10 +7684,10 @@ proc getDistanceTransmitter {chn p descr} {
     incr prn
     append html "<tr>"
     append html "<td>\${stringTableMeasurementInterval}</td>"
-    append html [getComboBox $chn $prn "$specialID" "autoIntervalA" "helpSoilMoisture"]
+    append html [getComboBox $chn $prn "$specialID" "timeMin_1_5_10_15_30_60" "helpSoilMoisture"]
     append html "</tr>"
 
-    append html [getTimeUnitComboBoxC $param $ps($param) $chn $prn $special_input_id 'measurementInterval']
+    append html [getTimeUnitComboBoxE $param $ps($param) $chn $prn $special_input_id 'measurementInterval']
 
     incr prn
     set param INTERVAL_VALUE
@@ -7698,7 +7698,7 @@ proc getDistanceTransmitter {chn p descr} {
 
     append html "</tr>"
     append html "<tr id=\"space_$chn\_$prn\" class=\"hidden\"><td><br/></td></tr>"
-    append html "<script type=\"text/javascript\">setTimeout(function() {setCurrentAutoIntervalAOption($chn, [expr $prn - 1], '$specialID');}, 100)</script>"
+    append html "<script type=\"text/javascript\">setTimeout(function() {setCurrentTimeMin_1_5_10_15_30_60Option($chn, [expr $prn - 1], '$specialID');}, 100)</script>"
   }
 
   set param REFERENCE_HEIGHT
