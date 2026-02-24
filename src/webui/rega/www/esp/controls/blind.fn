@@ -670,6 +670,15 @@ function ::CreateShutterTransmitter()
   object oManuelSelfCalDurValue = cObj.DPByControl("SHUTTER_TRANSMITTER.MANUAL_SELF_CALIBRATION_DURATION_VALUE");
   object oManuelSelfCal = cObj.DPByControl("SHUTTER_TRANSMITTER.MANUAL_SELF_CALIBRATION");
 
+  ! Determine the name of the interface
+  integer iFaceID = cObj.Interface();
+  object oIface = dom.GetObject(iFaceID);
+  string sInterface = oIface.Name();
+
+  object oChannel = dom.GetObject(chnId);
+  string chAddress = oChannel.Address();
+  string chType = oChannel.ChannelType();
+
 
   if (mode) {
     if (mode.MetaData("channelMode") == "shutter") {
@@ -705,7 +714,7 @@ function ::CreateShutterTransmitter()
       WriteLine("<tr>");
 
         WriteLine("<td>");
-          WriteLine("<div id='shutterSelfCal"#chnId#"' class='CLASS02550 ControlBtnOff' onclick='new shutterSelfCalibration(" # chnId # ");' >BTN</div>");
+          WriteLine("<div id='shutterSelfCal"#chnId#"' class='CLASS02550 ControlBtnOff' onclick='new shutterSelfCalibration("#chnId#", \""#sInterface#"\" , \""#chAddress#"\" );' >BTN</div>");
         WriteLine("</td>");
       WriteLine("</tr>");
     }
