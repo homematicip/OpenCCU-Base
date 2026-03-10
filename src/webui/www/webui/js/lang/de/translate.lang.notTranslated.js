@@ -380,8 +380,8 @@ langJSON.de.helpLockTargetLevel =
   */
   langJSON.de.helpLockTargetLevel_H +
   langJSON.de.helpLockTargetLevel_I +
-  langJSON.de.helpLockTargetLevel_J +
+  langJSON.de.helpLockTargetLevel_J ;
 //  langJSON.de.helpLockTargetLevel_K;
-  langJSON.de.helpLockTargetLevel_L;
+//  langJSON.de.helpLockTargetLevel_L;
 
 

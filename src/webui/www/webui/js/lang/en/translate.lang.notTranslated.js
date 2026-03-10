@@ -372,6 +372,6 @@ langJSON.en.helpLockTargetLevel =
   */
   langJSON.en.helpLockTargetLevel_H +
   langJSON.en.helpLockTargetLevel_I +
-  langJSON.en.helpLockTargetLevel_J +
+  langJSON.en.helpLockTargetLevel_J ;
 //  langJSON.en.helpLockTargetLevel_K ;
-  langJSON.en.helpLockTargetLevel_L;
+//  langJSON.en.helpLockTargetLevel_L;
