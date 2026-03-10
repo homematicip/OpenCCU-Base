@@ -839,7 +839,22 @@ function ::dcCreate()
               isKnownControl = true;
               Call("/esp/controls/maintenanceSmokeDetector.fn::CreateMaintenance()");
             }
-         }
+
+            ! The maintenance channel of a HMIP-FAL* or HmIP-eTRV* should only be visible when the VALUE parameter HEATING_COOLING is available
+            ! Nevertheless we check here again, if the parameter HEATING_COOLING is available
+            if ((ch.Label().Find("HmIP-FAL") > -1) || (ch.Label().Find("HmIP-eTRV") > -1)) {
+              object oHeatingCooling = cObj.DPByControl("MAINTENANCE.HEATING_COOLING");
+              if (oHeatingCooling) {
+                WriteLine( "<script>conInfo('Create "#ch.Label()#" MAINTENANCE Control.');</script>" );
+                sLastControlName = CN_MAINTENANCE;
+                isKnownControl = true;
+                Call("/esp/controls/maintenance.fn::CreateHeatingCooling()");
+              } else {
+                ! This should never be called.
+                Call("/esp/datapointconfigurator.fn::CreateNoFunction()");
+              }
+            }
+          }
 
           !# CN_MOTIONDETECTOR
           bIsControl = ( sControlName.Find(CN_MOTIONDETECTOR) > -1 );

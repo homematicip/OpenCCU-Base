@@ -461,6 +461,19 @@ function ::showHideHmIPChannel() {
         bShowChannel = true;
       }
 
+      if ((oDevHssType.Find("HmIP-FAL") != -1) || (oDevHssType.Find("HmIP-eTRV") != -1)) {
+        string sEnum = chn.DPs().EnumEnabledVisibleIDs();
+        string s;
+
+        foreach( s, sEnum ) {
+          object oDP = dom.GetObject( s );
+          if( oDP ) {
+            if (oDP.HSSID() == "HEATING_COOLING") {
+              bShowChannel = true;
+            }
+          }
+        }
+      }
       return;
     }
 
