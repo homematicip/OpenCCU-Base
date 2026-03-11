@@ -89,12 +89,13 @@ function ::CreateHeatingCooling() {
       btnStateCooling = "ControlBtnOn";
     }
 
-    WriteLine("<td><table><tr>");
+    WriteLine("<td><table class='CLASS02532b'><tr>");
       WriteLine("<td>");
         WriteLine("<div class='"#btnStateHeating#" CLASS02551' style='line-height:35px' id='"#chnId#"Heating' onclick='setDpState("#oHeatingCooling.ID()#", 0); JControlBtn.pressed(jQuery(this));'>"#statusHeating#"</div>");
       WriteLine("</td>");
+      WriteLine("<td><img src='/ise/img/help.png' style='curor: pointer; width:25px; height:25px;' onclick='showParamHelp(translateKey(\"helpHeatingCooling\"), 450, 150);'></td>");
       WriteLine("<td>");
-        WriteLine("<div class='"#btnStateCooling#" CLASS02551' style='line-height:35px; margin-left:60%;' id='"#chnId#"Cooling' onclick='setDpState("#oHeatingCooling.ID()#", 1); JControlBtn.pressed(jQuery(this));'>"#statusCooling#"</div>");
+        WriteLine("<div class='"#btnStateCooling#" CLASS02551' style='line-height:35px; margin-left:12%;' id='"#chnId#"Cooling' onclick='setDpState("#oHeatingCooling.ID()#", 1); JControlBtn.pressed(jQuery(this));'>"#statusCooling#"</div>");
       WriteLine("</td>");
     WriteLine("</tr></table></td>");
   }  else {
