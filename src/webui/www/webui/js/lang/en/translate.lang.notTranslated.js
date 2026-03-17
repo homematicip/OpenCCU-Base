@@ -346,6 +346,11 @@ jQuery.extend(true, langJSON, {
       "Wenn dies nicht passiert, kann der Zustand durch eine andere Komponente wieder %FCberschrieben werden.<br/><br/>" +
       "Beispielsweise verteilt die HmIP-MIOB diesen Zustand zyklisch an die Fu%DFbodenheizungsaktoren und diese verteilen die Information weiter an die Wandthermostate.",
 
+    "optionUnit1Ltr"    : "en*   1 Liter",
+    "optionUnit10Ltr"   : "en*  10 Liter",
+    "optionUnit100Ltr"  : "en*  100 Liter",
+    "optionUnit1000Ltr" : "en* 1000 Liter",
+
     "noMoreKeys" : ""
   }
 });

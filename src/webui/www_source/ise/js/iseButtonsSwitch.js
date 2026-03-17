@@ -45,6 +45,18 @@ iseButtonsSwitch.prototype = {
       
       this.clickOn = this.onClickOn.bindAsEventListener(this);
       Event.observe(this.divOn, 'mousedown', this.clickOn);
+
+      if (this.chnLabel.indexOf("HmIP-WSM") != -1) {
+        this.defaultDurationUnit = 5; // 5 minutes
+        this.durationSelect = jQuery("#" + this.id +"durationSelect");
+        this.durationValueElm = jQuery("#" + this.id + "durationValue");
+        this.durationUnitElm = jQuery("#" + this.id + "durationUnit");
+        this.durationElm = jQuery("#" + this.id + "duration"); // here we set the value which will be transmitted
+
+        this.initDurationValue();
+        this.initEventFlowDuration();
+      }
+
     }
   },
   
@@ -96,7 +108,20 @@ iseButtonsSwitch.prototype = {
       ControlBtn.off(this.divOn);
       ControlBtn.on(this.divOff);
     }
+  },
+
+  // Water
+  initDurationValue: function() {
+    this.durationElm.val(parseInt(this.durationSelect.val()) * this.defaultDurationUnit); // here we set the value which will be transmitted
+  },
+
+  initEventFlowDuration: function() {
+    var self = this;
+    this.durationSelect.on("change", function() {
+      self.durationElm.val(parseInt(this.value) * self.defaultDurationUnit); // set the value which will be transmitted
+    });
   }
+
 };
 
 /**
@@ -223,5 +248,4 @@ iseButtonsEvent.prototype = {
       pe.stop();
     }, 1);
   }
- 
 };
