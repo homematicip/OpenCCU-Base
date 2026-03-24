@@ -108,7 +108,7 @@ iseButtonsSwitch.prototype = {
       ControlBtn.off(this.divOn);
       ControlBtn.on(this.divOff);
     }
-  },
+  }
 
   // Water
 /*  initDurationValue: function() {
