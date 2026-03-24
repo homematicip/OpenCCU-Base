@@ -360,6 +360,14 @@ jQuery.extend(true, langJSON, {
     "optionUnit100Ltr"  : " 100 Liter",
     "optionUnit1000Ltr" : "1000 Liter",
 
+    "optionSensorError" : "Kein Sensor erkannt",
+    "optionSensorConnected" : "Sensor erkannt",
+    "lblSensorStatus" : "Sensor-Status",
+
+    "lblTypeOfMeasurement" : "Art der Messung",
+    "optionWater" : "Wasser",
+    "optionGas" : "Gas",
+
     "noMoreKeys" : ""
   }
 });

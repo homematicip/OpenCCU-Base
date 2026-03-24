@@ -2462,3 +2462,19 @@ storeWSMOutputBehaviour = function(address) {
   });
 
 };
+
+storeOptionGasWater = function(elm, chnAddress) {
+  console.log("setOptionGasWater: " + elm.val(), "channel: " + chnAddress);
+  var devId = DeviceList.getDeviceByAddress(chnAddress.split(":")[0]).id;
+  homematic("Interface.setMetadata", {"objectId": devId, "dataId": "modeGasWater", "value": elm.val()});
+};
+
+getOptionGasWater = function (chnAddress) {
+  var devId = DeviceList.getDeviceByAddress(chnAddress.split(":")[0]).id,
+  optionGasWater = homematic("Interface.getMetadata", {"objectId": devId, "dataId": "modeGasWater"});
+
+  if (optionGasWater == "null") { // metadata null == string "null"
+    optionGasWater = 0;
+  }
+  jQuery("#selectGasWater_" + chnAddress.split(":")[1]).val(optionGasWater);
+};

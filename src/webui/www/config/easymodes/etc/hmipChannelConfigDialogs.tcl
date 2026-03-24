@@ -3976,6 +3976,91 @@ proc getEnergieMeterTransmitterESIStartValue {chn p descr chnAddress chnOpMode} 
   return $html
 }
 
+proc getEnergieMeterTransmitterESIInd {chn p descr chnAddress} {
+  global dev_descr
+  upvar $p ps
+  upvar $descr psDescr
+  upvar prn prn
+  upvar special_input_id special_input_id
+
+  set CHANNEL $special_input_id
+  set specialID "[getSpecialID $special_input_id]"
+
+  set devType $dev_descr(TYPE)
+
+  set html ""
+
+  puts "<script type=\"text/javascript\">load_JSFunc('/config/easymodes/MASTER_LANG/HM_ES_PMSw.js')</script>"
+
+  set param CHANNEL_OPERATION_MODE
+  if { [info exists ps($param)] == 1  } {
+    # The HmIP-ESI-IND can be uses for measuring Water or Gas.
+    # This is a user defined parameter, stored as meta data.
+    # This parameter determines the different text labels for Gas and Water.
+
+    append html "<tr>"
+      append html "<td>\${lblTypeOfMeasurement}</td>"
+      append html "<td>"
+        append html "<select id='selectGasWater_$chn' onchange='storeOptionGasWater(jQuery(this), \"$chnAddress\")'>"
+         append html "<option value='0'>\${optionGas}</option>"
+         append html "<option value='1'>\${optionWater}</option>"
+        append html "</select>"
+      append html "</td>"
+    append html "</tr>"
+
+    incr prn
+    array_clear options
+    set options(0) "\${optionSensorError}"
+    set options(1) "\${optionSensorConnected}"
+    append html "<tr><td>\${lblSensorStatus}</td>"
+    append html "<td>[get_ComboBox options $param separate_$CHANNEL\_$prn ps $param]</td>"
+    append html "</tr>"
+  }
+
+  set param METER_CONSTANT_VOLUME
+  if {[info exists ps($param)] == 1} {
+    incr prn
+    append html "<tr>"
+    #  append html "<td>\${stringTablePowerMeterConstantVolume}</td>"
+      append html "<td>\${stringTablePowerMeterConstant}</td>"
+      append html "<td>[getTextField $param $ps($param) $chn $prn]&nbsp;[getUnit $param]&nbsp;[getMinMaxValueDescr $param]</td>"
+    append html "</tr>"
+  }
+
+  set param INTERVAL_UNIT
+  if { [info exists ps($param)] == 1  } {
+    incr prn
+    append html "<tr>"
+    append html "<td>\${stringTableMeasurementInterval}</td>"
+    append html [getComboBox $chn $prn "$specialID" "autoIntervalA" "helpSoilMoisture"]
+    append html "</tr>"
+
+    append html [getTimeUnitComboBoxC $param $ps($param) $chn $prn $special_input_id 'measurementInterval']
+
+    incr prn
+    set param INTERVAL_VALUE
+    append html "<tr id=\"timeFactor_$chn\_$prn\" class=\"hidden\">"
+    append html "<td>\${stringTableMeasurementIntervalValue}</td>"
+
+    append html "<td>[getTextField $param $ps($param) $chn $prn]&nbsp;[getMinMaxValueDescr $param]</td>"
+
+    append html "</tr>"
+    append html "<tr id=\"space_$chn\_$prn\" class=\"hidden\"><td><br/></td></tr>"
+    append html "<script type=\"text/javascript\">setTimeout(function() {setCurrentAutoIntervalAOption($chn, [expr $prn - 1], '$specialID');}, 100)</script>"
+  }
+
+  if {$html != ""} {
+    append html "<script type=\"text/javascript\">"
+      # here we set the gas/water selectbox to the current value
+      append html "getOptionGasWater(\"$chnAddress\");"
+    append html "</script>"
+  } else {
+    append html [getNoParametersToSet]
+  }
+
+  return $html
+}
+
 proc getCondSwitchTransmitter {chn p descr} {
 
   global iface dev_descr
