@@ -2464,7 +2464,6 @@ storeWSMOutputBehaviour = function(address) {
 };
 
 storeOptionGasWater = function(elm, chnAddress) {
-  console.log("setOptionGasWater: " + elm.val(), "channel: " + chnAddress);
   var devId = DeviceList.getDeviceByAddress(chnAddress.split(":")[0]).id;
   homematic("Interface.setMetadata", {"objectId": devId, "dataId": "modeGasWater", "value": elm.val()});
 };
