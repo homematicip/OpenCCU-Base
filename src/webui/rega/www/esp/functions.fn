@@ -809,6 +809,13 @@ function ::conditionIsParameterVisible() {
     }
   }
 
+  if (oCC.HssType() == "BACKLIGHTING_RECEIVER") {
+    if (oDP.HSSID().Find("ACTIVITY_STATE") != -1) {
+      showChannelParam = false;
+      return;
+    }
+  }
+
   if ( sInterface == hmIPVirtualDevIdentifier ) {
     excludeParams = "BOOST_TIME,CONTROL_DIFFERENTIAL_TEMPERATURE,LEVEL_STATUS,OPERATING_VOLTAGE,PARTY_,PARTY_MODE,PROCESS,QUICK_VETO_TIME,";
     excludeParams = excludeParams#"RSSI_DEVICE,RSSI_PEER,SECTION,SMOKE_DETECTOR_TEST_RESULT=NONE,VALVE_STATE";
