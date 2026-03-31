@@ -33,7 +33,10 @@ iseHmIPWeeklyProgram.prototype = {
     this.deviceIsHmIP_FLC = (this.isDeviceType("HmIP-FLC") || (this.isDeviceType("HmIP-FDC")));
 
     this.isWGS = (this.device.deviceType.id.includes("HmIP-WGS")) ? true : false;
+    this.isWiredWGS = (this.device.deviceType.id.includes("HmIPW-WGS")) ? true : false;
+
     this.isWGT = (this.device.deviceType.id.includes("HmIP-WGT")) ? true : false;
+
 
     this.expert = (! this.opts.userEasyLinkMode || this.deviceIsHmIP_FLC) ? true : false;
 
@@ -63,6 +66,10 @@ iseHmIPWeeklyProgram.prototype = {
 
     if (this.isWGS) {
       this.relevantChn = (this.expert) ? [7, 9, 10, 11] : [7, 9];
+    }
+
+    if (this.isWiredWGS) {
+      this.relevantChn = [6];
     }
 
     if (this.isWGT) {
