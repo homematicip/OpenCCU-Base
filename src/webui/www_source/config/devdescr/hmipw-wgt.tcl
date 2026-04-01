@@ -2,7 +2,7 @@
 
 #Typ dieser Beschreibung (Schlüssel)
 #-----------------------------------------------------------------------
-set TYPE "HmIP-WGT"
+set TYPE "HmIPW-WGT"
 
 #Beschreibung des Gerätetyps
 #-----------------------------------------------------------------------
