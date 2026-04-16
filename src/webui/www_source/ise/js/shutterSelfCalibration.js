@@ -37,7 +37,7 @@ shutterSelfCalibration.prototype = {
 
 
     var title = ((this.topSet == 0) && (this.bottomSet == 0)) ? translateKey("btnSelfCalibration") : "";
-    var dlgWith = ((this.topSet == 0) || (this.bottomSet == 0)) ? 310 : 132;
+    var dlgWith = ((this.topSet == 0) || (this.bottomSet == 0)) ? 310 : 182;
 
     this.dlg = new YesNoDialog(title, this.getHtml(), function(result) {
       if (result == YesNoDialog.RESULT_NO) {
@@ -98,7 +98,7 @@ shutterSelfCalibration.prototype = {
 
   getHtml: function() {
     var topSetHidden = false;
-    var html = "<table>";
+    var html = "<table class='center'>";
     if (this.topSet == 0) {
       // Change Motor Direction
       html += "<tr>";
