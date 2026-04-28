@@ -22,7 +22,7 @@ AddProfileValues = function(prefix)
   var i = 1;
 
   var elem;
-  while (elem = document.getElementById(prefix + i))
+  while (elem == document.getElementById(prefix + i))
   {
     AddParam(elem);
     i++;
