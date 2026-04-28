@@ -60,18 +60,34 @@ iseButtonsSwitch.prototype = {
 
   setConditionWaterFlow: function() {
 
-    if ((parseInt(this.durationValueElm.val()) == 0) && (parseInt(this.valueLitersElm.val()) > 0))  {
-      this.durationValueElm.val(31);
-      this.durationUnitElm.val(2);
-    }
+    var durationValue = parseInt(this.durationValueElm.val()),
+      durationUnit = parseInt(this.durationUnitElm.val()),
+      valueLiters =  parseInt(this.valueLitersElm.val()),
+      unitLiters = parseInt(this.unitLitersElm.val());
 
-    homematic("Interface.putParamset",{'interface': this.HmIPInterfaceID, 'address' : this.chnAddress, 'paramsetKey' : 'VALUES', 'set':
+
+    if ((durationValue == 0) && (valueLiters > 0))  {
+      homematic("Interface.putParamset",{'interface': this.HmIPInterfaceID, 'address' : this.chnAddress, 'paramsetKey' : 'VALUES', 'set':
         [
-          {name:'DURATION_VALUE', type: 'int', value: this.durationValueElm.val()},
-          {name:'DURATION_UNIT', type: 'int', value: this.durationUnitElm.val()},
-          {name:'OUTPUT_BEHAVIOUR', type: 'int', value: (parseInt(this.valueLitersElm.val()) + parseInt(this.unitLitersElm.val())) }
+          {name:'OUTPUT_BEHAVIOUR', type: 'int', value: (valueLiters + unitLiters) }
         ]
-    },function(result){console.log(result);});
+      },function(result){conInfo(result);});
+    } else if  ((durationValue > 0) && (valueLiters > 0)) {
+      homematic("Interface.putParamset",{'interface': this.HmIPInterfaceID, 'address' : this.chnAddress, 'paramsetKey' : 'VALUES', 'set':
+        [
+          {name:'DURATION_VALUE', type: 'int', value: durationValue},
+          {name:'DURATION_UNIT', type: 'int', value: durationUnit},
+          {name:'OUTPUT_BEHAVIOUR', type: 'int', value: (valueLiters + unitLiters) }
+        ]
+      },function(result){conInfo(result);});
+    } else if ((durationValue > 0) && (valueLiters == 0)) {
+      homematic("Interface.putParamset",{'interface': this.HmIPInterfaceID, 'address' : this.chnAddress, 'paramsetKey' : 'VALUES', 'set':
+        [
+          {name:'DURATION_VALUE', type: 'int', value: durationValue},
+          {name:'DURATION_UNIT', type: 'int', value: durationUnit}
+        ]
+      },function(result){conInfo(result);});
+    }
   },
 
   onClickOff: function() {
