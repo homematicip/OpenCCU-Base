@@ -69,7 +69,7 @@ iseButtonsSwitch.prototype = {
         [
           {name:'DURATION_VALUE', type: 'int', value: this.durationValueElm.val()},
           {name:'DURATION_UNIT', type: 'int', value: this.durationUnitElm.val()},
-          {name:'OUTPUT_BEHAVIOUR', type: 'int', value: (parseInt(this.valueLitersElm.val()) + parseInt(this.unitLitersElm.val())) },
+          {name:'OUTPUT_BEHAVIOUR', type: 'int', value: (parseInt(this.valueLitersElm.val()) + parseInt(this.unitLitersElm.val())) }
         ]
     },function(result){console.log(result);});
   },
