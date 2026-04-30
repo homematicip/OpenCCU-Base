@@ -20,7 +20,6 @@ ResetPostString = function()
 AddProfileValues = function(prefix)
 {
   var i = 1;
-
   var elem;
   while (elem = document.getElementById(prefix + i))
   {
@@ -31,8 +30,8 @@ AddProfileValues = function(prefix)
 
 AddSeparateSettings = function(prefix, pnr)
 {
-  var i = 1,
-  elem;
+  var i = 1;
+  var elem;
   while (elem = document.getElementById(prefix + pnr + '_' + i))
   {
     // add ALL parameters (do NOT use IsDirty()) because
