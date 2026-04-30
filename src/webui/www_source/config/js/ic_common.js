@@ -21,17 +21,20 @@ AddProfileValues = function(prefix)
 {
   var i = 1;
   var elem;
+  /*jsl:ignore*/
   while (elem = document.getElementById(prefix + i))
   {
     AddParam(elem);
     i++;
   }
+    
 };
 
 AddSeparateSettings = function(prefix, pnr)
 {
   var i = 1;
   var elem;
+  /*jsl:ignore*/    
   while (elem = document.getElementById(prefix + pnr + '_' + i))
   {
     // add ALL parameters (do NOT use IsDirty()) because
