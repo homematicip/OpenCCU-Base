@@ -742,46 +742,66 @@ HmIPWeeklyProgram.prototype = {
     }
 
     if (this.isWSM) {
-      isValueValid = function(elm) {
-        if (parseInt(elm.value) > 31) {elm.value = 31;} else if (isNaN(parseInt(elm.value))) {elm.value = 0;}
+      var arWSMFw = this.fwVersion.split("."),
+       wsmFwMajor = parseInt(arWSMFw[0]),
+       wsmFwMinor = parseInt(arWSMFw[1]);
+
+      if ((wsmFwMajor >= 1) && (wsmFwMinor >= 4)) {
+        isValueValid = function (elm) {
+          if (parseInt(elm.value) > 31) {
+            elm.value = 31;
+          } else if (isNaN(parseInt(elm.value))) {
+            elm.value = 0;
+          }
+        }
+
+        showFlowControlHelp = function () {
+          var width = 500,
+            height = 75;
+          MessageBox.show(translateKey("HelpTitle"), translateKey("helpConditionWaterFlow"), "", width, height);
+        };
+
+        this.prn++;
+        var outputBehaviourVal = (this.activeEntries[number] == true) ? parseInt(this.ps[number + "_WP_OUTPUT_BEHAVIOUR"]) : 0,
+          litersVal = 0, litersUnit = 0, bit = 0;
+
+        for (bit = 0; bit <= 5; bit++) {
+          if ((bit == 0) && (isBitSet(outputBehaviourVal, bit))) {
+            litersVal += 1;
+          }
+          if ((bit == 1) && (isBitSet(outputBehaviourVal, bit))) {
+            litersVal += 2;
+          }
+          if ((bit >= 2) && (isBitSet(outputBehaviourVal, bit))) {
+            litersVal += Math.pow(2, bit);
+          }
+        }
+
+        for (bit = 6; bit <= 7; bit++) {
+          if (isBitSet(outputBehaviourVal, bit)) {
+            litersUnit += Math.pow(2, bit);
+          }
+        }
+
+        programEntry += "<td name='condWaterFlow" + number + "'>" + translateKey('powerMeasurementA') + "</td>";
+        programEntry += "<td><input type='text' id='valueLiters" + number + "' size='4' name='condWaterFlow" + number + "' class='alignCenter' onblur='isValueValid(this)' value='" + litersVal + "'><span name='condWaterFlow" + number + "'> x </span>";
+
+        programEntry += "<select id='unitLiters" + number + "' name='condWaterFlow" + number + "'>"
+        programEntry += "<option value='0'>" + translateKey('optionUnit1Ltr') + "</option>";
+        programEntry += "<option value='64'>" + translateKey('optionUnit10Ltr') + "</option>";
+        programEntry += "<option value='128'>" + translateKey('optionUnit100Ltr') + "</option>";
+        programEntry += "<option value='192'>" + translateKey('optionUnit1000Ltr') + "</option>";
+        programEntry += "</select>"
+
+        programEntry += "<img id='iconHelp_" + number + "' src='/ise/img/help.png' style='cursor: pointer; width:18px; height:18px; position:relative; top:2px;' alt='' onclick='showFlowControlHelp();'>";
+
+        programEntry += "<td><input type='text' id='separate_CHANNEL_" + this.chn + "_" + this.prn + "' name='" + number + "_WP_OUTPUT_BEHAVIOUR' value='" + outputBehaviourVal + "' size='2' class='hidden'></td>";
+        programEntry += "<script>jQuery('\#unitLiters" + number + "').val(" + litersUnit + ")</script>";
+
+        window.setTimeout(function () {
+          self._setWSMOutputBehaviour(number);
+        }, 50);
       }
-
-      showFlowControlHelp = function () {
-        var width = 500,
-          height = 75;
-        MessageBox.show(translateKey("HelpTitle"), translateKey("helpConditionWaterFlow"), "", width, height);
-      };
-
-      this.prn++;
-      var outputBehaviourVal = (this.activeEntries[number] == true) ? parseInt(this.ps[number + "_WP_OUTPUT_BEHAVIOUR"]) : 0,
-        litersVal = 0, litersUnit = 0, bit = 0;
-
-      for (bit = 0; bit <= 5; bit++) {
-        if ((bit == 0) && (isBitSet(outputBehaviourVal,bit))) {litersVal += 1;}
-        if ((bit == 1) && (isBitSet(outputBehaviourVal,bit))) {litersVal += 2;}
-        if ((bit >= 2) && (isBitSet(outputBehaviourVal,bit))) {litersVal += Math.pow(2, bit);}
-      }
-
-      for (bit = 6; bit <= 7; bit++) {
-        if (isBitSet(outputBehaviourVal,bit)) {litersUnit += Math.pow(2, bit);}
-      }
-
-      programEntry += "<td name='condWaterFlow"+number+"'>"+translateKey('powerMeasurementA')+"</td>";
-      programEntry += "<td><input type='text' id='valueLiters"+number+"' size='4' name='condWaterFlow"+number+"' class='alignCenter' onblur='isValueValid(this)' value='"+litersVal+"'><span name='condWaterFlow"+number+"'> x </span>";
-
-      programEntry += "<select id='unitLiters"+number+"' name='condWaterFlow"+number+"'>"
-        programEntry += "<option value='0'>"+translateKey('optionUnit1Ltr')+"</option>";
-        programEntry += "<option value='64'>"+translateKey('optionUnit10Ltr')+"</option>";
-        programEntry += "<option value='128'>"+translateKey('optionUnit100Ltr')+"</option>";
-        programEntry += "<option value='192'>"+translateKey('optionUnit1000Ltr')+"</option>";
-      programEntry += "</select>"
-
-      programEntry += "<img id='iconHelp_"+number+"' src='/ise/img/help.png' style='cursor: pointer; width:18px; height:18px; position:relative; top:2px;' alt='' onclick='showFlowControlHelp();'>";
-
-      programEntry += "<td><input type='text' id='separate_CHANNEL_" + this.chn + "_" + this.prn + "' name='" + number + "_WP_OUTPUT_BEHAVIOUR' value='"+outputBehaviourVal+"' size='2' class='hidden'></td>";
-      programEntry += "<script>jQuery('\#unitLiters" + number +"').val("+litersUnit+")</script>";
-
-      window.setTimeout(function() {self._setWSMOutputBehaviour(number);},50);
     }
 
     // SLAT LEVEL for Blinds
