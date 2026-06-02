@@ -321,18 +321,13 @@ jQuery.extend(true, langJSON, {
 
 
     "btnSelfCalibration" : "Kalibrierung der Endlagen",
-
     "btnChangeMotorDir" : "Drehrichtung des Motors wechseln",
-
     "btnClearPosition" : "Endlagen l%F6schen",
-
     "lblPositionSaved" : "Die Endlagen sind kalibriert",
-
     "lblMovementTime" : "Fahrzeit",
 
     "actionStatusControlUp100" : "Auf 100 ms",
     "actionStatusControlDown100" : "Ab 100 ms",
-
     "actionStatusControlUp400" : "Auf 400 ms",
     "actionStatusControlDown400" : "Ab 400 ms",
 

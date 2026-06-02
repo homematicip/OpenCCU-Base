@@ -8028,7 +8028,8 @@ proc getValveActuatorReceiver {chn p descr {url ""} {address ""}} {
     incr prn
     append html "<tr>"
     append html "<td>\${lblOnTime}</td>"
-    append html "[getComboBox $chn $prn "$specialID" "timeOnOff"]<td>[getHelpIcon $param\_WSS 320 170]</td>"
+    #append html "[getComboBox $chn $prn "$specialID" "timeOnOff"]<td>[getHelpIcon $param\_WSS 320 170]</td>"
+    append html "[getComboBox $chn $prn "$specialID" "timeOnOff"]"
     append html "</tr>"
 
     append html [getTimeUnitComboBox $param $ps($param) $chn $prn $special_input_id]
@@ -8050,7 +8051,8 @@ proc getValveActuatorReceiver {chn p descr {url ""} {address ""}} {
     incr prn
     append html "<tr>"
     append html "<td>\${lblOffTime}</td>"
-    append html "[getComboBox $chn $prn "$specialID" "timeOnOff"]<td>[getHelpIcon $param\_WSS 320 170]</td>"
+    #append html "[getComboBox $chn $prn "$specialID" "timeOnOff"]<td>[getHelpIcon $param\_WSS 320 170]</td>"
+    append html "[getComboBox $chn $prn "$specialID" "timeOnOff"]"
     append html "</tr>"
 
     append html [getTimeUnitComboBox $param $ps($param) $chn $prn $special_input_id]
