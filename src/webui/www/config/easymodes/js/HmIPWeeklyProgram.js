@@ -3254,8 +3254,14 @@ HmIPWeeklyProgram.prototype = {
       if (self.isDLP) {
         window.setTimeout(function() {
           jQuery("#dlpModeSelector_" + self._addLeadingZero(parseInt(nextNumber))).change();
-      },50);
+        },50);
+      }
 
+      if (self.isDoorLockDrive) {
+        self.DoorLockWPMode[self.devAddress][self._addLeadingZero(parseInt(nextNumber))] = self.userDoorLockMode;
+        window.setTimeout(function() {
+          jQuery("#doorLockDriveModeElm_" + self._addLeadingZero(parseInt(nextNumber))).change();
+        },50);
       }
 
     };
