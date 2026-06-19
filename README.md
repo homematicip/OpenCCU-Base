@@ -11,6 +11,9 @@ It serves as the foundational layer for core Homematic / Homematic IP services, 
 - OpenCCU website: https://www.openccu.de/
 
 ## Purpose
+With the release of OpenCCU-Base and thus essential components of the CCU source code, new and extended possibilities arise for OpenCCU and OpenCCU-LTS users regarding individual customizations, extensions, and participation in the OpenCCU projects.
+For example, adjustments to the WebUI are significantly simplified, and modifications to core components of the CCU software from eQ-3—such as the Homematic radio and wired services—are now possible.
+Furthermore, in keeping with the spirit of the OCCU project, components that cannot be published as source code, as well as the Homematic IP service, will continue to be updated regularly by eQ-3 and contributors.
 
 This repository is used as the common base package that delivers:
 
